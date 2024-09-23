@@ -1,0 +1,18 @@
+.icon {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 23px;
+	height: 24px;
+	margin: 20px;
+}
+
+.rights {
+	position: absolute;
+	bottom: 0;
+	margin-bottom: 27px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 22px;
+	color: rgba(0, 0, 0, 0.45);
+}
