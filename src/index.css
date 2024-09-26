@@ -1,40 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
 :root {
-
+	--background: rgba(240, 242, 245, 1);
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-size: 16;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-size: 16;
 }
 
 body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  color: #000;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
+	margin: 0;
+	font-family: 'Roboto', sans-serif;
+	color: #000;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size: 16px;
 }
 ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 h1 {
-  font-size: 25px;
-  font-weight: 700;
+	font-size: 25px;
+	font-weight: 700;
 }
 p {
-  padding: 0;
+	padding: 0;
 }
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
+}
+
+.css-var-r1.ant-form-css-var {
+    --ant-form-item-margin-bottom: 0px;
 }

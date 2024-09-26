@@ -1,0 +1,14 @@
+.loginForm{
+	width: 100%;
+}
+
+.btnLogin{
+	background-color: rgba(24, 144, 255, 1);
+	border-radius: 2px;
+	color:#fff;
+	box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	line-height: 24px;
+	padding: 19px 39px;
+}

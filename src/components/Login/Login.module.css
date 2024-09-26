@@ -1,0 +1,38 @@
+.login h1 {
+	font-size: 33px;
+	font-weight: 900;
+	text-align: center;
+	line-height: 38px;
+	margin-bottom: 16.5px;
+	color:rgba(0, 0, 0, 0.85);
+}
+
+.login h2 {
+	font-size: 14px;
+	font-weight: 400;
+	text-align: center;
+	line-height: 22px;
+	color:rgba(0, 0, 0, 0.45);
+	margin-bottom: 46px;
+}
+
+.formWrapper{
+	width: 360px;
+}
+
+.formTitleWrapper{
+	padding-bottom: 7px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	margin-bottom: 22px;
+}
+
+.formTitle{
+	display: inline-block;
+	font-size: 18px;
+	line-height: 22px;
+	font-weight: 500;
+	color: rgba(24, 144, 255, 1);
+	padding-bottom: 5px;
+	border-bottom: 2px solid rgba(24, 144, 255, 1);
+}
+
