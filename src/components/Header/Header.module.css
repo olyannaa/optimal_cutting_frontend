@@ -1,0 +1,32 @@
+.wrapperHeader{
+	height: 62px;
+	background-color: #fff;
+	display: flex;
+	align-items: center;
+	box-shadow: 0px -1px 0px 0px rgba(240, 240, 240, 1) inset;
+}
+
+.headerNav{
+	display: flex;
+	gap:40px;
+	justify-self: center;
+}
+
+.linkNav{
+	display: flex;
+	height: 62px;
+	align-items: center;
+}
+
+.active{
+	border-bottom: 2px solid rgba(24, 144, 255, 1);
+	cursor: auto;
+}
+
+.linkNav:hover{
+	border-bottom: 2px solid rgba(24, 144, 255, 1);
+}
+
+.icon{
+	justify-self: flex-end;
+}
