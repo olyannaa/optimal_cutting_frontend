@@ -12,6 +12,7 @@ export const LoginForm=()=>{
 			<LoginInput
 			name='password'
 			placeholder='пароль'
+			type='password'
 			/>
 			<Button className={styles.btnLogin} htmlType='submit' type='primary'>
 				Вход
