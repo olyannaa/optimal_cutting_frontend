@@ -1,20 +1,23 @@
 .wrapperHeader{
-	height: 62px;
-	background-color: #fff;
+	height: 6.88%;
+	background-color: rgb(255,255,255);
 	display: flex;
+	width: 100vw;
 	align-items: center;
+	justify-content: center;
 	box-shadow: 0px -1px 0px 0px rgba(240, 240, 240, 1) inset;
+	position: relative;
 }
 
 .headerNav{
 	display: flex;
 	gap:40px;
-	justify-self: center;
+	height: 100%;                    
 }
 
 .linkNav{
 	display: flex;
-	height: 62px;
+	height: 100%;   
 	align-items: center;
 }
 
@@ -28,5 +31,6 @@
 }
 
 .icon{
-	justify-self: flex-end;
+	position: absolute;
+	right: 20px;
 }

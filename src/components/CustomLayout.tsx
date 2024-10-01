@@ -1,12 +1,16 @@
-import { Layout } from 'antd';
+import { Flex, Layout } from 'antd';
 import { Header } from './Header/Header';
 import { Outlet } from 'react-router-dom';
+import { Sidebar } from './Sidebar/SidebarWrapper/SidebarWrapper';
 
 export const CustomLayout = ()=>{
 	return(
-		<Layout>
+		<Layout style={{height:'100vh'}}>
 			<Header/>
-			<Outlet/>
+			<Flex style={{height:'93.12%'}}>
+				<Sidebar/>
+				<Outlet/>
+			</Flex>
 		</Layout>
 	)
 }
