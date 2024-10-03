@@ -5,16 +5,16 @@ export type ResponseLoginData = {
     refreshToken: string;
 };
 export type LoginData = {
-    login: string;
-    password: string;
+    Login: string;
+    Password: string;
 };
 export type Privilege = Record<string, { name: string; description: string }>;
 
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        login: builder.mutation<ResponseLoginData, LoginData>({
+        login: builder.mutation<ResponseLoginData, FormData>({
             query: (userData) => ({
-                url: '/Auth/token',
+                url: '/token',
                 method: 'POST',
                 body: userData,
             }),

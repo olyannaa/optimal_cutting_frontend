@@ -10,7 +10,7 @@ import { ResponseLoginData } from './auth';
 
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
     fetchBaseQuery({
-        baseUrl:' https://localhost:7148',
+        baseUrl:'https://10.147.18.178:5001',
         prepareHeaders: (headers, { getState }) => {
             const token =
                 (getState() as RootState).auth.token?.accessToken ||
