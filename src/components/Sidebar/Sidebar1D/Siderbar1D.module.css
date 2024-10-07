@@ -1,9 +1,9 @@
-.sidebar1D{
+.sidebar-1D{
 	position: relative;
 	height: 100%;
 }
 
-.createScheme{
+.btn-create-scheme{
 	border-radius: 2px;
 	position: absolute;
 	bottom: 0;

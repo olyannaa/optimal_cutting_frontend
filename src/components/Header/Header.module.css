@@ -1,4 +1,4 @@
-.wrapperHeader{
+.header{
 	height: 6.88%;
 	background-color: rgb(255,255,255);
 	display: flex;
@@ -9,24 +9,24 @@
 	position: relative;
 }
 
-.headerNav{
+.header-nav{
 	display: flex;
 	gap:40px;
 	height: 100%;                    
 }
 
-.linkNav{
+.header-nav__link{
 	display: flex;
 	height: 100%;   
 	align-items: center;
 }
 
-.active{
+.header-nav__link_active{
 	border-bottom: 2px solid rgba(24, 144, 255, 1);
 	cursor: auto;
 }
 
-.linkNav:hover{
+.header-nav__link:hover{
 	border-bottom: 2px solid rgba(24, 144, 255, 1);
 }
 

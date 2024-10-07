@@ -1,72 +1,76 @@
-import { Button, Col, Flex, Image, Row, Typography } from 'antd';
+import { Button, Col, Divider, Flex, Image, Row, Typography } from 'antd';
 import styles from './DetailTable.module.css';
 import { TableInput } from '../../../custom-input/TableInput/TableInput';
-import srcDownload from '../../../../assets/icons/download.svg'
-import srcImport from '../../../../assets/icons/import.svg'
+import srcDownload from '../../../../assets/icons/download.svg';
+import srcImport from '../../../../assets/icons/import.svg';
 
 export const DetailTable = () => {
 	return (
-		<Flex vertical>
-			<Typography.Text className={styles.title}>Деталь</Typography.Text>
+		<Flex vertical className={styles['detail-table']}>
+			<Typography.Text className={styles['detail-table__title']}>
+				Деталь
+			</Typography.Text>
 			<>
-				<Row className={styles.headerTableDetailRow}>
-					<Col span={5} className={styles.headerTableDetailCell}>
+				<Row
+					className={`${styles['detail-table__row']} ${styles['detail-table__row_header']}`}
+				>
+					<Col
+						span={5}
+						className={`${styles['detail-table__cell']} ${styles['detail-table__cell_header']}`}
+					>
 						№
 					</Col>
-					<Col span={12} className={styles.headerTableDetailCell}>
+					<Col
+						span={12}
+						className={`${styles['detail-table__cell']} ${styles['detail-table__cell_header']}`}
+					>
 						<Flex
-							className={styles.headerTableDetailCellLength}
+							className={styles['cell-body']}
 							align="center"
+							justify="center"
 						>
 							Длина
 						</Flex>
 					</Col>
-					<Col span={7} className={styles.headerTableDetailCell}>
+					<Col
+						span={7}
+						className={`${styles['detail-table__cell']} ${styles['detail-table__cell_header']}`}
+					>
 						К-во
 					</Col>
 				</Row>
-				<Row className={styles.tableDetailRow}>
-					<Col span={5} className={styles.tableDetailCell}>
+				<Row className={styles['detail-table__row']}>
+					<Col span={5} className={styles['detail-table__cell']}>
 						1
 					</Col>
-					<Col span={12} className={styles.tableDetailCell}>
-						<Flex
-							className={styles.tableDetailCellLength}
-							align="center"
-						>
-							<TableInput name="length" />
-						</Flex>
+					<Col span={12} className={styles['detail-table__cell']}>
+						<TableInput name="length" />
 					</Col>
-					<Col span={7} className={styles.tableDetailCell}>
-						<TableInput name='number' type='number'/>
+					<Col span={7} className={styles['detail-table__cell']}>
+						<TableInput name="number" type="number" />
 					</Col>
 				</Row>
-				<Row className={styles.tableDetailRow}>
-					<Col span={5} className={styles.tableDetailCell}>
+				<Row className={styles['detail-table__row']}>
+					<Col span={5} className={styles['detail-table__cell']}>
 						1
 					</Col>
-					<Col span={12} className={styles.tableDetailCell}>
-						<Flex
-							className={styles.tableDetailCellLength}
-							align="center"
-						>
-							<TableInput name="length" />
-						</Flex>
+					<Col span={12} className={styles['detail-table__cell']}>
+						<TableInput name="length" />
 					</Col>
-					<Col span={7} className={styles.tableDetailCell}>
-						<TableInput name='number' type='number'/>
+					<Col span={7} className={styles['detail-table__cell']}>
+						<TableInput name="number" type="number" />
 					</Col>
 				</Row>
 			</>
-			<Flex className={styles.buttons}>
-				<Button className={styles.buttonDownload}> 
+			<Flex className={styles['detail-table__buttons']}>
+				<Button className={styles['btn-download']}>
 					<Image preview={false} src={srcDownload} />
 				</Button>
-				<Button className={styles.buttonImport}> 
+				<Button className={styles['btn-import']}>
 					<Image preview={false} src={srcImport} />
 					Импорт
 				</Button>
-				<Button className={styles.buttonAdd} type='primary'> 
+				<Button className={styles['btn-add']} type="primary">
 					Добавить
 				</Button>
 			</Flex>
