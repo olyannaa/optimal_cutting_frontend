@@ -1,0 +1,11 @@
+.sidebar-1D{
+	position: relative;
+	height: 100%;
+}
+
+.btn-create-scheme{
+	border-radius: 2px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}

@@ -1,0 +1,11 @@
+.formItem{
+	width: 60px;
+	height: 32px;
+}
+
+.tableInput{
+	color:rgba(0, 0, 0, 0.85);
+	padding: 5px 0;
+	padding-left: 12px;
+	height: 32px;
+}
