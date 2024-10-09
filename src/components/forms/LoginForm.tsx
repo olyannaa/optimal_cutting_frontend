@@ -39,6 +39,7 @@ export const LoginForm = () => {
 			<LoginInput
 			name='Password'
 			placeholder='пароль'
+			type='password'
 			/>
 			{isError ? (
                     <p style={{ color: 'red', marginBottom: '2vh' }}>
