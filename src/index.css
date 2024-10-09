@@ -1,7 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
 :root {
-	--background: rgba(240, 242, 245, 1);
+	--background-auth: rgba(240, 242, 245, 1);
+	--light-grey: rgba(0, 0, 0, 0.06);
+	--light-blue: rgba(24, 144, 255, 1);
+	--black:rgb(255, 255, 255);
+	--white: rgb(255, 255, 255);
+	--font-black: rgba(0, 0, 0, 0.85);
+	--font-grey: rgba(0, 0, 0, 0.45);
+	--background-header-table: rgba(250, 250, 250, 1);
+	--login-border: rgba(217, 217, 217, 1);
+	--btn-color-grey: rgba(0, 0, 0, 0.25);
+	--shadow-color-header: rgba(240, 240, 240, 1);
+	--shadow-color-login: rgba(240, 240, 240, 1);
+	--placeholder-color: rgba(0, 0, 0, 0.25);
 }
 
 * {
@@ -41,5 +53,5 @@ code {
 }
 
 .css-var-r1.ant-form-css-var {
-    --ant-form-item-margin-bottom: 0px;
+	--ant-form-item-margin-bottom: 0px;
 }

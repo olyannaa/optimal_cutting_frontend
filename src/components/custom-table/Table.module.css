@@ -1,0 +1,39 @@
+.table__title {
+	color: var(--font-black);
+	font-size: 16px;
+	line-height: 22px;
+	margin-bottom: 7px;
+}
+
+.table__buttons {
+	margin-top: 13px;
+	gap: 6px;
+}
+
+.table__buttons_workpiece {
+	padding-left: 131px;
+}
+
+.table__buttons_detail2D,
+.table__buttons_sizes2D {
+	justify-content: flex-end;
+}
+
+.btn-download {
+	width: 32px;
+	padding: 7px;
+	border-radius: 2px;
+	color: var(--btn-color-grey);
+}
+
+.btn-import {
+	width: 87px;
+	padding: 7px;
+	border-radius: 2px;
+	color: var(--btn-color-grey);
+}
+
+.btn-add {
+	width: 97px;
+	border-radius: 2px;
+}

@@ -1,0 +1,21 @@
+.table__row {
+	display: inline-flex;
+	height: 55px;
+	border-bottom: 1px solid var(--light-grey);
+}
+
+.table__row_detail1D {
+	width: 192px;
+}
+
+.table__row_detail2D {
+	width: 266px;
+}
+
+.table__row_workpiece {
+	width: 125px;
+}
+
+.table__row_sizes2D {
+	width: 277px;
+}

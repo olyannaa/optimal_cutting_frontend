@@ -8,18 +8,18 @@ type Props = {
 };
 
 export const TableInput = ({ name, placeholder, type = 'text' }: Props) => {
+	console.log(name);
 	return (
 		<Form.Item
 			name={name}
 			className={styles.formItem}
-			style={{width:`${type==='number' ? '50px' : '60px'}`}}
+			style={{ width: `${type === 'count' ? '50px' : '60px'}` }}
 		>
 			<Input
 				placeholder={placeholder}
-				type={type}
+				type={type === 'count' ? 'number' : 'text'}
 				className={styles.tableInput}
-				style={{height:`${type==='number' ? '24px' : '32px'}`}}
-				
+				style={{ height: `${type === 'count' ? '24px' : '32px'}` }}
 			/>
 		</Form.Item>
 	);

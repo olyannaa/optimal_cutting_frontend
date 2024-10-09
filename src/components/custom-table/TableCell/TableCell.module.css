@@ -1,0 +1,34 @@
+.table__cell {
+	color: var(--font-black);
+	height: 100%;
+}
+
+.table__cell_header {
+	background-color: var(--background-header-table);
+}
+
+.table__cell_number {
+	width: 40px;
+}
+
+.table__cell_length {
+	width: 85px;
+}
+
+.table__cell_weight {
+	width: 85px;
+}
+
+.table__cell_count {
+	width: 67px;
+}
+
+.table__cell_detail {
+	width: 197px;
+}
+
+.body {
+	border-left: 1px solid var(--light-grey);
+	width: 100%;
+	height: 22px;
+}

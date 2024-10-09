@@ -20,24 +20,18 @@ function App() {
 		cssVar: true,
 	};
 	return (
-        <ConfigProvider theme={theme}>
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<Authorization />} />
+		<ConfigProvider theme={theme}>
+			<BrowserRouter>
+				<Routes>
+					<Route path="/" element={<Authorization />} />
 
-                    <Route element={<CustomLayout />}>
-                        <Route
-                            path='/cutting1D'
-                            element={
-                                <Cutting1D/>
-                            }
-                        />
-                        
-                    </Route>
-                </Routes>
-            </BrowserRouter>
-        </ConfigProvider>
-    );
+					<Route element={<CustomLayout />}>
+						<Route path="/cutting/1D" element={<Cutting1D />} />
+					</Route>
+				</Routes>
+			</BrowserRouter>
+		</ConfigProvider>
+	);
 }
 
 export default App;

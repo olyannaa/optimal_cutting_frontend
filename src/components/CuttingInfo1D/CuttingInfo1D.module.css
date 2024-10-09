@@ -1,9 +1,12 @@
-.sidebar-1D{
+.cutting-info-1D {
 	position: relative;
 	height: 100%;
+	display: flex;
+	gap: 20px;
+	flex-direction: column;
 }
 
-.btn-create-scheme{
+.btn-create-scheme {
 	border-radius: 2px;
 	position: absolute;
 	bottom: 0;
