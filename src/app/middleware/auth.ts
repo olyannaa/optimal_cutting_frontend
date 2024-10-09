@@ -8,9 +8,9 @@ listenerMiddleware.startListening({
     effect: async (action, listenerApi) => {
         listenerApi.cancelActiveListeners();
 
-        if (action.payload.accessToken && action.payload.refreshToken) {
-            localStorage.setItem('accessToken', action.payload.accessToken);
-            localStorage.setItem('refreshToken', action.payload.refreshToken);
+        if (action.payload.access && action.payload.refresh) {
+            localStorage.setItem('accessToken', action.payload.access);
+            localStorage.setItem('refreshToken', action.payload.refresh);
         }
     },
 });

@@ -4,7 +4,7 @@ import styles from './LoginForm.module.css'
 import { LoginData, useLoginMutation } from '../../app/services/auth';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import {IError} from '../../types/Error'
+import { IError } from '../../types/Error'
 
 export const LoginForm = () => {
 	const [loginUser, { isLoading }] = useLoginMutation();
@@ -12,14 +12,12 @@ export const LoginForm = () => {
 	const [isError, setIsErrors] = useState<boolean>(false);
 	
 	const handleAuth = async (data: LoginData) => {
-		console.log(data);
         try {
             
 			const formData = new FormData();
 			formData.append('Login', data.Login);
 			formData.append('Password', data.Password);
 			await loginUser(formData).unwrap();
-			console.log(formData);
 			navigate('/cabinet');
         } catch (err) {
             if ((err as IError).originalStatus === 401) {

@@ -10,10 +10,10 @@ import { ResponseLoginData } from './auth';
 
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
     fetchBaseQuery({
-        baseUrl:'https://10.147.18.178:5001',
+        baseUrl: import.meta.env.VITE_APP_BASE_URL,
         prepareHeaders: (headers, { getState }) => {
             const token =
-                (getState() as RootState).auth.token?.accessToken ||
+                (getState() as RootState).auth.token?.access ||
                 localStorage.getItem('accessToken');
 
             if (token) {
@@ -43,7 +43,7 @@ const baseQueryWithReauth: BaseQueryFn<
         refreshPromise = Promise.resolve(
             baseQuery(
                 {
-                    url: `/Auth/refresh-token`,
+                    url: `/refresh-token`,
                     method: 'POST',
                     body: {
                         accessToken: localStorage.getItem('accessToken'),
@@ -61,10 +61,10 @@ const baseQueryWithReauth: BaseQueryFn<
         if ((refreshResult as RefreshResult).data) {
             const refeshTokenResult = (refreshResult as RefreshResult)
                 .data as ResponseLoginData;
-            api.dispatch({ type: 'auth/refresh', payload: refeshTokenResult });
+            api.dispatch({ type: '/refresh', payload: refeshTokenResult });
             result = await baseQuery(args, api, extraOptions);
         } else {
-            api.dispatch({ type: 'auth/logout' });
+            api.dispatch({ type: '/logout' });
             localStorage.clear();
         }
     }

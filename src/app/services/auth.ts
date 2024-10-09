@@ -1,8 +1,8 @@
 import { api } from './api';
 
 export type ResponseLoginData = {
-    accessToken: string;
-    refreshToken: string;
+    access: string;
+    refresh: string;
 };
 export type LoginData = {
     Login: string;
@@ -14,7 +14,7 @@ export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation<ResponseLoginData, FormData>({
             query: (userData) => ({
-                url: '/token',
+                url: '/login',
                 method: 'POST',
                 body: userData,
             }),
