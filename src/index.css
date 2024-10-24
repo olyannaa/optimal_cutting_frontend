@@ -4,7 +4,7 @@
 	--background-auth: rgba(240, 242, 245, 1);
 	--light-grey: rgba(0, 0, 0, 0.06);
 	--light-blue: rgba(24, 144, 255, 1);
-	--black:rgb(255, 255, 255);
+	--black: rgb(255, 255, 255);
 	--white: rgb(255, 255, 255);
 	--font-black: rgba(0, 0, 0, 0.85);
 	--font-grey: rgba(0, 0, 0, 0.45);
@@ -14,6 +14,9 @@
 	--shadow-color-header: rgba(240, 240, 240, 1);
 	--shadow-color-login: rgba(240, 240, 240, 1);
 	--placeholder-color: rgba(0, 0, 0, 0.25);
+	--btn-border-grey: rgba(217, 217, 217, 1);
+	--light-red: rgba(255, 241, 240, 1);
+	--border-red: rgba(255, 204, 199, 1);
 }
 
 * {
@@ -54,4 +57,16 @@ code {
 
 .css-var-r1.ant-form-css-var {
 	--ant-form-item-margin-bottom: 0px;
+}
+
+::-webkit-scrollbar {
+	width: 0.57vw;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--background-header-table);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--btn-border-grey);
 }

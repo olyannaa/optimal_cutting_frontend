@@ -12,7 +12,7 @@
 	font-weight: 400;
 	text-align: center;
 	line-height: 22px;
-	color: rgba(0, 0, 0, 0.45);
+	color: var(--font-grey);
 	margin-bottom: 46px;
 }
 
@@ -31,7 +31,7 @@
 	font-size: 18px;
 	line-height: 22px;
 	font-weight: 500;
-	color: rgba(24, 144, 255, 1);
+	color: var(--light-blue);
 	padding-bottom: 5px;
 	border-bottom: 2px solid var(--light-blue);
 }

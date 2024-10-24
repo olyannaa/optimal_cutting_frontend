@@ -1,11 +1,9 @@
 .formItem {
-	width: 60px;
-	height: 32px;
+	width: 55px;
 }
 
 .tableInput {
 	color: var(--font-black);
-	padding: 5px 0;
-	padding-left: 12px;
-	height: 32px;
+	border-radius: 2px;
+	width: 55px;
 }

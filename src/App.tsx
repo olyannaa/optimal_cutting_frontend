@@ -5,7 +5,7 @@ import { Authorization } from './pages/Auth/Authorization';
 import { CustomLayout } from './components/CustomLayout';
 import { Cutting1D } from './pages/Cutting1D/Cutting1D';
 
-function App() {
+const App = () => {
 	const theme: ThemeConfig = {
 		components: {
 			Input: {
@@ -14,8 +14,13 @@ function App() {
 				fontSize: 16,
 				colorText: 'rgba(0, 0, 0, 0.25)',
 			},
+			Button: {
+				borderRadius: 2,
+			},
+			InputNumber: {
+				borderRadius: 2,
+			},
 		},
-
 		token: {},
 		cssVar: true,
 	};
@@ -32,6 +37,6 @@ function App() {
 			</BrowserRouter>
 		</ConfigProvider>
 	);
-}
+};
 
 export default App;

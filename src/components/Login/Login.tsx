@@ -1,6 +1,6 @@
 import { Flex, Typography } from 'antd';
 import styles from './Login.module.css';
-import { LoginForm } from '../forms/LoginForm';
+import { LoginForm } from '../forms/LoginForm/LoginForm';
 
 export const Login = () => {
 	return (

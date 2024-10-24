@@ -1,0 +1,22 @@
+.cutting-form-wrapper {
+	background-color: var(--black);
+	width: 100%;
+	padding: 13px 28px 40px 28px;
+	max-width: 312px;
+}
+
+.cutting-form {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	gap: 20px;
+	flex-direction: column;
+}
+
+.btn-create-scheme {
+	border-radius: 2px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}

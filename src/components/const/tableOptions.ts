@@ -5,6 +5,13 @@ export const tableOptions: ITableOptions = {
 	sizes2D: ['number', 'length', 'weight', 'count'],
 };
 
+export const tableOptionsInputs: ITableOptions = {
+	detail1D: ['length', 'count'],
+	workpiece: ['length'],
+	detail2D: ['count'],
+	sizes2D: ['length', 'weight', 'count'],
+};
+
 export const nameColumns = {
 	number: '№',
 	length: 'Длина',
