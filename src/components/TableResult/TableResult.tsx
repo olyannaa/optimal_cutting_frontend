@@ -11,6 +11,7 @@ export const TableResult = () => {
 			percentUsage: el.percentUsage,
 			details: el.details.join(','),
 			length: el.length,
+			key:i
 		};
 	});
 	const columns = [

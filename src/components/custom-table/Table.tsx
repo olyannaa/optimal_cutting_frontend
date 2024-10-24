@@ -116,7 +116,6 @@ export const Table = ({ typeTable, form }: Props) => {
 		if (typeTable === 'workpiece') {
 			let data: number[] = Object.values(form.getFieldsValue());
 			data = data.filter((el)=>el !== undefined)
-			console.log(Math.max(...data))
 			dispatch(updateMaxLength(Math.max(...data)));
 		}
 	};
