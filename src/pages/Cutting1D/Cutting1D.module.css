@@ -1,0 +1,6 @@
+.cutting1D {
+	padding: 40px 100px;
+	gap: 66px;
+	max-height: max-content;
+	overflow-y: auto;
+}

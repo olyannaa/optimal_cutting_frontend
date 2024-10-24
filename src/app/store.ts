@@ -1,11 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { api } from './services/api';
 import auth from "../features/authSlice"
+import cutting1D from "../features/cutting1DSlice"
+import maxLengthWorkpieces from "../features/maxLengthWorkpieces"
 import { listenerMiddleware } from './middleware/auth';
 export const store = configureStore({
     reducer: {
         [api.reducerPath]: api.reducer,
-        auth
+        auth,
+        cutting1D,
+        maxLengthWorkpieces
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()

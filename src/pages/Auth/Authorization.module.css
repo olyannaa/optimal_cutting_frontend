@@ -14,5 +14,5 @@
 	font-size: 14px;
 	font-weight: 400;
 	line-height: 22px;
-	color: rgba(0, 0, 0, 0.45);
+	color: var(--font-grey);
 }
