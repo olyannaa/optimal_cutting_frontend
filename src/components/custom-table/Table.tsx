@@ -3,7 +3,7 @@ import styles from './Table.module.css';
 import { TableRow } from './TableRow/TableRow';
 import srcDownload from '../../assets/icons/download.svg';
 import srcImport from '../../assets/icons/import.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormInstance } from 'antd/es/form/Form';
 import {
 	changeDetails1DDownload,
@@ -32,6 +32,11 @@ export const Table = ({ typeTable, form }: Props) => {
 	};
 	const [rows, setRows] = useState<ICustomTableRow[]>([initialRow]);
 	const [error, setError] = useState<string>('');
+
+	useEffect(()=>{
+		onChange()
+	},[rows])
+
 	const handlerAdd = () => {
 		setRows((last) => [
 			...last,
@@ -109,7 +114,9 @@ export const Table = ({ typeTable, form }: Props) => {
 
 	const onChange = () => {
 		if (typeTable === 'workpiece') {
-			const data: number[] = Object.values(form.getFieldsValue());
+			let data: number[] = Object.values(form.getFieldsValue());
+			data = data.filter((el)=>el !== undefined)
+			console.log(Math.max(...data))
 			dispatch(updateMaxLength(Math.max(...data)));
 		}
 	};
