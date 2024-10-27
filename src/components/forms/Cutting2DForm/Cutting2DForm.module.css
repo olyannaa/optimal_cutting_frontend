@@ -6,10 +6,3 @@
     gap: 20px;
     flex-direction: column;
 }
-
-.btn-create-scheme {
-    border-radius: 2px;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}

@@ -1,0 +1,28 @@
+.btn-import {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    height: 32px;
+    width: 87px;
+    border-radius: 2px;
+    color: var(--btn-color-grey);
+    border: 1px solid var(--btn-border-grey);
+    cursor: pointer;
+}
+
+.btn-import:hover {
+    color: var(--light-blue);
+    border: 1px solid var(--light-blue);
+}
+
+.btn-import__image {
+    display: block;
+}
+
+.upload-input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+    cursor: pointer;
+}
