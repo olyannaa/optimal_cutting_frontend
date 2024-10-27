@@ -4,7 +4,7 @@
 	text-align: center;
 	line-height: 38px;
 	margin-bottom: 16.5px;
-	color:rgba(0, 0, 0, 0.85);
+	color: var(--font-black);
 }
 
 .login h2 {
@@ -12,27 +12,26 @@
 	font-weight: 400;
 	text-align: center;
 	line-height: 22px;
-	color:rgba(0, 0, 0, 0.45);
+	color: var(--font-grey);
 	margin-bottom: 46px;
 }
 
-.formWrapper{
+.formWrapper {
 	width: 360px;
 }
 
-.formTitleWrapper{
+.formTitleWrapper {
 	padding-bottom: 7px;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+	border-bottom: 1px solid var(--light-grey);
 	margin-bottom: 22px;
 }
 
-.formTitle{
+.formTitle {
 	display: inline-block;
 	font-size: 18px;
 	line-height: 22px;
 	font-weight: 500;
-	color: rgba(24, 144, 255, 1);
+	color: var(--light-blue);
 	padding-bottom: 5px;
-	border-bottom: 2px solid rgba(24, 144, 255, 1);
+	border-bottom: 2px solid var(--light-blue);
 }
-

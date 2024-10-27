@@ -1,0 +1,29 @@
+.table__row {
+	display: inline-flex;
+	min-height: 55px;
+	border-bottom: 1px solid var(--light-grey);
+}
+
+.table__row_header {
+	background: var(--background-header-table);
+}
+
+.table__row_detail1D {
+	width: 218px;
+}
+
+.table__row_detail2D {
+	width: 266px;
+}
+
+.table__row_workpieces {
+	width: 151px;
+}
+
+.table__row_sizes2D {
+	width: 277px;
+}
+
+.close-row {
+	width: 26px;
+}
