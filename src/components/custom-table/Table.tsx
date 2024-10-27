@@ -17,9 +17,11 @@ import { IError } from '../../types/Error';
 import { tableOptionsInputs } from '../const/tableOptions';
 import { useAppDispatch } from '../../app/hooks';
 import { updateMaxLength } from '../../features/maxLengthWorkpieces';
+import { TableTypes } from '../../types/typeTable';
+import { ErrorsCsv } from '../../types/typeErrorsCsv';
 
 type Props = {
-	typeTable: 'detail1D' | 'workpiece' | 'detail2D' | 'sizes2D';
+	typeTable: TableTypes;
 	form: FormInstance<any>;
 };
 
@@ -31,11 +33,11 @@ export const Table = ({ typeTable, form }: Props) => {
 		detail: '',
 	};
 	const [rows, setRows] = useState<ICustomTableRow[]>([initialRow]);
-	const [error, setError] = useState<string>('');
+	const [error, setError] = useState<ErrorsCsv | null>(null);
 
-	useEffect(()=>{
-		onChange()
-	},[rows])
+	useEffect(() => {
+		onChange();
+	}, [rows]);
 
 	const handlerAdd = () => {
 		setRows((last) => [
@@ -45,13 +47,11 @@ export const Table = ({ typeTable, form }: Props) => {
 	};
 
 	const onFinish = async (data: any) => {
-		if (typeTable === 'detail1D') {
+		if (typeTable === TableTypes.detail1D) {
 			const details = changeDetails1DDownload(data);
-			console.log(details);
 			await downloadFileCSV1D(JSON.stringify(details));
 		}
 	};
-
 	const deleteRow = (num: number) => {
 		if (num < rows.length) {
 			for (let i = num; i < rows.length; i++) {
@@ -86,7 +86,7 @@ export const Table = ({ typeTable, form }: Props) => {
 	const handlerImportFile = async (
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
-		setError('');
+		setError(null);
 		const files = event.target.files;
 		if (files) {
 			const formData = new FormData();
@@ -94,7 +94,7 @@ export const Table = ({ typeTable, form }: Props) => {
 			try {
 				const responseData = await importFile(formData).unwrap();
 				if (Object.keys(responseData[0]).length !== 2) {
-					setError('colomns');
+					setError(ErrorsCsv.columns);
 				}
 				setRows(
 					responseData.map((_, i) => ({
@@ -104,18 +104,17 @@ export const Table = ({ typeTable, form }: Props) => {
 				);
 				form.setFieldsValue(changeDetails1DImport(responseData));
 			} catch (err) {
-				console.log(21);
 				if ((err as IError).status === 400) {
-					setError('type');
+					setError(ErrorsCsv.type);
 				}
 			}
 		}
 	};
 
 	const onChange = () => {
-		if (typeTable === 'workpiece') {
+		if (typeTable === TableTypes.workpieces) {
 			let data: number[] = Object.values(form.getFieldsValue());
-			data = data.filter((el)=>el !== undefined)
+			data = data.filter((el) => el !== undefined);
 			dispatch(updateMaxLength(Math.max(...data)));
 		}
 	};
@@ -123,9 +122,9 @@ export const Table = ({ typeTable, form }: Props) => {
 	return (
 		<Flex vertical className={styles.table}>
 			<Flex className={styles['table__title']}>
-				{typeTable === 'detail1D'
+				{typeTable === TableTypes.detail1D
 					? 'Деталь'
-					: typeTable === 'workpiece'
+					: typeTable === TableTypes.workpieces
 					? 'Заготовка'
 					: ''}
 			</Flex>
@@ -158,7 +157,7 @@ export const Table = ({ typeTable, form }: Props) => {
 					styles[`table__buttons_${typeTable}`]
 				}`}
 			>
-				{typeTable !== 'workpiece' && (
+				{typeTable !== TableTypes.workpieces && (
 					<>
 						<Button
 							className={styles['btn-download']}
@@ -200,7 +199,7 @@ export const Table = ({ typeTable, form }: Props) => {
 					Добавить
 				</Button>
 			</Flex>
-			{error && <CsvError error={error} setError={setError} />}
+			{error!==null && <CsvError error={error} setError={setError} />}
 		</Flex>
 	);
 };

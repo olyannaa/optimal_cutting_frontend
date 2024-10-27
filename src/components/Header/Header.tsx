@@ -1,6 +1,5 @@
 import { Flex } from 'antd';
 import styles from './Header.module.css';
-//import srcPlanet from '../../assets/icons/planet.svg';
 import { NavLink } from 'react-router-dom';
 import { linksNavHeader } from '../const/linksNavHeader';
 
@@ -22,9 +21,6 @@ export const Header = () => {
 					</NavLink>
 				))}
 			</Flex>
-			{/* <Flex className={styles['change-language']}>
-				<Image preview={false} src={srcPlanet} />
-			</Flex> */}
 		</Flex>
 	);
 };

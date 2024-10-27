@@ -6,6 +6,7 @@ import {
 	changeWorkpiece1DCalculate,
 } from '../../../functions/processingDataInput';
 import { Table } from '../../custom-table/Table';
+import { TableTypes } from '../../../types/typeTable';
 
 export const Cutting1DForm = () => {
 	const [formDetail] = Form.useForm();
@@ -31,12 +32,11 @@ export const Cutting1DForm = () => {
 			await calculate1D(data).unwrap();
 		}
 	};
-
 	return (
 		<Flex className={styles['cutting-form-wrapper']}>
 			<Flex className={styles['cutting-form']}>
-				<Table typeTable="detail1D" form={formDetail} />
-				<Table typeTable="workpiece" form={formWorkpiece} />
+				<Table typeTable={TableTypes.detail1D} form={formDetail} />
+				<Table typeTable={TableTypes.workpieces} form={formWorkpiece} />
 				<Button
 					type="primary"
 					danger

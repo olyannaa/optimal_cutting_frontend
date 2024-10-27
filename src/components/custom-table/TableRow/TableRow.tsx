@@ -4,9 +4,10 @@ import { tableOptions } from '../../const/tableOptions';
 import { TableCell } from '../TableCell/TableCell';
 import { ICustomTableRow } from '../../../types/CustomTable';
 import srcClose from '../../../assets/icons/close.svg';
+import { CellTypes, TableTypes } from '../../../types/typeTable';
 
 type Props = {
-	typeTable: 'detail1D' | 'workpiece' | 'detail2D' | 'sizes2D';
+	typeTable: TableTypes;
 	isHeader?: boolean;
 	rowInfo: ICustomTableRow;
 	deleteRow: (num: number) => void;
@@ -29,7 +30,7 @@ export const TableRow = ({
 			{tableOptions[typeTable].map((col, i) => (
 				<TableCell
 					isHeader={isHeader}
-					typeCell={col}
+					typeCell={CellTypes[col]}
 					rowInfo={rowInfo}
 					key={i}
 					typeTable={typeTable}

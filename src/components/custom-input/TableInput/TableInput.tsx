@@ -2,18 +2,19 @@ import { Form, Input, InputNumber } from 'antd';
 import styles from './TableInput.module.css';
 import { useAppSelector } from '../../../app/hooks';
 import { selectMaxLengthWorkpieces } from '../../../features/maxLengthWorkpieces';
+import { CellTypes, TableTypes } from '../../../types/typeTable';
 
 type Props = {
 	name: string;
 	placeholder?: string;
-	type?: string;
-	typeTable: 'detail1D' | 'workpiece' | 'detail2D' | 'sizes2D';
+	typeCell: CellTypes;
+	typeTable: TableTypes;
 };
 
 export const TableInput = ({
 	name,
 	placeholder,
-	type = 'text',
+	typeCell,
 	typeTable,
 }: Props) => {
 	const maxLength = useAppSelector(selectMaxLengthWorkpieces);
@@ -28,7 +29,7 @@ export const TableInput = ({
 				},
 			]}
 		>
-			{type === 'detail' ? (
+			{typeCell === CellTypes.detail ? (
 				<Input
 					placeholder={placeholder}
 					type={'text'}
@@ -38,14 +39,15 @@ export const TableInput = ({
 			) : (
 				<InputNumber
 					className={styles.tableInput}
-					size={type === 'count' ? 'small' : 'middle'}
+					size={typeCell === CellTypes.count ? 'small' : 'middle'}
 					min={1}
 					max={
-						typeTable === 'detail1D' && type === 'length'
+						typeTable === TableTypes.detail1D &&
+						typeCell === CellTypes.length
 							? maxLength.maxLength
 							: 1000000000
 					}
-					controls={type === 'count'}
+					controls={typeCell === CellTypes.count}
 				/>
 			)}
 		</Form.Item>

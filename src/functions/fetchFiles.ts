@@ -1,10 +1,11 @@
+
 const headers = new Headers();
 headers.set('Authorization', `Bearer ${localStorage.getItem('accessToken')}`);
 headers.set('Content-Type', 'application/json');
 export const getPNG1DCutting = async (dataCalculate1D: string) => {
 	try {
 		const response = await fetch(
-			`https://localhost:5001/1d/export/result/png`,
+			`${import.meta.env.VITE_APP_BASE_URL}1d/export/result/png`,
 			{
 				method: 'POST',
 				headers: headers,
@@ -28,7 +29,7 @@ export const downloadFile1DCutting = async (
 ) => {
 	try {
 		const response = await fetch(
-			`https://localhost:5001/1d/export/result/${typeFile}`,
+			`${import.meta.env.VITE_APP_BASE_URL}1d/export/result/${typeFile}`,
 			{
 				method: 'POST',
 				headers: headers,
@@ -54,7 +55,7 @@ export const downloadFile1DCutting = async (
 
 export const downloadFileCSV1D = async (dataDetails: string) => {
 	try {
-		const response = await fetch('https://localhost:5001/1d/export/csv', {
+		const response = await fetch(`${import.meta.env.VITE_APP_BASE_URL}1d/export/csv`, {
 			method: 'POST',
 			headers: headers,
 			body: dataDetails,

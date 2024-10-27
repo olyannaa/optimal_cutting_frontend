@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { cuttingApi, ResponseCalculate1D } from '../app/services/cutting';
+import { cuttingApi } from '../app/services/cutting';
 import { RootState } from '../app/store';
+import { ICalculate1D } from '../types/Calculated1D';
 
-const initialState: ResponseCalculate1D = {
+const initialState: ICalculate1D = {
 	workpieces: [],
 	totalPercentUsage: 0,
 };

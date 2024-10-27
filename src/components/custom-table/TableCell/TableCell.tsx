@@ -1,14 +1,15 @@
-import { Flex, Image } from 'antd';
+import { Flex } from 'antd';
 import { TableInput } from '../../custom-input/TableInput/TableInput';
 import styles from './TableCell.module.css';
 import { nameColumns } from '../../const/tableOptions';
 import { ICustomTableRow } from '../../../types/CustomTable';
+import { CellTypes, TableTypes } from '../../../types/typeTable';
 
 type Props = {
-	typeCell: 'number' | 'length' | 'weight' | 'count' | 'detail';
+	typeCell: CellTypes;
 	isHeader: boolean;
 	rowInfo: ICustomTableRow;
-	typeTable: 'detail1D' | 'workpiece' | 'detail2D' | 'sizes2D';
+	typeTable: TableTypes;
 };
 
 export const TableCell = ({
@@ -26,9 +27,9 @@ export const TableCell = ({
 			} `}
 		>
 			{isHeader &&
-			(typeCell === 'length' ||
-				typeCell === 'weight' ||
-				typeCell === 'count') ? (
+			(typeCell === CellTypes.length ||
+				typeCell === CellTypes.weight ||
+				typeCell === CellTypes.count) ? (
 				<Flex
 					align="center"
 					justify="center"
@@ -38,12 +39,12 @@ export const TableCell = ({
 				</Flex>
 			) : isHeader ? (
 				nameColumns[typeCell]
-			) : typeCell === 'number' || typeCell === 'detail' ? (
+			) : typeCell === CellTypes.number || typeCell === CellTypes.detail ? (
 				rowInfo[typeCell]
 			) : (
 				<TableInput
 					name={`${typeCell}_${rowInfo.number}`}
-					type={typeCell}
+					typeCell={typeCell}
 					typeTable={typeTable}
 				/>
 			)}

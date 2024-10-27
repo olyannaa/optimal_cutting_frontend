@@ -18,7 +18,7 @@
 	width: 230px;
 }
 
-.table__form_workpiece {
+.table__form_workpieces {
 	max-height: 110px;
 	width: 163px;
 }
@@ -28,7 +28,7 @@
 	gap: 6px;
 }
 
-.table__buttons_workpiece {
+.table__buttons_workpieces {
 	padding-left: 131px;
 }
 
