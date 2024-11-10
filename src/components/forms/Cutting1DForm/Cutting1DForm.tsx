@@ -39,7 +39,7 @@ export const Cutting1DForm = () => {
             <Button
                 type='primary'
                 danger
-                className={styles['btn-create-scheme']}
+                className='bottom-btn'
                 onClick={() => handlerSubmit()}
             >
                 Создать схему
