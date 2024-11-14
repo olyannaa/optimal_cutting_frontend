@@ -1,1 +1,6 @@
-# optimal_cutting_frontend
+#Клиент приложения для оптимального раскроя
+
+#Тестовая учетная запись:
+логин: john_doe
+пароль: my_secure_password
+
