@@ -8,13 +8,12 @@ export type LoginData = {
     Login: string;
     Password: string;
 };
-export type Privilege = Record<string, { name: string; description: string }>;
 
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
         login: builder.mutation<ResponseLoginData, FormData>({
             query: (userData) => ({
-                url: '/login',
+                url: '/auth/login',
                 method: 'POST',
                 body: userData,
             }),

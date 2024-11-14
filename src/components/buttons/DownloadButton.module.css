@@ -1,0 +1,6 @@
+.btn-download {
+    width: 32px;
+    padding: 7px;
+    border-radius: 2px;
+    color: var(--btn-color-grey);
+}
