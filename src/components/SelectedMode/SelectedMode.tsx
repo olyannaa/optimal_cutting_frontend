@@ -4,7 +4,6 @@ import { useLocation } from 'react-router-dom';
 import { CuttingInfo1D } from '../CuttingInfo1D/CuttingInfo1D';
 import { Cutting2DForm } from '../forms/Cutting2DForm/Cutting2DForm';
 import { FormContainer } from '../FormContainer/FormContainer';
-import { AddDetailsContainer } from '../AddDetailsContainer/AddDetailsContainer';
 
 export const SelectedMode = ({
     children,
@@ -23,7 +22,7 @@ export const SelectedMode = ({
                     </Flex>
                 </FormContainer>
             )}
-            {path === '/newDetail' && <AddDetailsContainer />}
+            {path === '/newDetail' && children}
         </Flex>
     );
 };

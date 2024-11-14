@@ -1,4 +1,4 @@
-import { Button, Form, Input, notification, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import Upload, { UploadProps } from '../../../buttons/UploadButton/Upload';
 import { useState } from 'react';
 import styles from './AddDetail.module.css';
@@ -7,7 +7,6 @@ import {
     useAddDetailMutation,
     useGetMaterialQuery,
 } from '../../../../app/services/addDxf';
-import { NotificationType } from '../../../../types/notificationType';
 
 const props: UploadProps = {
     required: true,
@@ -16,10 +15,13 @@ const props: UploadProps = {
     title: 'Загрузить dxf',
 };
 
-export const AddDetailForm = () => {
+export const AddDetailForm = ({
+    setImg,
+}: {
+    setImg: (value: string) => void;
+}) => {
     const [fileList, setFiles] = useState<File[]>([]);
     const { data } = useGetMaterialQuery();
-    const [api] = notification.useNotification();
     const [addDetail, { isLoading }] = useAddDetailMutation();
     const materials: Array<{ value: number; label: string }> = data
         ? data.map((key) => {
@@ -31,16 +33,6 @@ export const AddDetailForm = () => {
           })
         : [];
 
-    const openNotificationWithIcon = (
-        type: NotificationType,
-        title: string
-    ) => {
-        api[type]({
-            message: title,
-            placement: 'bottomLeft',
-        });
-    };
-
     const handleSubmit = async (data: Detail) => {
         const formData: FormData = new FormData();
         formData.append('file', fileList[0]);
@@ -51,13 +43,12 @@ export const AddDetailForm = () => {
             body: formData,
         };
         try {
-            await addDetail(newDetail);
-            openNotificationWithIcon('success', 'Деталь добавлена');
+            const image = await addDetail(newDetail);
+            if (image.data) {
+                setImg(URL.createObjectURL(image.data));
+            }
         } catch {
-            openNotificationWithIcon(
-                'error',
-                'Деталь не добавлена. Попробуйте еще раз'
-            );
+            console.log('Деталь не добавлена. Попробуйте еще раз');
         }
     };
 

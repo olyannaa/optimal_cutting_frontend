@@ -1,19 +1,8 @@
-import { Button, Form, Input, notification } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { Detail, useAddDetailMutation } from '../../../../app/services/addDxf';
-import { NotificationType } from '../../../../types/notificationType';
 
 export const NewWorkpiece = () => {
     const [addDetail, { isLoading }] = useAddDetailMutation();
-    const [api] = notification.useNotification();
-    const openNotificationWithIcon = (
-        type: NotificationType,
-        title: string
-    ) => {
-        api[type]({
-            message: title,
-            placement: 'bottomLeft',
-        });
-    };
 
     const handleSubmit = async (data: Detail) => {
         const formData: FormData = new FormData();
@@ -24,12 +13,8 @@ export const NewWorkpiece = () => {
         };
         try {
             await addDetail(newDetail);
-            openNotificationWithIcon('success', 'Заготовка добавлена');
         } catch {
-            openNotificationWithIcon(
-                'error',
-                'Заготовка не добавлена. Попробйте еще раз'
-            );
+            console.log('Заготовка не добавлена');
         }
     };
     return (

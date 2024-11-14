@@ -1,31 +1,42 @@
 import { Flex, Image } from 'antd';
-import { selectFile } from '../../features/dxfSlice';
-import { useAppSelector } from '../../app/hooks';
-import { useEffect, useState } from 'react';
+import { FormContainer } from '../../components/FormContainer/FormContainer';
+import { FormTabs, FormTabsType } from '../../components/FormTabs/FormTabs';
+import { AddDetailForm } from '../../components/forms/AddDXF/AddDetailForm/AddDetailForm';
+import { NewWorkpiece } from '../../components/forms/AddDXF/AddNewWorkpiece/AddNewWorkpiece';
+import { TabsOptions } from '../../components/FormTabs/tabsOption';
+import { useState } from 'react';
+import styles from './NewDetail.module.css';
 
 export const NewDetail = () => {
-    const fileData = useAppSelector(selectFile);
-    const [imageSrc, setImageSrc] = useState<string>('');
-    useEffect(() => {
-        if (fileData) {
-            const file = fileData.get('file') as File;
+    const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
+    const [img, setImg] = useState<string>('');
+    const props: FormTabsType = {
+        tabTitleFirst: 'Добавить деталь',
+        tabTitleSecond: 'Новая заготовка',
+        setTab: setTab,
+        tab: tab,
+    };
 
-            if (file && file.type === 'image/png') {
-                const reader = new FileReader();
-
-                reader.onload = (event) => {
-                    setImageSrc(event.target?.result as string);
-                };
-
-                reader.readAsDataURL(file);
-            } else {
-                alert('Файл не является PNG');
-            }
-        }
-    }, [fileData]);
     return (
-        <Flex className='page '>
-            <Image src={imageSrc} preview={false} />
+        <Flex style={{ width: '100%', height: '100%', display: 'flex' }}>
+            <FormContainer>
+                <Flex className='formgap'>
+                    <FormTabs {...props}></FormTabs>
+                    {tab === TabsOptions.valueFirst && (
+                        <AddDetailForm setImg={setImg}></AddDetailForm>
+                    )}
+                    {tab === TabsOptions.valueSecond && (
+                        <NewWorkpiece></NewWorkpiece>
+                    )}
+                </Flex>
+            </FormContainer>
+            <div className={styles['detail__img-container']}>
+                <Image
+                    src={img}
+                    preview={false}
+                    style={{ width: '100%', height: '100%' }}
+                ></Image>
+            </div>
         </Flex>
     );
 };

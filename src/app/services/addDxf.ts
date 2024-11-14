@@ -16,7 +16,7 @@ export type Material = {
 
 export const addDxfApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        addDetail: builder.mutation<FormData, Detail>({
+        addDetail: builder.mutation<Blob, Detail>({
             query: (data) => ({
                 url: '/detail',
                 method: 'POST',
@@ -29,9 +29,10 @@ export const addDxfApi = api.injectEndpoints({
                     UserId: data.userId,
                 },
                 body: data.body,
+                responseHandler: (response) => response.blob(),
             }),
         }),
-        newWorkpiece: builder.mutation<void, Detail>({
+        newWorkpiece: builder.mutation<FormData, Detail>({
             query: (data) => ({
                 url: '/detail',
                 method: 'POST',
