@@ -83,6 +83,16 @@ code {
     max-height: max-content;
     overflow-y: auto;
 }
+
+.select-not-found-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    padding: 8px;
+}
+
 .css-var-r1.ant-form-css-var {
     --ant-form-item-margin-bottom: 0px;
 }

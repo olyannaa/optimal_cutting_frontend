@@ -31,11 +31,13 @@ export const NewDetail = () => {
                 </Flex>
             </FormContainer>
             <div className={styles['detail__img-container']}>
-                <Image
-                    src={img}
-                    preview={false}
-                    style={{ width: '100%', height: '100%' }}
-                ></Image>
+                {img && (
+                    <Image
+                        src={img}
+                        preview={false}
+                        style={{ width: '100%', height: '100%' }}
+                    ></Image>
+                )}
             </div>
         </Flex>
     );
