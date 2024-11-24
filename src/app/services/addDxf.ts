@@ -1,12 +1,17 @@
 import { api } from './api';
 export type Detail = {
-    designation?: string;
-    name?: string;
-    thickness?: number;
-    filename?: string;
-    materialId?: number;
-    userId?: number;
-    body?: FormData;
+    designation: string;
+    name: string;
+    thickness: number;
+    filename: string;
+    materialId: number;
+    userId: number;
+};
+
+export type ReqWorkpiece = {
+    name: string;
+    width: number;
+    height: number;
 };
 
 export type Material = {
@@ -16,32 +21,19 @@ export type Material = {
 
 export const addDxfApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        addDetail: builder.mutation<Blob, Detail>({
+        addDetail: builder.mutation<Blob, FormData>({
             query: (data) => ({
                 url: '/detail',
                 method: 'POST',
-                params: {
-                    Designation: data.designation,
-                    Name: data.name,
-                    Thickness: data.thickness,
-                    Filename: data.filename,
-                    MaterialId: data.materialId,
-                    UserId: data.userId,
-                },
-                body: data.body,
+                body: data,
                 responseHandler: (response) => response.blob(),
             }),
         }),
-        newWorkpiece: builder.mutation<FormData, Detail>({
+        newWorkpiece: builder.mutation<void, ReqWorkpiece>({
             query: (data) => ({
-                url: '/detail',
+                url: '/detail/workpiece',
                 method: 'POST',
-                params: {
-                    Designation: data.designation,
-                    Name: data.name,
-                    Thickness: data.thickness,
-                    UserId: data.userId,
-                },
+                body: data,
             }),
         }),
         getMaterial: builder.query<Material[], void>({
