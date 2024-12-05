@@ -1,0 +1,15 @@
+.search {
+	width: 264px;
+	height: 32px;
+}
+
+.tree {
+	max-height: 408px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.search__button {
+	border-top-left-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+}

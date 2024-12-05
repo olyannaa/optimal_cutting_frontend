@@ -48,11 +48,14 @@ export const changeWorkpiece1DCalculate = (dataInputs: dataInputsType) => {
 	return workpiecesLength;
 };
 
-export const changeDetails1DImport = (dataFile: ResponseImportFile) => {
+export const changeDetails1DImport = (
+	dataFile: ResponseImportFile,
+	startIndex: number
+) => {
 	let result: { [key: string]: number } = {};
 	dataFile.forEach((el, i) => {
-		result = { ...result, [`count_${i + 1}`]: el.count };
-		result = { ...result, [`length_${i + 1}`]: el.length };
+		result = { ...result, [`count_${i + 1 + startIndex}`]: el.count };
+		result = { ...result, [`length_${i + 1 + startIndex}`]: el.length };
 	});
 	return result;
 };
