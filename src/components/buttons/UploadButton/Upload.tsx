@@ -20,10 +20,14 @@ const Upload = ({
 }) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            updateUploadFiles([
-                ...(uploadedFiles ?? []),
-                ...event.target.files,
-            ]);
+            if (!props.multiple) {
+                updateUploadFiles([...event.target.files]);
+            } else {
+                updateUploadFiles([
+                    ...(uploadedFiles ?? []),
+                    ...event.target.files,
+                ]);
+            }
         }
     };
     const removeFile = (indexI: number) => {

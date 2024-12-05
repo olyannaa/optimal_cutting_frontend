@@ -1,12 +1,17 @@
 import { api } from './api';
 export type Detail = {
-	designation?: string;
-	name?: string;
-	thickness?: number;
-	filename?: string;
-	materialId?: number;
-	userId?: number;
-	body?: FormData;
+    designation: string;
+    name: string;
+    thickness: number;
+    filename: string;
+    materialId: number;
+    userId: number;
+};
+
+export type ReqWorkpiece = {
+    name: string;
+    width: number;
+    height: number;
 };
 
 export type Material = {
@@ -26,48 +31,35 @@ export type ResponseGetDesignations = {
 };
 
 export const addDxfApi = api.injectEndpoints({
-	endpoints: (builder) => ({
-		addDetail: builder.mutation<Blob, Detail>({
-			query: (data) => ({
-				url: '/detail',
-				method: 'POST',
-				params: {
-					Designation: data.designation,
-					Name: data.name,
-					Thickness: data.thickness,
-					Filename: data.filename,
-					MaterialId: data.materialId,
-					UserId: data.userId,
-				},
-				body: data.body,
-				responseHandler: (response) => response.blob(),
-			}),
-		}),
-		newWorkpiece: builder.mutation<FormData, Detail>({
-			query: (data) => ({
-				url: '/detail',
-				method: 'POST',
-				params: {
-					Designation: data.designation,
-					Name: data.name,
-					Thickness: data.thickness,
-					UserId: data.userId,
-				},
-			}),
-		}),
-		getMaterial: builder.query<Material[], void>({
-			query: () => ({
-				url: '/detail/material',
-				method: 'GET',
-			}),
-		}),
-		getDesignations: builder.query<ResponseGetDesignations, void>({
+    endpoints: (builder) => ({
+        addDetail: builder.mutation<Blob, FormData>({
+            query: (data) => ({
+                url: '/detail',
+                method: 'POST',
+                body: data,
+                responseHandler: (response) => response.blob(),
+            }),
+        }),
+        newWorkpiece: builder.mutation<void, ReqWorkpiece>({
+            query: (data) => ({
+                url: '/detail/workpiece',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        getMaterial: builder.query<Material[], void>({
+            query: () => ({
+                url: '/detail/material',
+                method: 'GET',
+            }),
+        }),
+        getDesignations: builder.query<ResponseGetDesignations, void>({
 			query: () => ({
 				url: '/detail/designations',
 				method: 'GET',
 			}),
 		}),
-	}),
+    }),
 });
 
 export const {

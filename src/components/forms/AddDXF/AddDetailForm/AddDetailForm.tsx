@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, notification } from 'antd';
 import Upload, { UploadProps } from '../../../buttons/UploadButton/Upload';
 import { useState } from 'react';
 import styles from './AddDetail.module.css';
@@ -7,6 +7,7 @@ import {
     useAddDetailMutation,
     useGetMaterialQuery,
 } from '../../../../app/services/addDxf';
+import { NotFoundContentSelect } from '../../../custom-input/NotFountContentSelect';
 
 const props: UploadProps = {
     required: true,
@@ -36,19 +37,29 @@ export const AddDetailForm = ({
     const handleSubmit = async (data: Detail) => {
         const formData: FormData = new FormData();
         formData.append('file', fileList[0]);
-        const newDetail: Detail = {
-            ...data,
-            filename: fileList[0].name,
-            userId: 2,
-            body: formData,
-        };
-        try {
-            const image = await addDetail(newDetail);
-            if (image.data) {
-                setImg(URL.createObjectURL(image.data));
-            }
-        } catch {
-            console.log('Деталь не добавлена. Попробуйте еще раз');
+        formData.append('Name', data.name);
+        formData.append('Designation', data.designation);
+        formData.append('Thickness', data.thickness.toString());
+        formData.append('Filename', fileList[0].name);
+        formData.append('MaterialId', data.materialId.toString());
+        formData.append('UserId', '2');
+        const image = await addDetail(formData);
+
+        if (image.data) {
+            setImg(URL.createObjectURL(image.data));
+            notification.success({
+                message: 'Деталь добавлена',
+                placement: 'bottomLeft',
+                duration: 5,
+            });
+        } else {
+            notification.error({
+                message: 'Деталь не добавлена',
+                description:
+                    'Возможно внутренняя ошибка или неполадки с интернетом. Попробуйте еще раз.',
+                placement: 'bottomLeft',
+                duration: 5,
+            });
         }
     };
 
@@ -57,25 +68,41 @@ export const AddDetailForm = ({
             className={styles['detail-form__container']}
             onFinish={handleSubmit}
         >
-            <Form.Item name='designation'>
-                <Input
-                    className={styles['detail-form__input']}
-                    placeholder='Обозначение'
-                ></Input>
-            </Form.Item>
-            <Form.Item name='name'>
-                <Input placeholder='Наименование'></Input>
-            </Form.Item>
-            <Form.Item name='thickness'>
-                <Input placeholder='Толщина'></Input>
-            </Form.Item>
+            {[
+                { name: 'designation', placeholder: 'Обозначение' },
+                { name: 'name', placeholder: 'Наименование' },
+                { name: 'thickness', placeholder: 'Толщина' },
+            ].map(({ name, placeholder }) => (
+                <Form.Item
+                    key={name}
+                    name={name}
+                    rules={[{ required: true, message: '' }]}
+                >
+                    <Input
+                        className={styles['detail-form__input']}
+                        placeholder={placeholder}
+                    />
+                </Form.Item>
+            ))}
             <Upload
                 updateUploadFiles={setFiles}
                 uploadedFiles={fileList}
                 props={props}
             />
-            <Form.Item name='materialId'>
-                <Select placeholder='Материал' options={materials}></Select>
+            <Form.Item
+                name='materialId'
+                rules={[
+                    {
+                        required: true,
+                        message: '',
+                    },
+                ]}
+            >
+                <Select
+                    placeholder='Материал'
+                    options={materials}
+                    notFoundContent={<NotFoundContentSelect />}
+                ></Select>
             </Form.Item>
             <Button
                 className='bottom-btn'
