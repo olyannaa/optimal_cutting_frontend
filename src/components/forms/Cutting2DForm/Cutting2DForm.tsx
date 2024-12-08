@@ -1,4 +1,4 @@
-import { Flex, Form, Input, Select } from 'antd';
+import { Button, Flex, Form, Input, Select } from 'antd';
 import { TableTypes } from '../../../types/typeTable';
 import { Table } from '../../custom-table/Table';
 import { useState } from 'react';
@@ -59,6 +59,9 @@ export const Cutting2DForm = () => {
                     )}
                     <h2 style={{ marginTop: '44px' }}>Толщина реза</h2>
                     <Input type='number'></Input>
+                    <Button type='primary' danger className='bottom-btn'>
+                        Создать схему
+                    </Button>
                 </Flex>
             </FormContainer>
         </Flex>
