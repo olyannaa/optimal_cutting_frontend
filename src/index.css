@@ -1,88 +1,87 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
 
 :root {
-	--background-auth: rgba(240, 242, 245, 1);
-	--light-grey: rgba(0, 0, 0, 0.06);
-	--light-blue: rgba(24, 144, 255, 1);
-	--primary: #1890ff;
-	--black: rgb(0, 0, 0);
-	--white: rgb(255, 255, 255);
-	--font-black: rgba(0, 0, 0, 0.85);
-	--font-grey: rgba(0, 0, 0, 0.45);
-	--background-header-table: rgba(250, 250, 250, 1);
-	--login-border: rgba(217, 217, 217, 1);
-	--btn-color-grey: rgba(0, 0, 0, 0.25);
-	--shadow-color-header: rgba(240, 240, 240, 1);
-	--shadow-color-login: rgba(240, 240, 240, 1);
-	--placeholder-color: rgba(0, 0, 0, 0.25);
-	--btn-border-grey: rgba(217, 217, 217, 1);
-	--light-red: rgba(255, 241, 240, 1);
-	--border-red: rgba(255, 204, 199, 1);
-	--background-scroll-bar: #f6f6f6;
+    --background-auth: rgba(240, 242, 245, 1);
+    --light-grey: rgba(0, 0, 0, 0.06);
+    --light-blue: rgba(24, 144, 255, 1);
+    --primary: #1890ff;
+    --black: rgb(0, 0, 0);
+    --white: rgb(255, 255, 255);
+    --font-black: rgba(0, 0, 0, 0.85);
+    --font-grey: rgba(0, 0, 0, 0.45);
+    --background-header-table: rgba(250, 250, 250, 1);
+    --login-border: rgba(217, 217, 217, 1);
+    --btn-color-grey: rgba(0, 0, 0, 0.25);
+    --shadow-color-header: rgba(240, 240, 240, 1);
+    --shadow-color-login: rgba(240, 240, 240, 1);
+    --placeholder-color: rgba(0, 0, 0, 0.25);
+    --btn-border-grey: rgba(217, 217, 217, 1);
+    --light-red: rgba(255, 241, 240, 1);
+    --border-red: rgba(255, 204, 199, 1);
+    --background-scroll-bar: #f6f6f6;
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-size: 16;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16;
 }
 
 body {
-	margin: 0;
-	font-family: 'Roboto', sans-serif;
-	color: #000;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	font-size: 16px;
-	box-sizing: content-box;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    box-sizing: content-box;
 }
 ul {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 h1 {
-	font-size: 25px;
-	font-weight: 700;
+    font-size: 25px;
+    font-weight: 700;
 }
 h2 {
-	font-size: 18px;
-	font-weight: 500;
-	line-height: 24px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
 }
 p {
-	padding: 0;
+    padding: 0;
 }
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-		monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 .formgap {
-	position: relative;
-	height: 100%;
-	width: 100%;
-	display: flex;
-	gap: 20px;
-	flex-direction: column;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
 }
 
 .bottom-btn {
-	border-radius: 2px;
-	position: absolute;
-	bottom: 0;
-	width: 100%;
-	height: 38px;
+    border-radius: 2px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 38px;
 }
 
 .page {
-	padding: 40px 100px;
-	gap: 66px;
-	max-height: max-content;
-	overflow-y: auto;
+    padding: 40px 100px;
+    gap: 66px;
+    max-height: max-content;
+    overflow-y: auto;
 }
 
 .select-not-found-content {
@@ -95,36 +94,36 @@ code {
 }
 
 .css-var-r1.ant-form-css-var {
-	--ant-form-item-margin-bottom: 0px;
+    --ant-form-item-margin-bottom: 0px;
 }
 
 ::-webkit-scrollbar {
-	width: 0.57vw;
+    width: 0.57vw;
 }
 
 ::-webkit-scrollbar-track {
-	background: var(--background-scroll-bar);
+    background: var(--background-scroll-bar);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--btn-border-grey);
+    background: var(--btn-border-grey);
 }
 
 :where(.css-dev-only-do-not-override-jzb1ci).ant-radio-button-wrapper:not(
-		:first-child
-	)::before {
-	width: 0;
+        :first-child
+    )::before {
+    width: 0;
 }
 
 ._tree_16vzc_11::-webkit-scrollbar-thumb {
-	border-radius: 99px;
+    border-radius: 99px;
 }
 
 ._tree_16vzc_11::-webkit-scrollbar-track {
-	border-radius: 99px;
+    border-radius: 99px;
 }
 
 ._search_1hjg9_1 .ant-input {
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }

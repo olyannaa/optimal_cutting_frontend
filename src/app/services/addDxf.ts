@@ -15,20 +15,18 @@ export type ReqWorkpiece = {
 };
 
 export type Material = {
-	id: number;
-	name: string;
+    id: number;
+    name: string;
 };
 
 export type Designation = {
-	id: number;
-	designation: string;
-	thickness: number;
-	materialId: number;
+    id: number;
+    designation: string;
+    thickness: number;
+    materialId: number;
 };
 
-export type ResponseGetDesignations = {
-	[key: string]: Designation[];
-};
+export type ResponseGetDesignations = Record<string, Designation[]>;
 
 export const addDxfApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -54,20 +52,20 @@ export const addDxfApi = api.injectEndpoints({
             }),
         }),
         getDesignations: builder.query<ResponseGetDesignations, void>({
-			query: () => ({
-				url: '/detail/designations',
-				method: 'GET',
-			}),
-		}),
+            query: () => ({
+                url: '/detail/designations',
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
 export const {
-	useAddDetailMutation,
-	useGetMaterialQuery,
-	useNewWorkpieceMutation,
-	useLazyGetDesignationsQuery,
+    useAddDetailMutation,
+    useGetMaterialQuery,
+    useNewWorkpieceMutation,
+    useLazyGetDesignationsQuery,
 } = addDxfApi;
 export const {
-	endpoints: { addDetail, newWorkpiece, getMaterial, getDesignations },
+    endpoints: { addDetail, newWorkpiece, getMaterial, getDesignations },
 } = addDxfApi;

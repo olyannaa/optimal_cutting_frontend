@@ -12,21 +12,14 @@ type Props = {
     typeTable: TableTypes;
 };
 
-export const TableCell = ({
-    typeCell,
-    rowInfo,
-    isHeader,
-    typeTable,
-}: Props) => {
+export const TableCell = ({ typeCell, rowInfo, isHeader, typeTable }: Props) => {
     const isTitleDetailOrNumber: boolean =
         typeCell === CellTypes.detail || typeCell === CellTypes.number;
     return (
         <Flex
             align='center'
             justify='center'
-            className={`${styles['table-cell']} ${
-                styles[`table-cell__${typeCell}`]
-            } `}
+            className={`${styles['table-cell']} ${styles[`table-cell__${typeCell}`]} `}
         >
             {isHeader ? (
                 <Flex
@@ -40,8 +33,7 @@ export const TableCell = ({
                 >
                     {nameColumns[typeCell]}
                 </Flex>
-            ) : typeCell === CellTypes.number ||
-              typeCell === CellTypes.detail ? (
+            ) : typeCell === CellTypes.number || typeCell === CellTypes.detail ? (
                 rowInfo[typeCell]
             ) : (
                 <TableInput
