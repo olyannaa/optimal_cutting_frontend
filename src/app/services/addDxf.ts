@@ -19,6 +19,15 @@ export type Material = {
     name: string;
 };
 
+export type Designation = {
+    id: number;
+    designation: string;
+    thickness: number;
+    materialId: number;
+};
+
+export type ResponseGetDesignations = Record<string, Designation[]>;
+
 export const addDxfApi = api.injectEndpoints({
     endpoints: (builder) => ({
         addDetail: builder.mutation<Blob, FormData>({
@@ -42,6 +51,12 @@ export const addDxfApi = api.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        getDesignations: builder.query<ResponseGetDesignations, void>({
+            query: () => ({
+                url: '/detail/designations',
+                method: 'GET',
+            }),
+        }),
     }),
 });
 
@@ -49,7 +64,8 @@ export const {
     useAddDetailMutation,
     useGetMaterialQuery,
     useNewWorkpieceMutation,
+    useLazyGetDesignationsQuery,
 } = addDxfApi;
 export const {
-    endpoints: { addDetail, newWorkpiece, getMaterial },
+    endpoints: { addDetail, newWorkpiece, getMaterial, getDesignations },
 } = addDxfApi;

@@ -18,6 +18,7 @@
     --btn-border-grey: rgba(217, 217, 217, 1);
     --light-red: rgba(255, 241, 240, 1);
     --border-red: rgba(255, 204, 199, 1);
+    --background-scroll-bar: #f6f6f6;
 }
 
 * {
@@ -57,8 +58,7 @@ a {
     text-decoration: none;
 }
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 .formgap {
     position: relative;
@@ -102,7 +102,7 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--background-header-table);
+    background: var(--background-scroll-bar);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -113,4 +113,17 @@ code {
         :first-child
     )::before {
     width: 0;
+}
+
+._tree_16vzc_11::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+}
+
+._tree_16vzc_11::-webkit-scrollbar-track {
+    border-radius: 99px;
+}
+
+._search_1hjg9_1 .ant-input {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }

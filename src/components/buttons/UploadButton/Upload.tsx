@@ -23,18 +23,13 @@ const Upload = ({
             if (!props.multiple) {
                 updateUploadFiles([...event.target.files]);
             } else {
-                updateUploadFiles([
-                    ...(uploadedFiles ?? []),
-                    ...event.target.files,
-                ]);
+                updateUploadFiles([...(uploadedFiles ?? []), ...event.target.files]);
             }
         }
     };
     const removeFile = (indexI: number) => {
         if (uploadedFiles) {
-            const currentFiles = uploadedFiles.filter(
-                (file, index) => index !== indexI
-            );
+            const currentFiles = uploadedFiles.filter((file, index) => index !== indexI);
 
             updateUploadFiles(currentFiles);
         }
@@ -45,8 +40,7 @@ const Upload = ({
                 name={'files'}
                 rules={[
                     {
-                        required:
-                            uploadedFiles.length > 0 ? false : props.required,
+                        required: uploadedFiles.length > 0 ? false : props.required,
                         message: 'Обязательное поле',
                     },
                 ]}
@@ -58,10 +52,7 @@ const Upload = ({
                             color: 'rgba(0, 0, 0, 0.25)',
                         }}
                     />
-                    <label
-                        htmlFor='file-loader-button'
-                        className={styles.upload_label}
-                    >
+                    <label htmlFor='file-loader-button' className={styles.upload_label}>
                         {props.title}
                     </label>
                     <Input
