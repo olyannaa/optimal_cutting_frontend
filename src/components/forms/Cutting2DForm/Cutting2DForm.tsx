@@ -30,9 +30,7 @@ export const Cutting2DForm = () => {
                 value={modeDetail}
                 style={{ marginBottom: 8, display: 'flex' }}
             >
-                <Radio.Button value='standard'>
-                    Выбрать&nbsp;детали
-                </Radio.Button>
+                <Radio.Button value='standard'>Выбрать&nbsp;детали</Radio.Button>
                 <Radio.Button value='custom'>Ввести&nbsp;размеры</Radio.Button>
             </Radio.Group>
             <Table typeTable={TableTypes.detail2D} form={formDetail} />
@@ -42,9 +40,7 @@ export const Cutting2DForm = () => {
                 value={modeBlank}
                 style={{ marginBottom: 8, display: 'flex' }}
             >
-                <Radio.Button value='standard'>
-                    Станд.&nbsp;заготовка
-                </Radio.Button>
+                <Radio.Button value='standard'>Станд.&nbsp;заготовка</Radio.Button>
                 <Radio.Button value='custom'>Ввести&nbsp;размеры</Radio.Button>
             </Radio.Group>
             <Select></Select>

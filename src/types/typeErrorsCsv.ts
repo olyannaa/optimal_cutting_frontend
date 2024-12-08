@@ -1,4 +1,4 @@
 export enum ErrorsCsv {
-	type = 'type',
-	columns = 'columns',
+    type = 'type',
+    columns = 'columns',
 }

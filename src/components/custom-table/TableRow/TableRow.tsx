@@ -10,7 +10,7 @@ type Props = {
     typeTable: TableTypes;
     isHeader?: boolean;
     rowInfo: ICustomTableRow;
-    deleteRow: (num: number) => void;
+    deleteRow: (num: number, detail: string) => void;
     countRows?: number;
 };
 
@@ -23,9 +23,9 @@ export const TableRow = ({
 }: Props) => {
     return (
         <Flex
-            className={`${styles['table__row']} ${
-                styles[`table__row_${typeTable}`]
-            } ${isHeader && styles[`table__row_header`]}`}
+            className={`${styles['table__row']} ${styles[`table__row_${typeTable}`]} ${
+                isHeader && styles[`table__row_header`]
+            }`}
         >
             {tableOptions[typeTable].map((col, i) => (
                 <TableCell
@@ -36,20 +36,18 @@ export const TableRow = ({
                     typeTable={typeTable}
                 />
             ))}
-            {!isHeader && countRows! > 1 && (
-                <Flex
-                    align='center'
-                    justify='center'
-                    className={styles['close-row']}
-                >
-                    <Image
-                        src={srcClose}
-                        preview={false}
-                        onClick={() => deleteRow(rowInfo.number)}
-                        style={{ cursor: 'pointer' }}
-                    />
-                </Flex>
-            )}
+            {!isHeader &&
+                ((countRows! > 1 && typeTable === TableTypes.detail1D) ||
+                    typeTable === TableTypes.detail2D) && (
+                    <Flex align='center' justify='center' className={styles['close-row']}>
+                        <Image
+                            src={srcClose}
+                            preview={false}
+                            onClick={() => deleteRow(rowInfo.number, rowInfo.detail)}
+                            style={{ cursor: 'pointer' }}
+                        />
+                    </Flex>
+                )}
         </Flex>
     );
 };

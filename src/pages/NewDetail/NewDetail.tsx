@@ -25,9 +25,7 @@ export const NewDetail = () => {
                     {tab === TabsOptions.valueFirst && (
                         <AddDetailForm setImg={setImg}></AddDetailForm>
                     )}
-                    {tab === TabsOptions.valueSecond && (
-                        <NewWorkpiece></NewWorkpiece>
-                    )}
+                    {tab === TabsOptions.valueSecond && <NewWorkpiece></NewWorkpiece>}
                 </Flex>
             </FormContainer>
             <div className={styles['detail__img-container']}>

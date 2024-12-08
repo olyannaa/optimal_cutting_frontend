@@ -1,4 +1,4 @@
 export interface ICustomTableRow {
-	number: number;
-	detail: string;
+    number: number;
+    detail: string;
 }

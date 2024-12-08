@@ -1,14 +1,14 @@
 .loginInput {
-	border-radius: 2px;
-	border: 1px solid var(--login-border);
-	height: 40px;
-	width: 100%;
-	padding: 8px 12px;
-	color: rgb(1, 1, 1);
+    border-radius: 2px;
+    border: 1px solid var(--login-border);
+    height: 40px;
+    width: 100%;
+    padding: 8px 12px;
+    color: rgb(1, 1, 1);
 }
 
 .loginInput::placeholder {
-	font-size: 16px;
-	line-height: 24px;
-	color: var(--placeholder-color);
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--placeholder-color);
 }
