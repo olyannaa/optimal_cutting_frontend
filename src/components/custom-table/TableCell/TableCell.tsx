@@ -6,48 +6,42 @@ import { ICustomTableRow } from '../../../types/CustomTable';
 import { CellTypes, TableTypes } from '../../../types/typeTable';
 
 type Props = {
-	typeCell: CellTypes;
-	isHeader: boolean;
-	rowInfo: ICustomTableRow;
-	typeTable: TableTypes;
+    typeCell: CellTypes;
+    isHeader: boolean;
+    rowInfo: ICustomTableRow;
+    typeTable: TableTypes;
 };
 
-export const TableCell = ({
-	typeCell,
-	rowInfo,
-	isHeader,
-	typeTable,
-}: Props) => {
-	return (
-		<Flex
-			align="center"
-			justify="center"
-			className={`${styles['table__cell']} ${
-				styles[`table__cell_${typeCell}`]
-			} `}
-		>
-			{isHeader &&
-			(typeCell === CellTypes.length ||
-				typeCell === CellTypes.weight ||
-				typeCell === CellTypes.count) ? (
-				<Flex
-					align="center"
-					justify="center"
-					className={styles['body']}
-				>
-					{nameColumns[typeCell]}
-				</Flex>
-			) : isHeader ? (
-				nameColumns[typeCell]
-			) : typeCell === CellTypes.number || typeCell === CellTypes.detail ? (
-				rowInfo[typeCell]
-			) : (
-				<TableInput
-					name={`${typeCell}_${rowInfo.number}`}
-					typeCell={typeCell}
-					typeTable={typeTable}
-				/>
-			)}
-		</Flex>
-	);
+export const TableCell = ({ typeCell, rowInfo, isHeader, typeTable }: Props) => {
+    const isTitleDetailOrNumber: boolean =
+        typeCell === CellTypes.detail || typeCell === CellTypes.number;
+    return (
+        <Flex
+            align='center'
+            justify='center'
+            className={`${styles['table-cell']} ${styles[`table-cell__${typeCell}`]} `}
+        >
+            {isHeader ? (
+                <Flex
+                    align='center'
+                    justify='center'
+                    className={
+                        isTitleDetailOrNumber
+                            ? `${styles['table-cell__title']} ${styles['table-cell__title_is-first']}`
+                            : styles['table-cell__title']
+                    }
+                >
+                    {nameColumns[typeCell]}
+                </Flex>
+            ) : typeCell === CellTypes.number || typeCell === CellTypes.detail ? (
+                rowInfo[typeCell]
+            ) : (
+                <TableInput
+                    name={`${typeCell}_${rowInfo.number}`}
+                    typeCell={typeCell}
+                    typeTable={typeTable}
+                />
+            )}
+        </Flex>
+    );
 };

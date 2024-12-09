@@ -5,23 +5,24 @@ import { useAppSelector } from '../../app/hooks';
 import { downloadFile1DCutting } from '../../functions/fetchFiles';
 
 export const Cutting1DDownload = () => {
-	const dataCalculate1D = useAppSelector(selectCalculateData1D);
-	const handlerDownloadPDF = async () => {
-		await downloadFile1DCutting(JSON.stringify(dataCalculate1D), 'pdf');
-	};
+    const dataCalculate1D = useAppSelector(selectCalculateData1D);
 
-	const handlerDownloadCSV = async () => {
-		await downloadFile1DCutting(JSON.stringify(dataCalculate1D), 'csv');
-	};
+    const handlerDownloadPDF = async () => {
+        await downloadFile1DCutting(JSON.stringify(dataCalculate1D), 'pdf');
+    };
 
-	return (
-		<Flex vertical className={styles['cutting-1D-download']}>
-			<Button type="primary" danger onClick={() => handlerDownloadPDF()}>
-				Скачать схему pdf
-			</Button>
-			<Button danger onClick={() => handlerDownloadCSV()}>
-				Скачать схему csv
-			</Button>
-		</Flex>
-	);
+    const handlerDownloadCSV = async () => {
+        await downloadFile1DCutting(JSON.stringify(dataCalculate1D), 'csv');
+    };
+
+    return (
+        <Flex vertical className={styles['cutting-1D-download']}>
+            <Button type='primary' danger onClick={() => handlerDownloadPDF()}>
+                Скачать схему pdf
+            </Button>
+            <Button danger onClick={() => handlerDownloadCSV()}>
+                Скачать схему csv
+            </Button>
+        </Flex>
+    );
 };
