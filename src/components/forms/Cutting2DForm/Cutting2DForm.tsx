@@ -6,6 +6,7 @@ import { FormTabs, FormTabsType } from '../../FormTabs/FormTabs';
 import { TabsOptions } from '../../FormTabs/tabsOption';
 import { FormContainer } from '../../FormContainer/FormContainer';
 import multiple from '../../../assets/icons/multiple.svg';
+import styles from './Cutting2DForm.module.css';
 
 export const Cutting2DForm = () => {
     const [formDetail] = Form.useForm();
@@ -26,7 +27,7 @@ export const Cutting2DForm = () => {
         tab: modeBlank,
     };
     return (
-        <Flex style={{ width: '100%', height: '100%', display: 'flex' }}>
+        <Flex className={styles['cutting2D']}>
             <FormContainer>
                 <Flex className='formgap'>
                     <h2>Детали</h2>
@@ -45,20 +46,29 @@ export const Cutting2DForm = () => {
                     )}
                     <h2 style={{ marginTop: '44px' }}>Заготовка</h2>
                     <FormTabs {...propsSelect}></FormTabs>
-                    {modeBlank === TabsOptions.valueFirst && <Select></Select>}
+                    {modeBlank === TabsOptions.valueFirst && (
+                        <Select placeholder='Выбрать заготовку'></Select>
+                    )}
                     {modeBlank === TabsOptions.valueSecond && (
-                        <Form style={{ display: 'flex' }}>
+                        <Form className={styles['cutting2D__form-wrapper']}>
                             <Form.Item>
-                                <Input></Input>
+                                <Input
+                                    className={styles['cutting2D__input']}
+                                ></Input>
                             </Form.Item>
                             <img src={multiple} />
                             <Form.Item>
-                                <Input></Input>
+                                <Input
+                                    className={styles['cutting2D__input']}
+                                ></Input>
                             </Form.Item>
                         </Form>
                     )}
                     <h2 style={{ marginTop: '44px' }}>Толщина реза</h2>
-                    <Input type='number'></Input>
+                    <Input
+                        type='number'
+                        className={styles['cutting2D__input']}
+                    ></Input>
                     <Button type='primary' danger className='bottom-btn'>
                         Создать схему
                     </Button>

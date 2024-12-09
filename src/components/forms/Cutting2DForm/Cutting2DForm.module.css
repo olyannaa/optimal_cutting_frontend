@@ -6,3 +6,16 @@
     gap: 20px;
     flex-direction: column;
 }
+.cutting2D__form-wrapper {
+    display: flex;
+    gap: 14px;
+}
+.cutting2D {
+    height: 100%;
+    width: 100%;
+}
+
+.cutting2D__input {
+    height: 32px;
+    width: 90px;
+}
