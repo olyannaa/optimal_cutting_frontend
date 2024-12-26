@@ -54,7 +54,11 @@ export const Table = ({ typeTable, form }: Props) => {
                 const lengthLast = last.length;
                 Object.values(addedDetails).forEach((values) => {
                     for (let i = 1; i <= values.length; i++) {
-                        if (!last.find((el) => el.detail === values[i - 1].designation))
+                        if (
+                            !last.find(
+                                (el) => el.detail === values[i - 1].designation
+                            )
+                        )
                             last = [
                                 ...last,
                                 {
@@ -70,8 +74,15 @@ export const Table = ({ typeTable, form }: Props) => {
     }, [addedDetails]);
 
     const handlerAdd = () => {
-        if (typeTable === TableTypes.detail1D || typeTable === TableTypes.workpieces) {
-            setRows((last) => [...last, { ...initialRow, number: last.length + 1 }]);
+        if (
+            typeTable === TableTypes.detail1D ||
+            typeTable === TableTypes.workpieces ||
+            typeTable === TableTypes.sizes2D
+        ) {
+            setRows((last) => [
+                ...last,
+                { ...initialRow, number: last.length + 1 },
+            ]);
         }
         if (typeTable === TableTypes.detail2D) {
             setIsOpenModal(true);
@@ -105,7 +116,9 @@ export const Table = ({ typeTable, form }: Props) => {
                 form.setFieldsValue(result);
             }
         } else {
-            form.resetFields(tableOptionsInputs[typeTable].map((el) => `${el}_${num}`));
+            form.resetFields(
+                tableOptionsInputs[typeTable].map((el) => `${el}_${num}`)
+            );
         }
         setRows((last) => {
             const newRows = last.filter((row) => row.number !== num);
@@ -116,7 +129,9 @@ export const Table = ({ typeTable, form }: Props) => {
         }
     };
 
-    const handlerImportFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlerImportFile = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setError(null);
         const files = event.target.files;
         if (files) {
@@ -143,7 +158,10 @@ export const Table = ({ typeTable, form }: Props) => {
                         });
                     } else {
                         for (let i = 1; i <= responseData.length; i++) {
-                            last = [...last, { number: lengthLast + i, detail: '' }];
+                            last = [
+                                ...last,
+                                { number: lengthLast + i, detail: '' },
+                            ];
                         }
 
                         form.setFieldsValue({
@@ -210,7 +228,9 @@ export const Table = ({ typeTable, form }: Props) => {
                 >
                     {typeTable !== TableTypes.workpieces && (
                         <>
-                            <DownloadButton submit={form.submit}></DownloadButton>
+                            <DownloadButton
+                                submit={form.submit}
+                            ></DownloadButton>
                             <Form>
                                 <ImportButton
                                     name='input-files'
@@ -227,9 +247,14 @@ export const Table = ({ typeTable, form }: Props) => {
                         Добавить
                     </Button>
                 </Flex>
-                {error !== null && <CsvError error={error} setError={setError} />}
+                {error !== null && (
+                    <CsvError error={error} setError={setError} />
+                )}
             </Flex>
-            <ModalSelectDetails isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+            <ModalSelectDetails
+                isOpen={isOpenModal}
+                setIsOpen={setIsOpenModal}
+            />
         </>
     );
 };

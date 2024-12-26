@@ -1,4 +1,5 @@
 import { ResponseImportFile } from '../app/services/cutting';
+import { Detail2D } from '../types/Calculated2D';
 
 type dataInputsType = {
     [key: string]: string;
@@ -57,5 +58,35 @@ export const changeDetails1DImport = (
         result = { ...result, [`count_${i + 1 + startIndex}`]: el.count };
         result = { ...result, [`length_${i + 1 + startIndex}`]: el.length };
     });
+    return result;
+};
+
+const division2DArray = (dataInputs: dataInputsType) => {
+    const width: number[] = [];
+    const height: number[] = [];
+    const count: number[] = [];
+    Object.keys(dataInputs).forEach((key) => {
+        const parseKey = key.split('_');
+        if (parseKey[0] === 'width') width.push(Number(dataInputs[key]));
+        else if (parseKey[0] === 'height') height.push(Number(dataInputs[key]));
+        else if (parseKey[0] === 'count') count.push(Number(dataInputs[key]));
+    });
+    return {
+        width: width,
+        height: height,
+        count: count,
+    };
+};
+
+export const getListDetails2D = (dataInputs: dataInputsType): Detail2D[] => {
+    const arrays = division2DArray(dataInputs);
+    const result = arrays.count.map((el, i) => {
+        return {
+            width: arrays.width[i],
+            height: arrays.height[i],
+            count: el,
+        };
+    });
+
     return result;
 };

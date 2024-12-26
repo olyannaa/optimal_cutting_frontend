@@ -13,6 +13,7 @@ import {
 } from '../../../app/services/cutting2d';
 import { ICalculate2D } from '../../../types/Calculated2D';
 import { getPNG2DCuttingFromSizes } from '../../../functions/readZipFiles';
+import { getListDetails2D } from '../../../functions/processingDataInput';
 
 export const Cutting2DForm = () => {
     const [formDetail] = Form.useForm();
@@ -52,13 +53,7 @@ export const Cutting2DForm = () => {
             .catch(() => (isValidatedForms = false));
         if (isValidatedForms) {
             const data: ICalculate2D = {
-                details: [
-                    {
-                        width: 100,
-                        height: 100,
-                        count: 3,
-                    },
-                ],
+                details: getListDetails2D(formDetail.getFieldsValue()),
                 workpieceId: formStandardWorkpiece.getFieldValue('workpiece'),
                 cuttingThickness:
                     formThickness.getFieldValue('cuttingThickness'),
@@ -156,7 +151,6 @@ export const Cutting2DForm = () => {
                     </Button>
                 </Flex>
             </FormContainer>
-            {images && images.map((img) => <img src={img.url}></img>)}
         </Flex>
     );
 };

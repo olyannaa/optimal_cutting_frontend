@@ -1,6 +1,6 @@
 export interface ICalculate2D {
     details: Detail2D[];
-    workpieceId: number;
+    workpieceId: RequestWorkpiece;
     cuttingThickness: number;
 }
 
@@ -27,4 +27,18 @@ export type DetailCoordinates = {
     height: number;
     x: number;
     y: number;
+    figures: Figure[];
+    rotated: boolean;
+};
+
+export type RequestWorkpiece = {
+    width: number;
+    height: number;
+};
+
+export type Figure = {
+    id: number;
+    filenameId: number;
+    typeId: number;
+    coordinates: string;
 };
