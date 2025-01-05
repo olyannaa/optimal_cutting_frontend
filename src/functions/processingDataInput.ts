@@ -67,8 +67,8 @@ const division2DArray = (dataInputs: dataInputsType) => {
     const count: number[] = [];
     Object.keys(dataInputs).forEach((key) => {
         const parseKey = key.split('_');
-        if (parseKey[0] === 'width') width.push(Number(dataInputs[key]));
-        else if (parseKey[0] === 'height') height.push(Number(dataInputs[key]));
+        if (parseKey[0] === 'weight') width.push(Number(dataInputs[key]));
+        else if (parseKey[0] === 'length') height.push(Number(dataInputs[key]));
         else if (parseKey[0] === 'count') count.push(Number(dataInputs[key]));
     });
     return {

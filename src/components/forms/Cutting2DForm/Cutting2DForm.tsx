@@ -11,8 +11,7 @@ import {
     useCalculate2DMutation,
     useGetWorkpiecesQuery,
 } from '../../../app/services/cutting2d';
-import { ICalculate2D } from '../../../types/Calculated2D';
-import { getPNG2DCuttingFromSizes } from '../../../functions/readZipFiles';
+import { ICalculate2D, RequestWorkpiece } from '../../../types/Calculated2D';
 import { getListDetails2D } from '../../../functions/processingDataInput';
 
 export const Cutting2DForm = () => {
@@ -25,7 +24,6 @@ export const Cutting2DForm = () => {
     const [modeBlank, setModeBlank] = useState<TabsOptions>(
         TabsOptions.valueFirst
     );
-    const [images, setImages] = useState<{ name: string; url: string }[]>([]);
     const { data } = useGetWorkpiecesQuery();
     const workpieces: Array<{ value: number; label: string }> = data
         ? data.map((key) => {
@@ -36,6 +34,20 @@ export const Cutting2DForm = () => {
               return item;
           })
         : [];
+
+    const findHeightAndWidth = (id: number): RequestWorkpiece | undefined => {
+        if (!data) return undefined;
+
+        const workpiece = data.find((key) => key.id === id);
+        if (workpiece) {
+            return {
+                height: workpiece.height,
+                width: workpiece.width,
+            };
+        }
+
+        return undefined;
+    };
 
     const generateResult = async () => {
         let isValidatedForms = false;
@@ -52,26 +64,40 @@ export const Cutting2DForm = () => {
             .then()
             .catch(() => (isValidatedForms = false));
         if (isValidatedForms) {
-            const data: ICalculate2D = {
+            let data: ICalculate2D = {
                 details: getListDetails2D(formDetail.getFieldsValue()),
-                workpieceId: formStandardWorkpiece.getFieldValue('workpiece'),
+                workpiece: { width: 0, height: 0 },
                 cuttingThickness:
                     formThickness.getFieldValue('cuttingThickness'),
             };
-            console.log(data);
-            const response = await getCalculate2D(data);
-            if (response.data) {
-                const images = getPNG2DCuttingFromSizes(response.data);
-                images.then((data) => {
-                    setImages(data);
-                });
+            if (modeBlank === TabsOptions.valueFirst) {
+                data = {
+                    ...data,
+                    workpiece: findHeightAndWidth(
+                        formStandardWorkpiece.getFieldValue('workpiece')
+                    ) ?? { width: 0, height: 0 },
+                };
+            } else {
+                data = {
+                    ...data,
+                    workpiece: {
+                        width: Number(
+                            formCustomWorkpiece.getFieldValue('width')
+                        ),
+                        height: Number(
+                            formCustomWorkpiece.getFieldValue('length')
+                        ),
+                    },
+                };
             }
+
+            await getCalculate2D(data).unwrap();
         }
     };
 
     const propsMode: FormTabsType = {
-        tabTitleFirst: 'Добавить деталь',
-        tabTitleSecond: 'Новая заготовка',
+        tabTitleFirst: 'Выбрать детали',
+        tabTitleSecond: 'Ввести размеры',
         setTab: setTab,
         tab: tab,
     };
@@ -82,75 +108,65 @@ export const Cutting2DForm = () => {
         tab: modeBlank,
     };
     return (
-        <Flex className={styles['cutting2D']}>
-            <FormContainer>
-                <Flex className='formgap'>
-                    <h2>Детали</h2>
-                    <FormTabs {...propsMode}></FormTabs>
-                    {tab === TabsOptions.valueFirst && (
-                        <Table
-                            typeTable={TableTypes.detail2D}
-                            form={formDetail}
-                        />
-                    )}
-                    {tab === TabsOptions.valueSecond && (
-                        <Table
-                            typeTable={TableTypes.sizes2D}
-                            form={formDetail}
-                        />
-                    )}
-                    <h2 style={{ marginTop: '44px' }}>Заготовка</h2>
-                    <FormTabs {...propsSelect}></FormTabs>
-                    {modeBlank === TabsOptions.valueFirst && (
-                        <Form form={formStandardWorkpiece}>
-                            <Form.Item name='workpiece'>
-                                <Select
-                                    style={{ width: '100%' }}
-                                    placeholder='Выбрать заготовку'
-                                    options={workpieces}
-                                ></Select>
-                            </Form.Item>
-                        </Form>
-                    )}
-                    {modeBlank === TabsOptions.valueSecond && (
-                        <Form
-                            form={formCustomWorkpiece}
-                            className={styles['cutting2D__form-wrapper']}
-                        >
-                            <Form.Item>
-                                <Input
-                                    name='height'
-                                    className={styles['cutting2D__input']}
-                                ></Input>
-                            </Form.Item>
-                            <img src={multiple} />
-                            <Form.Item>
-                                <Input
-                                    name='width'
-                                    className={styles['cutting2D__input']}
-                                ></Input>
-                            </Form.Item>
-                        </Form>
-                    )}
-                    <h2 style={{ marginTop: '44px' }}>Толщина реза</h2>
-                    <Form form={formThickness}>
-                        <Form.Item name='cuttingThickness'>
+        <FormContainer>
+            <Flex className='formgap'>
+                <h2>Детали</h2>
+                <FormTabs {...propsMode}></FormTabs>
+                {tab === TabsOptions.valueFirst && (
+                    <Table typeTable={TableTypes.detail2D} form={formDetail} />
+                )}
+                {tab === TabsOptions.valueSecond && (
+                    <Table typeTable={TableTypes.sizes2D} form={formDetail} />
+                )}
+                <h2 style={{ marginTop: '44px' }}>Заготовка</h2>
+                <FormTabs {...propsSelect}></FormTabs>
+                {modeBlank === TabsOptions.valueFirst && (
+                    <Form form={formStandardWorkpiece}>
+                        <Form.Item name='workpiece'>
+                            <Select
+                                style={{ width: '100%' }}
+                                placeholder='Выбрать заготовку'
+                                options={workpieces}
+                            ></Select>
+                        </Form.Item>
+                    </Form>
+                )}
+                {modeBlank === TabsOptions.valueSecond && (
+                    <Form
+                        form={formCustomWorkpiece}
+                        className={styles['cutting2D__form-wrapper']}
+                    >
+                        <Form.Item name='length'>
                             <Input
-                                type='number'
+                                className={styles['cutting2D__input']}
+                            ></Input>
+                        </Form.Item>
+                        <img src={multiple} />
+                        <Form.Item name='width'>
+                            <Input
                                 className={styles['cutting2D__input']}
                             ></Input>
                         </Form.Item>
                     </Form>
-                    <Button
-                        type='primary'
-                        danger
-                        className='bottom-btn'
-                        onClick={generateResult}
-                    >
-                        Создать схему
-                    </Button>
-                </Flex>
-            </FormContainer>
-        </Flex>
+                )}
+                <h2 style={{ marginTop: '44px' }}>Толщина реза</h2>
+                <Form form={formThickness}>
+                    <Form.Item name='cuttingThickness'>
+                        <Input
+                            type='number'
+                            className={styles['cutting2D__input']}
+                        ></Input>
+                    </Form.Item>
+                </Form>
+                <Button
+                    type='primary'
+                    danger
+                    className='bottom-btn'
+                    onClick={generateResult}
+                >
+                    Создать схему
+                </Button>
+            </Flex>
+        </FormContainer>
     );
 };

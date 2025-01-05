@@ -24,4 +24,4 @@ const slice = createSlice({
 });
 
 export default slice.reducer;
-export const selectCalculateData1D = (state: RootState) => state.cutting1D;
+export const selectCalculateData2D = (state: RootState) => state.cutting2D;

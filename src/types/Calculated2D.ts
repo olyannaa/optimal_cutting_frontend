@@ -1,6 +1,6 @@
 export interface ICalculate2D {
     details: Detail2D[];
-    workpieceId: RequestWorkpiece;
+    workpiece: RequestWorkpiece;
     cuttingThickness: number;
 }
 

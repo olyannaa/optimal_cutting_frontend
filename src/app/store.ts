@@ -3,6 +3,7 @@ import { api } from './services/api';
 import { listenerMiddleware } from './middleware/auth';
 import auth from '../features/authSlice';
 import cutting1D from '../features/cutting1DSlice';
+import cutting2D from '../features/cutting2DSlice';
 import maxLengthWorkpieces from '../features/maxLengthWorkpieces';
 import dxf from '../features/dxfSlice';
 import selectDetails2D from '../features/selectDetails2DSlice';
@@ -12,6 +13,7 @@ export const store = configureStore({
         [api.reducerPath]: api.reducer,
         auth,
         cutting1D,
+        cutting2D,
         maxLengthWorkpieces,
         dxf,
         selectDetails2D,
