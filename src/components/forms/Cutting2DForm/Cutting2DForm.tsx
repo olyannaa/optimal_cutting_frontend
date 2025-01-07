@@ -1,4 +1,4 @@
-import { Button, Flex, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 import { TableTypes } from '../../../types/typeTable';
 import { Table } from '../../custom-table/Table';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ export const Cutting2DForm = () => {
     const [formStandardWorkpiece] = Form.useForm();
     const [formCustomWorkpiece] = Form.useForm();
     const [formThickness] = Form.useForm();
-    const [getCalculate2D] = useCalculate2DMutation();
+    const [getCalculate2D, { isLoading }] = useCalculate2DMutation();
     const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
     const [modeBlank, setModeBlank] = useState<TabsOptions>(
         TabsOptions.valueFirst
@@ -109,7 +109,7 @@ export const Cutting2DForm = () => {
     };
     return (
         <FormContainer>
-            <Flex className='formgap'>
+            <div className='formgap'>
                 <h2>Детали</h2>
                 <FormTabs {...propsMode}></FormTabs>
                 {tab === TabsOptions.valueFirst && (
@@ -118,7 +118,7 @@ export const Cutting2DForm = () => {
                 {tab === TabsOptions.valueSecond && (
                     <Table typeTable={TableTypes.sizes2D} form={formDetail} />
                 )}
-                <h2 style={{ marginTop: '44px' }}>Заготовка</h2>
+                <h2 style={{ marginTop: '38px' }}>Заготовка</h2>
                 <FormTabs {...propsSelect}></FormTabs>
                 {modeBlank === TabsOptions.valueFirst && (
                     <Form form={formStandardWorkpiece}>
@@ -149,8 +149,8 @@ export const Cutting2DForm = () => {
                         </Form.Item>
                     </Form>
                 )}
-                <h2 style={{ marginTop: '44px' }}>Толщина реза</h2>
-                <Form form={formThickness}>
+                <h2 style={{ marginTop: '38px' }}>Толщина реза</h2>
+                <Form form={formThickness} style={{ marginBottom: '28px' }}>
                     <Form.Item name='cuttingThickness'>
                         <Input
                             type='number'
@@ -158,15 +158,18 @@ export const Cutting2DForm = () => {
                         ></Input>
                     </Form.Item>
                 </Form>
-                <Button
-                    type='primary'
-                    danger
-                    className='bottom-btn'
-                    onClick={generateResult}
-                >
-                    Создать схему
-                </Button>
-            </Flex>
+                <div className='btn__container'>
+                    <Button
+                        type='primary'
+                        danger
+                        className='btn-bottom'
+                        onClick={generateResult}
+                        loading={isLoading}
+                    >
+                        Создать схему
+                    </Button>
+                </div>
+            </div>
         </FormContainer>
     );
 };

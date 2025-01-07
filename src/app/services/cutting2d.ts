@@ -1,4 +1,5 @@
 import {
+    Detail2D,
     ICalculate2D,
     ResultCalculate2D,
     WorkpieceStandard,
@@ -20,7 +21,18 @@ export const cutting2DApi = api.injectEndpoints({
                 body: data,
             }),
         }),
+        importFile2D: builder.mutation<Detail2D[], FormData>({
+            query: (file) => ({
+                url: '2d/import/csv',
+                method: 'POST',
+                body: file,
+            }),
+        }),
     }),
 });
 
-export const { useGetWorkpiecesQuery, useCalculate2DMutation } = cutting2DApi;
+export const {
+    useGetWorkpiecesQuery,
+    useCalculate2DMutation,
+    useImportFile2DMutation,
+} = cutting2DApi;

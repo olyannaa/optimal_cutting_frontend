@@ -40,7 +40,7 @@ export const FormTabs = ({
                 <Radio.Button
                     value={TabsOptions.valueFirst}
                     style={{
-                        padding: '0px 9.5px',
+                        padding: '0px 10px',
                         border: 'none',
                         borderRadius: '2px',
                     }}
@@ -50,7 +50,7 @@ export const FormTabs = ({
                 <Radio.Button
                     value={TabsOptions.valueSecond}
                     style={{
-                        padding: '0px 9.5px',
+                        padding: '0px 12px',
                         border: 'none',
                         borderRadius: '2px',
                     }}

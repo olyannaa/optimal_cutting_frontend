@@ -4,7 +4,6 @@ import styles from './LoginForm.module.css';
 import { LoginData, useLoginMutation } from '../../../app/services/auth';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { IError } from '../../../types/Error';
 
 export const LoginForm = () => {
     const [loginUser, { isLoading }] = useLoginMutation();
@@ -13,17 +12,14 @@ export const LoginForm = () => {
 
     const handleAuth = async (data: LoginData) => {
         try {
+            setIsErrors(false);
             const formData = new FormData();
             formData.append('Login', data.Login);
             formData.append('Password', data.Password);
             await loginUser(formData).unwrap();
             navigate('/cutting/1D');
-        } catch (err) {
-            if ((err as IError).originalStatus === 401) {
-                setIsErrors(true);
-            } else {
-                console.log(err);
-            }
+        } catch {
+            setIsErrors(true);
         }
     };
 

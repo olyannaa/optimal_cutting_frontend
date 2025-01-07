@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Form } from 'antd';
 import styles from './Table.module.css';
 import { TableRow } from './TableRow/TableRow';
@@ -8,7 +9,7 @@ import {
     changeDetails1DImport,
 } from '../../functions/processingDataInput';
 import { downloadFileCSV1D } from '../../functions/fetchFiles';
-import { useImportFileMutation } from '../../app/services/cutting';
+import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
 import { CsvError } from './CsvError/CsvError';
 import { IError } from '../../types/Error';
@@ -32,7 +33,7 @@ type Props = {
 
 export const Table = ({ typeTable, form }: Props) => {
     const dispatch = useAppDispatch();
-    const [importFile] = useImportFileMutation();
+    const [importFile1D] = useImportFile1DMutation();
     const initialRow: ICustomTableRow = {
         number: 1,
         detail: '',
@@ -138,7 +139,7 @@ export const Table = ({ typeTable, form }: Props) => {
             const formData = new FormData();
             formData.append('file', files[0]);
             try {
-                const responseData = await importFile(formData).unwrap();
+                const responseData = await importFile1D(formData).unwrap();
                 if (Object.keys(responseData[0]).length !== 2) {
                     setError(ErrorsCsv.columns);
                 }
@@ -190,13 +191,13 @@ export const Table = ({ typeTable, form }: Props) => {
     return (
         <>
             <Flex vertical className={styles.table}>
-                <Flex className={styles['table__title']}>
+                <h2 className={styles['table__title']}>
                     {typeTable === TableTypes.detail1D
                         ? 'Деталь'
                         : typeTable === TableTypes.workpieces
                         ? 'Заготовка'
                         : ''}
-                </Flex>
+                </h2>
                 <TableRow
                     typeTable={typeTable}
                     isHeader

@@ -14,7 +14,7 @@ export const Cutting2DContainer = ({
         <Flex style={{ height: '100%' }}>
             <Cutting2DForm></Cutting2DForm>
             {children}
-            {dataCalculate2D.details.length && (
+            {dataCalculate2D.workpiece && (
                 <CuttingDownload selectCalculateData={selectCalculateData2D} />
             )}
         </Flex>

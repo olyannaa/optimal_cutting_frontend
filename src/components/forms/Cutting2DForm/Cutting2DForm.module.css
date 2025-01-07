@@ -3,8 +3,12 @@
     height: 100%;
     width: 100%;
     display: flex;
-    gap: 20px;
+}
+
+.cutting2D__form-overflow {
+    display: flex;
     flex-direction: column;
+    overflow-y: auto;
 }
 .cutting2D__form-wrapper {
     display: flex;
