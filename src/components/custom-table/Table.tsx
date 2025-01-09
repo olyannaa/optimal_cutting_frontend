@@ -8,7 +8,7 @@ import {
     changeDetails1DImport,
 } from '../../functions/processingDataInput';
 import { downloadFileCSV1D } from '../../functions/fetchFiles';
-import { useImportFileMutation } from '../../app/services/cutting';
+import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
 import { CsvError } from './CsvError/CsvError';
 import { IError } from '../../types/Error';
@@ -32,7 +32,7 @@ type Props = {
 
 export const Table = ({ typeTable, form }: Props) => {
     const dispatch = useAppDispatch();
-    const [importFile] = useImportFileMutation();
+    const [importFile] = useImportFile1DMutation();
     const initialRow: ICustomTableRow = {
         number: 1,
         detail: '',
@@ -70,7 +70,11 @@ export const Table = ({ typeTable, form }: Props) => {
     }, [addedDetails]);
 
     const handlerAdd = () => {
-        if (typeTable === TableTypes.detail1D || typeTable === TableTypes.workpieces) {
+        if (
+            typeTable === TableTypes.detail1D ||
+            typeTable === TableTypes.workpieces ||
+            typeTable === TableTypes.sizes2D
+        ) {
             setRows((last) => [...last, { ...initialRow, number: last.length + 1 }]);
         }
         if (typeTable === TableTypes.detail2D) {

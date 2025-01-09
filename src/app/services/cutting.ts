@@ -6,6 +6,15 @@ export type TypeDataForm1D = {
     workpiecesLength: number[];
 };
 
+export type TypeDataFormDxf = {
+    details: number[];
+    workpiece: {
+        width: number;
+        height: number;
+    };
+    cuttingThickness: number;
+};
+
 export type ResponseImportFile = { length: number; count: number }[];
 
 export const cuttingApi = api.injectEndpoints({
@@ -17,7 +26,14 @@ export const cuttingApi = api.injectEndpoints({
                 body: data1D,
             }),
         }),
-        importFile: builder.mutation<ResponseImportFile, FormData>({
+        calculateDxf: builder.mutation<any, TypeDataForm1D>({
+            query: (dataDxf) => ({
+                url: 'dxf/calculate',
+                method: 'POST',
+                body: dataDxf,
+            }),
+        }),
+        importFile1D: builder.mutation<ResponseImportFile, FormData>({
             query: (file) => ({
                 url: '1d/import/csv',
                 method: 'POST',
@@ -27,7 +43,7 @@ export const cuttingApi = api.injectEndpoints({
     }),
 });
 
-export const { useCalculate1DMutation, useImportFileMutation } = cuttingApi;
+export const { useCalculate1DMutation, useImportFile1DMutation } = cuttingApi;
 export const {
-    endpoints: { calculate1D, importFile },
+    endpoints: { calculate1D, importFile1D },
 } = cuttingApi;
