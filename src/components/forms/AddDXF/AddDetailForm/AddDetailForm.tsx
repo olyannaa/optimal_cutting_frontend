@@ -16,7 +16,11 @@ const props: UploadProps = {
     title: 'Загрузить dxf',
 };
 
-export const AddDetailForm = ({ setImg }: { setImg: (value: string) => void }) => {
+export const AddDetailForm = ({
+    setImg,
+}: {
+    setImg: (value: string) => void;
+}) => {
     const [fileList, setFiles] = useState<File[]>([]);
     const { data } = useGetMaterialQuery();
     const [addDetail, { isLoading }] = useAddDetailMutation();
@@ -38,7 +42,6 @@ export const AddDetailForm = ({ setImg }: { setImg: (value: string) => void }) =
         formData.append('Thickness', data.thickness.toString());
         formData.append('Filename', fileList[0].name);
         formData.append('MaterialId', data.materialId.toString());
-        formData.append('UserId', '2');
         const image = await addDetail(formData);
 
         if (image.data) {
@@ -60,7 +63,10 @@ export const AddDetailForm = ({ setImg }: { setImg: (value: string) => void }) =
     };
 
     return (
-        <Form className={styles['detail-form__container']} onFinish={handleSubmit}>
+        <Form
+            className={styles['detail-form__container']}
+            onFinish={handleSubmit}
+        >
             {[
                 { name: 'designation', placeholder: 'Обозначение' },
                 { name: 'name', placeholder: 'Наименование' },
@@ -77,7 +83,11 @@ export const AddDetailForm = ({ setImg }: { setImg: (value: string) => void }) =
                     />
                 </Form.Item>
             ))}
-            <Upload updateUploadFiles={setFiles} uploadedFiles={fileList} props={props} />
+            <Upload
+                updateUploadFiles={setFiles}
+                uploadedFiles={fileList}
+                props={props}
+            />
             <Form.Item
                 name='materialId'
                 rules={[
