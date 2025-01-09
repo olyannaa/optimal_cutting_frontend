@@ -33,7 +33,10 @@ export const FormTabs = ({
                     padding: 2,
                     background: 'rgba(217, 217, 217, 1)',
                     border: 'none',
-                    width: tabTitleFirst === 'Выбрать детали' ? '253.5px' : '258.6px',
+                    width:
+                        tabTitleFirst === 'Выбрать детали'
+                            ? '253.5px'
+                            : '258.6px',
                 }}
                 defaultValue={TabsOptions.valueFirst}
                 buttonStyle='solid'
@@ -51,7 +54,7 @@ export const FormTabs = ({
                 <Radio.Button
                     value={TabsOptions.valueSecond}
                     style={{
-                        padding: '0px 12px',
+                        padding: '0px 10px',
                         border: 'none',
                         borderRadius: '2px',
                     }}

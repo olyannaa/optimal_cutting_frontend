@@ -7,6 +7,7 @@ import cutting2D from '../features/cutting2DSlice';
 import maxLengthWorkpieces from '../features/maxLengthWorkpieces';
 import dxf from '../features/dxfSlice';
 import selectDetails2D from '../features/selectDetails2DSlice';
+import statePage from '../features/statePageSlice';
 
 export const store = configureStore({
     reducer: {
@@ -17,6 +18,7 @@ export const store = configureStore({
         maxLengthWorkpieces,
         dxf,
         selectDetails2D,
+        statePage,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()

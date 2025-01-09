@@ -13,6 +13,7 @@ export const Cutting2DContainer = ({
     return (
         <Flex style={{ height: '100%' }}>
             <Cutting2DForm />
+            {children}
             {dataCalculate2D.workpiece && (
                 <CuttingDownload selectCalculateData={selectCalculateData2D} />
             )}

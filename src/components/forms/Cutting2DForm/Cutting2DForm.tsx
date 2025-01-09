@@ -13,15 +13,20 @@ import {
 } from '../../../app/services/cutting2d';
 import { ICalculate2D, RequestWorkpiece } from '../../../types/Calculated2D';
 import { getListDetails2D } from '../../../functions/processingDataInput';
+import { useAppDispatch } from '../../../app/hooks';
+import { setLoading } from '../../../features/statePageSlice';
 
 export const Cutting2DForm = () => {
+    const dispatch = useAppDispatch();
     const [formDetail] = Form.useForm();
     const [formStandardWorkpiece] = Form.useForm();
     const [formCustomWorkpiece] = Form.useForm();
     const [formThickness] = Form.useForm();
     const [getCalculate2D, { isLoading }] = useCalculate2DMutation();
     const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
-    const [modeBlank, setModeBlank] = useState<TabsOptions>(TabsOptions.valueFirst);
+    const [modeBlank, setModeBlank] = useState<TabsOptions>(
+        TabsOptions.valueFirst
+    );
     const { data } = useGetWorkpiecesQuery();
     const workpieces: Array<{ value: number; label: string }> = data
         ? data.map((key) => {
@@ -62,10 +67,12 @@ export const Cutting2DForm = () => {
             .then()
             .catch(() => (isValidatedForms = false));
         if (isValidatedForms) {
+            dispatch(setLoading(true));
             let data: ICalculate2D = {
                 details: getListDetails2D(formDetail.getFieldsValue()),
                 workpiece: { width: 0, height: 0 },
-                cuttingThickness: formThickness.getFieldValue('cuttingThickness'),
+                cuttingThickness:
+                    formThickness.getFieldValue('cuttingThickness'),
             };
             if (modeBlank === TabsOptions.valueFirst) {
                 data = {
@@ -78,13 +85,20 @@ export const Cutting2DForm = () => {
                 data = {
                     ...data,
                     workpiece: {
-                        width: Number(formCustomWorkpiece.getFieldValue('width')),
-                        height: Number(formCustomWorkpiece.getFieldValue('length')),
+                        width: Number(
+                            formCustomWorkpiece.getFieldValue('width')
+                        ),
+                        height: Number(
+                            formCustomWorkpiece.getFieldValue('length')
+                        ),
                     },
                 };
             }
-
-            await getCalculate2D(data).unwrap();
+            try {
+                await getCalculate2D(data).unwrap();
+            } finally {
+                dispatch(setLoading(false));
+            }
         }
     };
 
@@ -130,11 +144,15 @@ export const Cutting2DForm = () => {
                         className={styles['cutting2D__form-wrapper']}
                     >
                         <Form.Item name='length'>
-                            <Input className={styles['cutting2D__input']}></Input>
+                            <Input
+                                className={styles['cutting2D__input']}
+                            ></Input>
                         </Form.Item>
                         <img src={multiple} />
                         <Form.Item name='width'>
-                            <Input className={styles['cutting2D__input']}></Input>
+                            <Input
+                                className={styles['cutting2D__input']}
+                            ></Input>
                         </Form.Item>
                     </Form>
                 )}
