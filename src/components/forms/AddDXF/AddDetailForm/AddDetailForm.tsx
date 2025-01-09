@@ -42,7 +42,6 @@ export const AddDetailForm = ({
         formData.append('Thickness', data.thickness.toString());
         formData.append('Filename', fileList[0].name);
         formData.append('MaterialId', data.materialId.toString());
-        formData.append('UserId', '2');
         const image = await addDetail(formData);
 
         if (image.data) {
