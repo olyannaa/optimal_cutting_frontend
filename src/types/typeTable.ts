@@ -8,7 +8,7 @@ export enum TableTypes {
 export enum CellTypes {
     number = 'number',
     length = 'length',
-    weight = 'weight',
+    width = 'width',
     count = 'count',
     detail = 'detail',
 }

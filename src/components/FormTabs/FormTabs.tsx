@@ -33,6 +33,7 @@ export const FormTabs = ({
                     padding: 2,
                     background: 'rgba(217, 217, 217, 1)',
                     border: 'none',
+                    width: tabTitleFirst === 'Выбрать детали' ? '253.5px' : '258.6px',
                 }}
                 defaultValue={TabsOptions.valueFirst}
                 buttonStyle='solid'

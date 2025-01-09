@@ -5,7 +5,7 @@ type dataInputsType = {
     [key: string]: string;
 };
 
-const divisionArray = (dataInputs: dataInputsType) => {
+const divisionArray1D = (dataInputs: dataInputsType) => {
     const length: number[] = [];
     const count: number[] = [];
     Object.keys(dataInputs).forEach((key) => {
@@ -20,7 +20,7 @@ const divisionArray = (dataInputs: dataInputsType) => {
 };
 
 export const changeDetails1DDownload = (dataInputs: dataInputsType) => {
-    const arrays = divisionArray(dataInputs);
+    const arrays = divisionArray1D(dataInputs);
     const result = arrays.count.map((el, i) => {
         return {
             length: arrays.length[i],
@@ -31,7 +31,7 @@ export const changeDetails1DDownload = (dataInputs: dataInputsType) => {
 };
 
 export const changeDetails1DCalculate = (dataInputs: dataInputsType) => {
-    const arrays = divisionArray(dataInputs);
+    const arrays = divisionArray1D(dataInputs);
     const details: number[] = [];
     arrays.count.forEach((el, i) => {
         for (let _ = 0; _ < el; _++) {
@@ -67,7 +67,7 @@ const division2DArray = (dataInputs: dataInputsType) => {
     const count: number[] = [];
     Object.keys(dataInputs).forEach((key) => {
         const parseKey = key.split('_');
-        if (parseKey[0] === 'weight') width.push(Number(dataInputs[key]));
+        if (parseKey[0] === 'width') width.push(Number(dataInputs[key]));
         else if (parseKey[0] === 'length') height.push(Number(dataInputs[key]));
         else if (parseKey[0] === 'count') count.push(Number(dataInputs[key]));
     });
@@ -88,5 +88,16 @@ export const getListDetails2D = (dataInputs: dataInputsType): Detail2D[] => {
         };
     });
 
+    return result;
+};
+
+export const changeDetails2DImport = (dataFile: Detail2D[], startIndex: number) => {
+    let result: { [key: string]: number } = {};
+    dataFile.forEach((el, i) => {
+        result = { ...result, [`count_${i + 1 + startIndex}`]: el.count };
+        result = { ...result, [`width_${i + 1 + startIndex}`]: el.width };
+        result = { ...result, [`length_${i + 1 + startIndex}`]: el.height };
+    });
+    console.log(result);
     return result;
 };

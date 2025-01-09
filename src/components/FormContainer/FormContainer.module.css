@@ -1,6 +1,6 @@
 .form-wrapper {
     background-color: var(--white);
-    width: 100%;
+    min-width: 312px;
     height: 100%;
-    max-width: 318px;
+    max-width: 370px;
 }

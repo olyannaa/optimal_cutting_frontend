@@ -1,4 +1,4 @@
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, InputNumber, Select } from 'antd';
 import { TableTypes } from '../../../types/typeTable';
 import { Table } from '../../custom-table/Table';
 import { useState } from 'react';
@@ -21,9 +21,7 @@ export const Cutting2DForm = () => {
     const [formThickness] = Form.useForm();
     const [getCalculate2D, { isLoading }] = useCalculate2DMutation();
     const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
-    const [modeBlank, setModeBlank] = useState<TabsOptions>(
-        TabsOptions.valueFirst
-    );
+    const [modeBlank, setModeBlank] = useState<TabsOptions>(TabsOptions.valueFirst);
     const { data } = useGetWorkpiecesQuery();
     const workpieces: Array<{ value: number; label: string }> = data
         ? data.map((key) => {
@@ -67,8 +65,7 @@ export const Cutting2DForm = () => {
             let data: ICalculate2D = {
                 details: getListDetails2D(formDetail.getFieldsValue()),
                 workpiece: { width: 0, height: 0 },
-                cuttingThickness:
-                    formThickness.getFieldValue('cuttingThickness'),
+                cuttingThickness: formThickness.getFieldValue('cuttingThickness'),
             };
             if (modeBlank === TabsOptions.valueFirst) {
                 data = {
@@ -81,12 +78,8 @@ export const Cutting2DForm = () => {
                 data = {
                     ...data,
                     workpiece: {
-                        width: Number(
-                            formCustomWorkpiece.getFieldValue('width')
-                        ),
-                        height: Number(
-                            formCustomWorkpiece.getFieldValue('length')
-                        ),
+                        width: Number(formCustomWorkpiece.getFieldValue('width')),
+                        height: Number(formCustomWorkpiece.getFieldValue('length')),
                     },
                 };
             }
@@ -111,7 +104,7 @@ export const Cutting2DForm = () => {
         <FormContainer>
             <div className='formgap'>
                 <h2>Детали</h2>
-                <FormTabs {...propsMode}></FormTabs>
+                <FormTabs {...propsMode} />
                 {tab === TabsOptions.valueFirst && (
                     <Table typeTable={TableTypes.detail2D} form={formDetail} />
                 )}
@@ -124,10 +117,10 @@ export const Cutting2DForm = () => {
                     <Form form={formStandardWorkpiece}>
                         <Form.Item name='workpiece'>
                             <Select
-                                style={{ width: '100%' }}
+                                style={{ width: '90%' }}
                                 placeholder='Выбрать заготовку'
                                 options={workpieces}
-                            ></Select>
+                            />
                         </Form.Item>
                     </Form>
                 )}
@@ -137,25 +130,25 @@ export const Cutting2DForm = () => {
                         className={styles['cutting2D__form-wrapper']}
                     >
                         <Form.Item name='length'>
-                            <Input
-                                className={styles['cutting2D__input']}
-                            ></Input>
+                            <Input className={styles['cutting2D__input']}></Input>
                         </Form.Item>
                         <img src={multiple} />
                         <Form.Item name='width'>
-                            <Input
-                                className={styles['cutting2D__input']}
-                            ></Input>
+                            <Input className={styles['cutting2D__input']}></Input>
                         </Form.Item>
                     </Form>
                 )}
                 <h2 style={{ marginTop: '38px' }}>Толщина реза</h2>
                 <Form form={formThickness} style={{ marginBottom: '28px' }}>
                     <Form.Item name='cuttingThickness'>
-                        <Input
-                            type='number'
+                        <InputNumber
                             className={styles['cutting2D__input']}
-                        ></Input>
+                            size={'middle'}
+                            min={0}
+                            controls
+                            defaultValue={0.3}
+                            step={0.1}
+                        />
                     </Form.Item>
                 </Form>
                 <div className='btn__container'>
