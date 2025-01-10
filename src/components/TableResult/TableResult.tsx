@@ -1,6 +1,4 @@
 import { Flex, Table } from 'antd';
-import { useAppSelector } from '../../app/hooks';
-import { selectCalculateData1D } from '../../features/cutting1DSlice';
 import styles from './TableResult.module.css';
 import { ICalculate1D } from '../../types/Calculated1D';
 import { ResultCalculate2D } from '../../types/Calculated2D';
@@ -12,8 +10,6 @@ type Props = {
 };
 
 export const TableResult = ({ result1D, result2D }: Props) => {
-    const dataResult = useAppSelector(selectCalculateData1D);
-    console.log(result1D, result2D);
     const dataTable = result1D
         ? result1D.workpieces.map((el, i) => {
               return {
