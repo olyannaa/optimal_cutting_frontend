@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Form } from 'antd';
 import styles from './Table.module.css';
 import { TableRow } from './TableRow/TableRow';
@@ -6,8 +7,10 @@ import { FormInstance } from 'antd/es/form/Form';
 import {
     changeDetails1DDownload,
     changeDetails1DImport,
+    changeDetails2DImport,
+    getListDetails2D,
 } from '../../functions/processingDataInput';
-import { downloadFileCSV1D } from '../../functions/fetchFiles';
+import { downloadFileCSV1D, downloadFileCSV2DCutting } from '../../functions/fetchFiles';
 import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
 import { CsvError } from './CsvError/CsvError';
@@ -24,6 +27,7 @@ import {
     deleteAddedDetail,
     selectAddedDetails,
 } from '../../features/selectDetails2DSlice';
+import { useImportFile2DMutation } from '../../app/services/cutting2d';
 
 type Props = {
     typeTable: TableTypes;
@@ -32,7 +36,7 @@ type Props = {
 
 export const Table = ({ typeTable, form }: Props) => {
     const dispatch = useAppDispatch();
-    const [importFile] = useImportFile1DMutation();
+    const [importFile] = useImportFile2DMutation();
     const initialRow: ICustomTableRow = {
         number: 1,
         detail: '',
@@ -86,8 +90,13 @@ export const Table = ({ typeTable, form }: Props) => {
         if (typeTable === TableTypes.detail1D) {
             const details = changeDetails1DDownload(data);
             await downloadFileCSV1D(JSON.stringify(details));
+        } else if (typeTable === TableTypes.sizes2D) {
+            console.log(data);
+            const details = getListDetails2D(data);
+            await downloadFileCSV2DCutting(JSON.stringify(details));
         }
     };
+
     const deleteRow = (num: number, detail: string) => {
         if (num < rows.length) {
             for (let i = num; i < rows.length; i++) {
@@ -127,25 +136,31 @@ export const Table = ({ typeTable, form }: Props) => {
             const formData = new FormData();
             formData.append('file', files[0]);
             try {
-                const responseData = await importFile(formData).unwrap();
-                if (Object.keys(responseData[0]).length !== 2) {
-                    setError(ErrorsCsv.columns);
-                }
-                setRows((last) => {
-                    const lengthLast = last.length;
-                    if (typeTable === TableTypes.detail2D) {
-                        Object.values(addedDetails).forEach((values) => {
-                            for (let i = 1; i <= values.length; i++) {
-                                last = [
-                                    ...last,
-                                    {
-                                        number: lengthLast + i,
-                                        detail: files[i - 1].name,
-                                    },
-                                ];
-                            }
+                if (typeTable === TableTypes.sizes2D) {
+                    const responseData = await importFile2D(formData).unwrap();
+                    if (Object.keys(responseData[0]).length !== 3) {
+                        setError(ErrorsCsv.columns);
+                    }
+                    setRows((last) => {
+                        const lengthLast = last.length;
+                        for (let i = 1; i <= responseData.length; i++) {
+                            last = [...last, { number: lengthLast + i, detail: '' }];
+                        }
+
+                        form.setFieldsValue({
+                            ...form.getFieldsValue(),
+                            ...changeDetails2DImport(responseData, lengthLast),
                         });
-                    } else {
+                        return last;
+                    });
+                } else if (typeTable === TableTypes.detail1D) {
+                    const responseData = await importFile1D(formData).unwrap();
+                    console.log(responseData);
+                    if (Object.keys(responseData[0]).length !== 2) {
+                        setError(ErrorsCsv.columns);
+                    }
+                    setRows((last) => {
+                        const lengthLast = last.length;
                         for (let i = 1; i <= responseData.length; i++) {
                             last = [...last, { number: lengthLast + i, detail: '' }];
                         }
@@ -154,9 +169,39 @@ export const Table = ({ typeTable, form }: Props) => {
                             ...form.getFieldsValue(),
                             ...changeDetails1DImport(responseData, lengthLast),
                         });
-                    }
-                    return last;
-                });
+                        return last;
+                    });
+                } else if (typeTable === TableTypes.detail2D) {
+                    //
+                }
+
+                // const responseData = await importFile1D(formData).unwrap();
+                // console.log(responseData);
+                // if (Object.keys(responseData[0]).length !== 2) {
+                //     setError(ErrorsCsv.columns);
+                // }
+                // setRows((last) => {
+                //     const lengthLast = last.length;
+                //     if (typeTable === TableTypes.detail2D) {
+                //         Object.values(addedDetails).forEach((values) => {
+                //             for (let i = 1; i <= values.length; i++) {
+                //                 last = [
+                //                     ...last,
+                //                     {
+                //                         number: lengthLast + i,
+                //                         detail: files[i - 1].name,
+                //                     },
+                //                 ];
+                //             }
+                //         });
+                //     } else if (typeTable === TableTypes.sizes2D){
+
+                //     }
+                //     else {
+
+                //     }
+                //     return last;
+                //});
             } catch (err) {
                 if ((err as IError).status === 400) {
                     setError(ErrorsCsv.type);
@@ -176,13 +221,13 @@ export const Table = ({ typeTable, form }: Props) => {
     return (
         <>
             <Flex vertical className={styles.table}>
-                <Flex className={styles['table__title']}>
+                <h2 className={styles['table__title']}>
                     {typeTable === TableTypes.detail1D
                         ? 'Деталь'
                         : typeTable === TableTypes.workpieces
                         ? 'Заготовка'
                         : ''}
-                </Flex>
+                </h2>
                 <TableRow
                     typeTable={typeTable}
                     isHeader
@@ -214,12 +259,12 @@ export const Table = ({ typeTable, form }: Props) => {
                 >
                     {typeTable !== TableTypes.workpieces && (
                         <>
-                            <DownloadButton submit={form.submit}></DownloadButton>
+                            <DownloadButton submit={form.submit} />
                             <Form>
                                 <ImportButton
                                     name='input-files'
                                     onChange={handlerImportFile}
-                                ></ImportButton>
+                                />
                             </Form>
                         </>
                     )}

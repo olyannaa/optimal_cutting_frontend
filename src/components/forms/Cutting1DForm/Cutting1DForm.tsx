@@ -1,5 +1,4 @@
 import { Button, Flex, Form } from 'antd';
-import styles from './Cutting1DForm.module.css';
 import { useCalculate1DMutation } from '../../../app/services/cutting';
 import {
     changeDetails1DCalculate,
@@ -33,13 +32,13 @@ export const Cutting1DForm = () => {
         }
     };
     return (
-        <Flex className={styles['cutting-form']}>
+        <Flex className='formgap'>
             <Table typeTable={TableTypes.detail1D} form={formDetail} />
             <Table typeTable={TableTypes.workpieces} form={formWorkpiece} />
             <Button
                 type='primary'
                 danger
-                className='bottom-btn'
+                className='btn-bottom'
                 onClick={() => handlerSubmit()}
             >
                 Создать схему
