@@ -36,7 +36,8 @@ type Props = {
 
 export const Table = ({ typeTable, form }: Props) => {
     const dispatch = useAppDispatch();
-    const [importFile] = useImportFile2DMutation();
+    const [importFile1D] = useImportFile1DMutation();
+    const [importFile2D] = useImportFile2DMutation();
     const initialRow: ICustomTableRow = {
         number: 1,
         detail: '',
