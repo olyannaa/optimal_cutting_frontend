@@ -5,8 +5,8 @@ export interface ICalculate2D {
 }
 
 export interface ResultCalculate2D {
-    details: DetailCoordinates[];
-    workpiece?: WorkpieceStandard;
+    totalPercentUsage: number;
+    workpieces: ResponseWorkpiece[];
 }
 
 export type Detail2D = {
@@ -34,6 +34,13 @@ export type DetailCoordinates = {
 export type RequestWorkpiece = {
     width: number;
     height: number;
+};
+
+export type ResponseWorkpiece = {
+    width: number;
+    height: number;
+    procentUsage: number;
+    details: DetailCoordinates[];
 };
 
 export type Figure = {

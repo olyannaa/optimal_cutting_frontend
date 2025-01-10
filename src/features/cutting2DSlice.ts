@@ -4,8 +4,8 @@ import { ResultCalculate2D } from '../types/Calculated2D';
 import { cutting2DApi } from '../app/services/cutting2d';
 
 const initialState: ResultCalculate2D = {
-    details: [],
-    workpiece: undefined,
+    workpieces: [],
+    totalPercentUsage: 0,
 };
 
 const slice = createSlice({
@@ -16,8 +16,8 @@ const slice = createSlice({
         builder.addMatcher(
             cutting2DApi.endpoints.calculate2D.matchFulfilled,
             (state, action) => {
-                state.details = [...action.payload.details];
-                state.workpiece = action.payload.workpiece;
+                state.workpieces = [...action.payload.workpieces];
+                state.totalPercentUsage = action.payload.totalPercentUsage;
             }
         );
     },
