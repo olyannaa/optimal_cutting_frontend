@@ -3,6 +3,7 @@ import {
     ReqWorkpiece,
     useNewWorkpieceMutation,
 } from '../../../../app/services/addDxf';
+import styles from '../AddDetailForm/AddDetail.module.css';
 
 export const NewWorkpiece = () => {
     const [addWorkpiece, { isLoading }] = useNewWorkpieceMutation();
@@ -26,7 +27,10 @@ export const NewWorkpiece = () => {
         }
     };
     return (
-        <Form className='formgap' onFinish={handleSubmit}>
+        <Form
+            className={styles['detail-form__container']}
+            onFinish={handleSubmit}
+        >
             {[
                 { name: 'name', placeholder: 'Обозначение' },
                 { name: 'height', placeholder: 'Длина' },
@@ -41,7 +45,7 @@ export const NewWorkpiece = () => {
                 </Form.Item>
             ))}
             <Button
-                className='bottom-btn'
+                className='btn-bottom'
                 danger
                 type='primary'
                 htmlType='submit'

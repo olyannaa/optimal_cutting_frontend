@@ -1,0 +1,11 @@
+.cutting2d {
+    padding: 40px 100px;
+    gap: 42px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow-y: auto;
+}
+.cutting2d__loading-container {
+    margin: auto;
+}

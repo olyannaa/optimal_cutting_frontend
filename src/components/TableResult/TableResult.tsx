@@ -1,19 +1,36 @@
 import { Flex, Table } from 'antd';
-import { useAppSelector } from '../../app/hooks';
-import { selectCalculateData1D } from '../../features/cutting1DSlice';
 import styles from './TableResult.module.css';
+import { ICalculate1D } from '../../types/Calculated1D';
+import { ResultCalculate2D } from '../../types/Calculated2D';
+import { changeFormatSize } from '../../functions/changeFormatSize';
 
-export const TableResult = () => {
-    const dataResult = useAppSelector(selectCalculateData1D);
-    const dataTable = dataResult.workpieces.map((el, i) => {
-        return {
-            number: i + 1,
-            percentUsage: el.percentUsage,
-            details: el.details.join(','),
-            length: el.length,
-            key: i,
-        };
-    });
+type Props = {
+    result1D?: ICalculate1D;
+    result2D?: ResultCalculate2D;
+};
+
+export const TableResult = ({ result1D, result2D }: Props) => {
+    const dataTable = result1D
+        ? result1D.workpieces.map((el, i) => {
+              return {
+                  number: i + 1,
+                  percentUsage: el.percentUsage,
+                  details: el.details.join(','),
+                  length: el.length.toString(),
+                  key: i,
+              };
+          })
+        : result2D
+        ? result2D.workpieces.map((el, i) => {
+              return {
+                  number: i + 1,
+                  percentUsage: el.procentUsage,
+                  details: changeFormatSize(el.details),
+                  length: `${el.width}, ${el.height}`,
+                  key: i,
+              };
+          })
+        : [];
     const columns = [
         {
             title: 'Заготовка',
@@ -26,12 +43,12 @@ export const TableResult = () => {
             key: 'percentUsage',
         },
         {
-            title: 'Длины деталей',
+            title: `${result1D ? 'Длины' : 'Размеры'} деталей`,
             dataIndex: 'details',
             key: 'details',
         },
         {
-            title: 'Длина заготовки',
+            title: `${result1D ? 'Длина' : 'Размер'} заготовки`,
             dataIndex: 'length',
             key: 'length',
         },

@@ -58,7 +58,8 @@ a {
     text-decoration: none;
 }
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 .formgap {
     position: relative;
@@ -67,14 +68,32 @@ code {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    padding: 13px 28px 60px 28px;
+    overflow-y: auto;
 }
 
-.bottom-btn {
-    border-radius: 2px;
-    position: absolute;
+.cutting-form {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.btn__container {
+    position: fixed;
     bottom: 0;
-    width: 100%;
+    width: 266px;
+    height: 58px;
+    background: var(--white);
+    z-index: 0;
+}
+
+.btn-bottom {
+    border-radius: 2px;
+    position: fixed;
+    width: 266px;
+    bottom: 0;
     height: 38px;
+    margin-bottom: 40px;
 }
 
 .page {

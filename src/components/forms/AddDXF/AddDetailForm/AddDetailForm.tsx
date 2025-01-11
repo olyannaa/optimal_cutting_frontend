@@ -104,7 +104,7 @@ export const AddDetailForm = ({
                 ></Select>
             </Form.Item>
             <Button
-                className='bottom-btn'
+                className='btn-bottom'
                 type='primary'
                 danger
                 htmlType='submit'

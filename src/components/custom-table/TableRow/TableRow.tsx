@@ -36,18 +36,16 @@ export const TableRow = ({
                     typeTable={typeTable}
                 />
             ))}
-            {!isHeader &&
-                ((countRows! > 1 && typeTable === TableTypes.detail1D) ||
-                    typeTable === TableTypes.detail2D) && (
-                    <Flex align='center' justify='center' className={styles['close-row']}>
-                        <Image
-                            src={srcClose}
-                            preview={false}
-                            onClick={() => deleteRow(rowInfo.number, rowInfo.detail)}
-                            style={{ cursor: 'pointer' }}
-                        />
-                    </Flex>
-                )}
+            {!isHeader && (countRows! > 1 || typeTable === TableTypes.detail2D) && (
+                <Flex align='center' justify='center' className={styles['close-row']}>
+                    <Image
+                        src={srcClose}
+                        preview={false}
+                        onClick={() => deleteRow(rowInfo.number, rowInfo.detail)}
+                        style={{ cursor: 'pointer' }}
+                    />
+                </Flex>
+            )}
         </Flex>
     );
 };
