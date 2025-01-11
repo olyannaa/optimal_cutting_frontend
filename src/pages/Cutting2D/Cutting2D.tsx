@@ -20,7 +20,7 @@ export const Cutting2D = () => {
     const [images, setImages] = useState<{ name: string; url: string }[]>([]);
 
     const getPng = async () => {
-        if (dataCalculate2D.workpieces[0].details.length) {
+        if (dataCalculate2D.workpieces[0]) {
             const images = await getPNG2DCuttingFromSizes(dataCalculate2D);
             setImages(images);
         }

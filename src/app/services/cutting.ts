@@ -26,13 +26,6 @@ export const cuttingApi = api.injectEndpoints({
                 body: data1D,
             }),
         }),
-        calculateDxf: builder.mutation<any, TypeDataForm1D>({
-            query: (dataDxf) => ({
-                url: 'dxf/calculate',
-                method: 'POST',
-                body: dataDxf,
-            }),
-        }),
         importFile1D: builder.mutation<ResponseImportFile, FormData>({
             query: (file) => ({
                 url: '1d/import/csv',

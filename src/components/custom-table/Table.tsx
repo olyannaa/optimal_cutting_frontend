@@ -27,7 +27,11 @@ import {
     deleteAddedDetail,
     selectAddedDetails,
 } from '../../features/selectDetails2DSlice';
-import { useImportFile2DMutation } from '../../app/services/cutting2d';
+import {
+    useImportFile2DMutation,
+    useImportFileDxfMutation,
+} from '../../app/services/cutting2d';
+import { updateRows } from '../../features/rowsTableSlice';
 
 type Props = {
     typeTable: TableTypes;
@@ -38,9 +42,11 @@ export const Table = ({ typeTable, form }: Props) => {
     const dispatch = useAppDispatch();
     const [importFile1D] = useImportFile1DMutation();
     const [importFile2D] = useImportFile2DMutation();
+    const [importFileDxf] = useImportFileDxfMutation();
     const initialRow: ICustomTableRow = {
         number: 1,
         detail: '',
+        id: 0,
     };
     const [rows, setRows] = useState<ICustomTableRow[]>(
         TableTypes.detail2D === typeTable ? [] : [initialRow]
@@ -51,6 +57,9 @@ export const Table = ({ typeTable, form }: Props) => {
 
     useEffect(() => {
         onChange();
+        if (typeTable === TableTypes.detail2D) {
+            dispatch(updateRows(rows));
+        }
     }, [rows]);
 
     useEffect(() => {
@@ -65,6 +74,7 @@ export const Table = ({ typeTable, form }: Props) => {
                                 {
                                     number: lengthLast + i,
                                     detail: values[i - 1].designation,
+                                    id: values[i - 1].id,
                                 },
                             ];
                     }
@@ -145,7 +155,10 @@ export const Table = ({ typeTable, form }: Props) => {
                     setRows((last) => {
                         const lengthLast = last.length;
                         for (let i = 1; i <= responseData.length; i++) {
-                            last = [...last, { number: lengthLast + i, detail: '' }];
+                            last = [
+                                ...last,
+                                { number: lengthLast + i, detail: '', id: 0 },
+                            ];
                         }
 
                         form.setFieldsValue({
@@ -163,7 +176,10 @@ export const Table = ({ typeTable, form }: Props) => {
                     setRows((last) => {
                         const lengthLast = last.length;
                         for (let i = 1; i <= responseData.length; i++) {
-                            last = [...last, { number: lengthLast + i, detail: '' }];
+                            last = [
+                                ...last,
+                                { number: lengthLast + i, detail: '', id: 0 },
+                            ];
                         }
 
                         form.setFieldsValue({
@@ -173,7 +189,8 @@ export const Table = ({ typeTable, form }: Props) => {
                         return last;
                     });
                 } else if (typeTable === TableTypes.detail2D) {
-                    //
+                    console.log(21);
+                    const responseData = await importFileDxf(formData).unwrap();
                 }
 
                 // const responseData = await importFile1D(formData).unwrap();

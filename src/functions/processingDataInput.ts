@@ -1,5 +1,6 @@
 import { ResponseImportFile } from '../app/services/cutting';
 import { Detail2D } from '../types/Calculated2D';
+import { ICustomTableRow } from '../types/CustomTable';
 
 type dataInputsType = {
     [key: string]: string;
@@ -99,5 +100,18 @@ export const changeDetails2DImport = (dataFile: Detail2D[], startIndex: number) 
         result = { ...result, [`length_${i + 1 + startIndex}`]: el.height };
     });
     console.log(result);
+    return result;
+};
+
+export const changeDetailsDxfCalculate = (
+    dataInputs: dataInputsType,
+    dataRows: ICustomTableRow[]
+) => {
+    const result: number[] = [];
+    Object.values(dataRows).forEach((el, i) => {
+        for (let i = 0; i < Number(dataInputs[`count_${el.number}`]); i++) {
+            result.push(el.id);
+        }
+    });
     return result;
 };

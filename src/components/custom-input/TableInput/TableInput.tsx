@@ -6,29 +6,34 @@ import { CellTypes, TableTypes } from '../../../types/typeTable';
 
 type Props = {
     name: string;
-    placeholder?: string;
+    value?: string;
     typeCell: CellTypes;
     typeTable: TableTypes;
 };
 
-export const TableInput = ({ name, placeholder, typeCell, typeTable }: Props) => {
+export const TableInput = ({ name, value, typeCell, typeTable }: Props) => {
     const maxLength = useAppSelector(selectMaxLengthWorkpieces);
     return (
         <Form.Item
             name={name}
             className={styles.formItem}
-            rules={[
-                {
-                    required: true,
-                    message: '',
-                },
-            ]}
+            rules={
+                typeCell !== CellTypes.detail
+                    ? [
+                          {
+                              required: true,
+                              message: '',
+                          },
+                      ]
+                    : []
+            }
         >
             {typeCell === CellTypes.detail ? (
                 <Input
-                    placeholder={placeholder}
+                    defaultValue={value}
+                    value={212}
                     type={'text'}
-                    className={styles.tableInput}
+                    className={styles.tableInputDetail}
                     style={{ height: '32px' }}
                 />
             ) : (

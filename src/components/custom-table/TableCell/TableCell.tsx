@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { Flex, Input } from 'antd';
 import { TableInput } from '../../custom-input/TableInput/TableInput';
 import styles from './TableCell.module.css';
 import { nameColumns } from '../../const/tableOptions';
@@ -40,6 +40,7 @@ export const TableCell = ({ typeCell, rowInfo, isHeader, typeTable }: Props) => 
                     name={`${typeCell}_${rowInfo.number}`}
                     typeCell={typeCell}
                     typeTable={typeTable}
+                    value={rowInfo.detail}
                 />
             )}
         </Flex>
