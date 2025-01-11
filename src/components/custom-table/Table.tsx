@@ -8,9 +8,15 @@ import {
     changeDetails1DDownload,
     changeDetails1DImport,
     changeDetails2DImport,
+    changeDetailsDxfExport,
+    changeDetailsDxfImport,
     getListDetails2D,
 } from '../../functions/processingDataInput';
-import { downloadFileCSV1D, downloadFileCSV2DCutting } from '../../functions/fetchFiles';
+import {
+    downloadFileCSV1D,
+    downloadFileCSV2DCutting,
+    downloadFileCSVDxfCutting,
+} from '../../functions/fetchFiles';
 import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
 import { CsvError } from './CsvError/CsvError';
@@ -102,9 +108,11 @@ export const Table = ({ typeTable, form }: Props) => {
             const details = changeDetails1DDownload(data);
             await downloadFileCSV1D(JSON.stringify(details));
         } else if (typeTable === TableTypes.sizes2D) {
-            console.log(data);
             const details = getListDetails2D(data);
             await downloadFileCSV2DCutting(JSON.stringify(details));
+        } else if (typeTable === TableTypes.detail2D) {
+            const details = changeDetailsDxfExport(form.getFieldsValue(), rows);
+            await downloadFileCSVDxfCutting(JSON.stringify(details));
         }
     };
 
@@ -169,7 +177,6 @@ export const Table = ({ typeTable, form }: Props) => {
                     });
                 } else if (typeTable === TableTypes.detail1D) {
                     const responseData = await importFile1D(formData).unwrap();
-                    console.log(responseData);
                     if (Object.keys(responseData[0]).length !== 2) {
                         setError(ErrorsCsv.columns);
                     }
@@ -189,8 +196,28 @@ export const Table = ({ typeTable, form }: Props) => {
                         return last;
                     });
                 } else if (typeTable === TableTypes.detail2D) {
-                    console.log(21);
                     const responseData = await importFileDxf(formData).unwrap();
+                    if (Object.keys(responseData[0]).length !== 3) {
+                        setError(ErrorsCsv.columns);
+                    }
+                    setRows((last) => {
+                        const lengthLast = last.length;
+                        for (let i = 1; i <= responseData.length; i++) {
+                            last = [
+                                ...last,
+                                {
+                                    number: lengthLast + i,
+                                    detail: responseData[i - 1].designation,
+                                    id: responseData[i - 1].id,
+                                },
+                            ];
+                        }
+                        form.setFieldsValue({
+                            ...form.getFieldsValue(),
+                            ...changeDetailsDxfImport(responseData, lengthLast),
+                        });
+                        return last;
+                    });
                 }
 
                 // const responseData = await importFile1D(formData).unwrap();
