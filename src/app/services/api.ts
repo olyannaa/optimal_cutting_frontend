@@ -46,7 +46,6 @@ const baseQueryWithReauth: BaseQueryFn<
                     url: `/auth/refresh-token`,
                     method: 'POST',
                     body: {
-                        accessToken: localStorage.getItem('accessToken'),
                         refreshToken: localStorage.getItem('refreshToken'),
                     },
                 },
