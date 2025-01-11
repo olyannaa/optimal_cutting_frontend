@@ -22,6 +22,7 @@ export const Cutting2DForm = () => {
     const [formStandardWorkpiece] = Form.useForm();
     const [formCustomWorkpiece] = Form.useForm();
     const [formThickness] = Form.useForm();
+    const requiredRule = [{ required: true, message: '' }];
     const [getCalculate2D, { isLoading }] = useCalculate2DMutation();
     const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
     const [modeBlank, setModeBlank] = useState<TabsOptions>(
@@ -63,6 +64,10 @@ export const Cutting2DForm = () => {
             .then()
             .catch(() => (isValidatedForms = false));
         await formThickness
+            .validateFields()
+            .then()
+            .catch(() => (isValidatedForms = false));
+        await formCustomWorkpiece
             .validateFields()
             .then()
             .catch(() => (isValidatedForms = false));
@@ -129,15 +134,7 @@ export const Cutting2DForm = () => {
                 <FormTabs {...propsSelect}></FormTabs>
                 {modeBlank === TabsOptions.valueFirst && (
                     <Form form={formStandardWorkpiece}>
-                        <Form.Item
-                            name='workpiece'
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '',
-                                },
-                            ]}
-                        >
+                        <Form.Item name='workpiece' rules={requiredRule}>
                             <Select
                                 style={{ width: '90%' }}
                                 placeholder='Выбрать заготовку'
@@ -151,30 +148,14 @@ export const Cutting2DForm = () => {
                         form={formCustomWorkpiece}
                         className={styles['cutting2D__form-wrapper']}
                     >
-                        <Form.Item
-                            name='length'
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '',
-                                },
-                            ]}
-                        >
+                        <Form.Item name='length' rules={requiredRule}>
                             <InputNumber
                                 min={0}
                                 className={styles['cutting2D__input']}
                             ></InputNumber>
                         </Form.Item>
-                        <img src={multiple} />
-                        <Form.Item
-                            name='width'
-                            rules={[
-                                {
-                                    required: true,
-                                    message: '',
-                                },
-                            ]}
-                        >
+                        <img width={16} src={multiple} />
+                        <Form.Item name='width' rules={requiredRule}>
                             <InputNumber
                                 min={0}
                                 className={styles['cutting2D__input']}
@@ -184,15 +165,7 @@ export const Cutting2DForm = () => {
                 )}
                 <h2 style={{ marginTop: '38px' }}>Толщина реза</h2>
                 <Form form={formThickness} style={{ marginBottom: '28px' }}>
-                    <Form.Item
-                        name='cuttingThickness'
-                        rules={[
-                            {
-                                required: true,
-                                message: '',
-                            },
-                        ]}
-                    >
+                    <Form.Item name='cuttingThickness' rules={requiredRule}>
                         <InputNumber
                             className={styles['cutting2D__input']}
                             size={'middle'}

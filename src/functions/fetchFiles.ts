@@ -1,13 +1,12 @@
-const headers = new Headers();
-headers.set('Authorization', `Bearer ${localStorage.getItem('accessToken')}`);
-headers.set('Content-Type', 'application/json');
+import { getHeaders } from './getHeaders';
+
 export const getPNG1DCutting = async (dataCalculate1D: string) => {
     try {
         const response = await fetch(
             `${import.meta.env.VITE_APP_BASE_URL}1d/export/result/png`,
             {
                 method: 'POST',
-                headers: headers,
+                headers: getHeaders(),
                 body: dataCalculate1D,
             }
         );
@@ -31,7 +30,7 @@ export const downloadFile1DCutting = async (
             `${import.meta.env.VITE_APP_BASE_URL}1d/export/result/${typeFile}`,
             {
                 method: 'POST',
-                headers: headers,
+                headers: getHeaders(),
                 body: dataCalculate1D,
             }
         );
@@ -58,7 +57,7 @@ export const downloadFileCSV1D = async (dataDetails: string) => {
             `${import.meta.env.VITE_APP_BASE_URL}1d/export/csv`,
             {
                 method: 'POST',
-                headers: headers,
+                headers: getHeaders(),
                 body: dataDetails,
             }
         );
@@ -85,7 +84,7 @@ export const downloadFileCSV2DCutting = async (dataDetails: string) => {
             `${import.meta.env.VITE_APP_BASE_URL}2d/export/csv`,
             {
                 method: 'POST',
-                headers: headers,
+                headers: getHeaders(),
                 body: dataDetails,
             }
         );
@@ -115,7 +114,7 @@ export const downloadFile2DCutting = async (
             `${import.meta.env.VITE_APP_BASE_URL}2d/export/result/${typeFile}`,
             {
                 method: 'POST',
-                headers: headers,
+                headers: getHeaders(),
                 body: dataCalculate2D,
             }
         );

@@ -3,13 +3,8 @@ export function export2DPng() {
     return `${import.meta.env.VITE_APP_BASE_URL}2d/export/result/png`;
 }
 
-/** Скачивание DXF файлов для 2D раскроя по размерам */
-export function export2DDxf() {
-    return `${import.meta.env.VITE_APP_BASE_URL}2d/export/result/dxf`;
-}
-
-/** Скачивание PDF файлов для 2D раскроя по размерам */
-export function export2DPdf() {
+/** Скачивание PDF/DXF файлов для 2D раскроя по размерам */
+export function export2D() {
     return `${import.meta.env.VITE_APP_BASE_URL}2d/export/result/pdf`;
 }
 
