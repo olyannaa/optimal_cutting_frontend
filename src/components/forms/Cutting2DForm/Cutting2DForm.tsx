@@ -1,4 +1,4 @@
-import { Button, Form, Input, InputNumber, Select } from 'antd';
+import { Button, Form, InputNumber, Select } from 'antd';
 import { TableTypes } from '../../../types/typeTable';
 import { Table } from '../../custom-table/Table';
 import { useState } from 'react';
@@ -129,7 +129,15 @@ export const Cutting2DForm = () => {
                 <FormTabs {...propsSelect}></FormTabs>
                 {modeBlank === TabsOptions.valueFirst && (
                     <Form form={formStandardWorkpiece}>
-                        <Form.Item name='workpiece'>
+                        <Form.Item
+                            name='workpiece'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '',
+                                },
+                            ]}
+                        >
                             <Select
                                 style={{ width: '90%' }}
                                 placeholder='Выбрать заготовку'
@@ -143,28 +151,53 @@ export const Cutting2DForm = () => {
                         form={formCustomWorkpiece}
                         className={styles['cutting2D__form-wrapper']}
                     >
-                        <Form.Item name='length'>
-                            <Input
+                        <Form.Item
+                            name='length'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                min={0}
                                 className={styles['cutting2D__input']}
-                            ></Input>
+                            ></InputNumber>
                         </Form.Item>
                         <img src={multiple} />
-                        <Form.Item name='width'>
-                            <Input
+                        <Form.Item
+                            name='width'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                min={0}
                                 className={styles['cutting2D__input']}
-                            ></Input>
+                            ></InputNumber>
                         </Form.Item>
                     </Form>
                 )}
                 <h2 style={{ marginTop: '38px' }}>Толщина реза</h2>
                 <Form form={formThickness} style={{ marginBottom: '28px' }}>
-                    <Form.Item name='cuttingThickness'>
+                    <Form.Item
+                        name='cuttingThickness'
+                        rules={[
+                            {
+                                required: true,
+                                message: '',
+                            },
+                        ]}
+                    >
                         <InputNumber
                             className={styles['cutting2D__input']}
                             size={'middle'}
                             min={0}
                             controls
-                            defaultValue={0.3}
                             step={0.1}
                         />
                     </Form.Item>

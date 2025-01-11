@@ -10,7 +10,10 @@ import {
     changeDetails2DImport,
     getListDetails2D,
 } from '../../functions/processingDataInput';
-import { downloadFileCSV1D, downloadFileCSV2DCutting } from '../../functions/fetchFiles';
+import {
+    downloadFileCSV1D,
+    downloadFileCSV2DCutting,
+} from '../../functions/fetchFiles';
 import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
 import { CsvError } from './CsvError/CsvError';
@@ -59,7 +62,11 @@ export const Table = ({ typeTable, form }: Props) => {
                 const lengthLast = last.length;
                 Object.values(addedDetails).forEach((values) => {
                     for (let i = 1; i <= values.length; i++) {
-                        if (!last.find((el) => el.detail === values[i - 1].designation))
+                        if (
+                            !last.find(
+                                (el) => el.detail === values[i - 1].designation
+                            )
+                        )
                             last = [
                                 ...last,
                                 {
@@ -80,7 +87,10 @@ export const Table = ({ typeTable, form }: Props) => {
             typeTable === TableTypes.workpieces ||
             typeTable === TableTypes.sizes2D
         ) {
-            setRows((last) => [...last, { ...initialRow, number: last.length + 1 }]);
+            setRows((last) => [
+                ...last,
+                { ...initialRow, number: last.length + 1 },
+            ]);
         }
         if (typeTable === TableTypes.detail2D) {
             setIsOpenModal(true);
@@ -119,7 +129,9 @@ export const Table = ({ typeTable, form }: Props) => {
                 form.setFieldsValue(result);
             }
         } else {
-            form.resetFields(tableOptionsInputs[typeTable].map((el) => `${el}_${num}`));
+            form.resetFields(
+                tableOptionsInputs[typeTable].map((el) => `${el}_${num}`)
+            );
         }
         setRows((last) => {
             const newRows = last.filter((row) => row.number !== num);
@@ -130,7 +142,9 @@ export const Table = ({ typeTable, form }: Props) => {
         }
     };
 
-    const handlerImportFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlerImportFile = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setError(null);
         const files = event.target.files;
         if (files) {
@@ -145,7 +159,10 @@ export const Table = ({ typeTable, form }: Props) => {
                     setRows((last) => {
                         const lengthLast = last.length;
                         for (let i = 1; i <= responseData.length; i++) {
-                            last = [...last, { number: lengthLast + i, detail: '' }];
+                            last = [
+                                ...last,
+                                { number: lengthLast + i, detail: '' },
+                            ];
                         }
 
                         form.setFieldsValue({
@@ -163,7 +180,10 @@ export const Table = ({ typeTable, form }: Props) => {
                     setRows((last) => {
                         const lengthLast = last.length;
                         for (let i = 1; i <= responseData.length; i++) {
-                            last = [...last, { number: lengthLast + i, detail: '' }];
+                            last = [
+                                ...last,
+                                { number: lengthLast + i, detail: '' },
+                            ];
                         }
 
                         form.setFieldsValue({
@@ -175,34 +195,6 @@ export const Table = ({ typeTable, form }: Props) => {
                 } else if (typeTable === TableTypes.detail2D) {
                     //
                 }
-
-                // const responseData = await importFile1D(formData).unwrap();
-                // console.log(responseData);
-                // if (Object.keys(responseData[0]).length !== 2) {
-                //     setError(ErrorsCsv.columns);
-                // }
-                // setRows((last) => {
-                //     const lengthLast = last.length;
-                //     if (typeTable === TableTypes.detail2D) {
-                //         Object.values(addedDetails).forEach((values) => {
-                //             for (let i = 1; i <= values.length; i++) {
-                //                 last = [
-                //                     ...last,
-                //                     {
-                //                         number: lengthLast + i,
-                //                         detail: files[i - 1].name,
-                //                     },
-                //                 ];
-                //             }
-                //         });
-                //     } else if (typeTable === TableTypes.sizes2D){
-
-                //     }
-                //     else {
-
-                //     }
-                //     return last;
-                //});
             } catch (err) {
                 if ((err as IError).status === 400) {
                     setError(ErrorsCsv.type);
@@ -277,9 +269,14 @@ export const Table = ({ typeTable, form }: Props) => {
                         Добавить
                     </Button>
                 </Flex>
-                {error !== null && <CsvError error={error} setError={setError} />}
+                {error !== null && (
+                    <CsvError error={error} setError={setError} />
+                )}
             </Flex>
-            <ModalSelectDetails isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+            <ModalSelectDetails
+                isOpen={isOpenModal}
+                setIsOpen={setIsOpenModal}
+            />
         </>
     );
 };
