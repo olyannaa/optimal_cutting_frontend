@@ -1,6 +1,6 @@
 import { Flex, Image } from 'antd';
 import styles from './TableRow.module.css';
-import { tableOptions } from '../../const/tableOptions';
+import { tableOptions } from '../../../const/tableOptions';
 import { TableCell } from '../TableCell/TableCell';
 import { ICustomTableRow } from '../../../types/CustomTable';
 import srcClose from '../../../assets/icons/close.svg';
@@ -23,9 +23,9 @@ export const TableRow = ({
 }: Props) => {
     return (
         <Flex
-            className={`${styles['table__row']} ${styles[`table__row_${typeTable}`]} ${
-                isHeader && styles[`table__row_header`]
-            }`}
+            className={`${styles['table__row']} ${
+                styles[`table__row_${typeTable}`]
+            } ${isHeader && styles[`table__row_header`]}`}
         >
             {tableOptions[typeTable].map((col, i) => (
                 <TableCell
@@ -36,16 +36,23 @@ export const TableRow = ({
                     typeTable={typeTable}
                 />
             ))}
-            {!isHeader && (countRows! > 1 || typeTable === TableTypes.detail2D) && (
-                <Flex align='center' justify='center' className={styles['close-row']}>
-                    <Image
-                        src={srcClose}
-                        preview={false}
-                        onClick={() => deleteRow(rowInfo.number, rowInfo.detail)}
-                        style={{ cursor: 'pointer' }}
-                    />
-                </Flex>
-            )}
+            {!isHeader &&
+                (countRows! > 1 || typeTable === TableTypes.detail2D) && (
+                    <Flex
+                        align='center'
+                        justify='center'
+                        className={styles['close-row']}
+                    >
+                        <Image
+                            src={srcClose}
+                            preview={false}
+                            onClick={() =>
+                                deleteRow(rowInfo.number, rowInfo.detail)
+                            }
+                            style={{ cursor: 'pointer' }}
+                        />
+                    </Flex>
+                )}
         </Flex>
     );
 };

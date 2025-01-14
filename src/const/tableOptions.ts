@@ -1,4 +1,4 @@
-import { TableTypes } from '../../types/typeTable';
+import { TableTypes } from '../types/typeTable';
 
 type ITableOptions = {
     [TableTypes.detail1D]: ('number' | 'length' | 'count')[];

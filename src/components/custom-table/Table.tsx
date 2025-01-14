@@ -18,7 +18,7 @@ import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
 import { CsvError } from './CsvError/CsvError';
 import { IError } from '../../types/Error';
-import { tableOptionsInputs } from '../const/tableOptions';
+import { tableOptionsInputs } from '../../const/tableOptions';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updateMaxLength } from '../../features/maxLengthWorkpieces';
 import { TableTypes } from '../../types/typeTable';
