@@ -3,8 +3,6 @@ import styles from './Login.module.css';
 import { LoginForm } from '../forms/LoginForm/LoginForm';
 
 export const Login = () => {
-    console.log(import.meta.env.VITE_API_URL); // Доступ к переменной окружения
-    console.log(import.meta.env.MODE); // Укажет 'development' или 'production'
     return (
         <Flex className={styles.login} vertical align='center'>
             <h1>Оптимальный раскрой</h1>

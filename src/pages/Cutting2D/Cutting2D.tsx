@@ -20,14 +20,14 @@ export const Cutting2D = () => {
     const [images, setImages] = useState<{ name: string; url: string }[]>([]);
 
     const getPng = async () => {
-        if (dataCalculate2D.workpieces[0].details.length) {
-            const images = await getPNG2DCuttingFromSizes(dataCalculate2D);
-            setImages(images);
-        }
+        const images = await getPNG2DCuttingFromSizes(dataCalculate2D);
+        setImages(images);
     };
 
     useEffect(() => {
-        getPng();
+        if (dataCalculate2D.workpieces.length) {
+            getPng();
+        }
     }, [dataCalculate2D]);
 
     return (
@@ -46,7 +46,7 @@ export const Cutting2D = () => {
                         <Image src={img.url} preview={false} />
                     </div>
                 ))}
-            {dataCalculate2D.workpieces[0] && !isLoading ? (
+            {dataCalculate2D.workpieces.length && !isLoading ? (
                 <TableResult result2D={dataCalculate2D} />
             ) : (
                 ''

@@ -10,7 +10,7 @@ import { ResponseLoginData } from './auth';
 
 const baseQuery: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> =
     fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_APP_BASE_URL,
+        baseUrl: import.meta.env.VITE_API_URL,
         prepareHeaders: (headers, { getState }) => {
             const token =
                 (getState() as RootState).auth.token?.access ||
