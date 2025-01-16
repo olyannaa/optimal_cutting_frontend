@@ -49,7 +49,7 @@ export const Cutting2D = () => {
                         <Image src={img.url} preview={false} />
                     </div>
                 ))}
-            {dataCalculate2D.workpieces.length && !isLoading && (
+            {dataCalculate2D.workpieces[0] && !isLoading && (
                 <TableResult result2D={dataCalculate2D} />
             )}
         </Flex>
