@@ -30,7 +30,6 @@ export const ModalSelectDetails = ({ isOpen, setIsOpen }: Props) => {
     const checkedDetails = useAppSelector(selectCheckedDetails);
     const addedDetails = useAppSelector(selectAddedDetails);
     const [isError, setIsError] = useState<boolean>(false);
-
     const handlerAdd = () => {
         let arrDetails: Designation[] = [];
         Object.values(checkedDetails).forEach((arr) => {
@@ -56,7 +55,7 @@ export const ModalSelectDetails = ({ isOpen, setIsOpen }: Props) => {
     return (
         <Modal
             footer={[
-                <Button onClick={handlerAdd} type='primary'>
+                <Button onClick={handlerAdd} type='primary' key={1}>
                     Добавить
                 </Button>,
             ]}

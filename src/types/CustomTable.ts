@@ -1,4 +1,7 @@
 export interface ICustomTableRow {
     number: number;
-    detail: string;
+    detail?: string;
+    id?: number;
+    materialId?: number;
+    thickness?: number;
 }

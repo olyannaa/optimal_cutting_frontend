@@ -22,3 +22,7 @@ export function exportCsv1DEndpoint() {
 export function exportCsv2DEndpoint() {
     return `${import.meta.env.VITE_API_URL}2d/export/csv`;
 }
+
+export function getBaseApi() {
+    return import.meta.env.VITE_API_URL;
+}

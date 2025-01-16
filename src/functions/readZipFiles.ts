@@ -1,17 +1,25 @@
 import JSZip from 'jszip';
 import { ResultCalculate2D } from '../types/Calculated2D';
+import { TabsOptions } from '../components/FormTabs/tabsOption';
 import { getHeaders } from './getHeaders';
-import { export2DPng } from './endpoints/FileEndpoints';
+import { getBaseApi } from './endpoints/FileEndpoints';
 
 export const getPNG2DCuttingFromSizes = async (
-    dataCalculate1D: ResultCalculate2D
+    dataCalculate1D: ResultCalculate2D,
+    tab: TabsOptions
 ) => {
     try {
-        const response = await fetch(export2DPng(), {
-            method: 'POST',
-            headers: getHeaders(),
-            body: JSON.stringify(dataCalculate1D),
-        });
+        const response = await fetch(
+            `${getBaseApi()}${
+                tab === TabsOptions.valueFirst ? 'dxf' : '2d'
+            }/export/result/png`,
+            {
+                method: 'POST',
+                headers: getHeaders(),
+                body: JSON.stringify(dataCalculate1D),
+            }
+        );
+
         if (!response.ok) {
             throw new Error('Ошибка при получении данных.');
         }

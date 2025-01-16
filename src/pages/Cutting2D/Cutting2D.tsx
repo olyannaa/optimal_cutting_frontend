@@ -5,6 +5,7 @@ import { getPNG2DCuttingFromSizes } from '../../functions/readZipFiles';
 import { selectCalculateData2D } from '../../features/cutting2DSlice';
 import styles from './Cutting2D.module.css';
 import { TableResult } from '../../components/TableResult/TableResult';
+import { selectTab } from '../../features/statePageSlice';
 
 const contentStyle: React.CSSProperties = {
     padding: 50,
@@ -18,10 +19,12 @@ export const Cutting2D = () => {
     const isLoading = useAppSelector((state) => state.statePage.isLoading);
     const dataCalculate2D = useAppSelector(selectCalculateData2D);
     const [images, setImages] = useState<{ name: string; url: string }[]>([]);
-
+    const tab = useAppSelector(selectTab);
     const getPng = async () => {
-        const images = await getPNG2DCuttingFromSizes(dataCalculate2D);
-        setImages(images);
+        if (dataCalculate2D.workpieces[0]) {
+            const images = await getPNG2DCuttingFromSizes(dataCalculate2D, tab);
+            setImages(images);
+        }
     };
 
     useEffect(() => {
@@ -46,10 +49,8 @@ export const Cutting2D = () => {
                         <Image src={img.url} preview={false} />
                     </div>
                 ))}
-            {dataCalculate2D.workpieces.length && !isLoading ? (
+            {dataCalculate2D.workpieces.length && !isLoading && (
                 <TableResult result2D={dataCalculate2D} />
-            ) : (
-                ''
             )}
         </Flex>
     );
