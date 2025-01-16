@@ -27,6 +27,7 @@ export const ImportButton = ({
                 type='file'
                 name={name}
                 onChange={onChange}
+                value={''}
             />
         </Form.Item>
     );

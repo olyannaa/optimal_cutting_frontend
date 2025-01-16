@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../app/store';
 import { addDxfApi, ResponseGetDesignations } from '../app/services/addDxf';
+import { DetailDxf } from '../types/CalculatedDxf';
 
 interface InitialState {
     details: ResponseGetDesignations;
@@ -25,9 +26,17 @@ const slice = createSlice({
             ];
         },
         deleteCheckedDetails: (state, action) => {
-            state.checkedDetails[action.payload.name] = state.checkedDetails[
-                action.payload.name
-            ].filter((detail) => detail.id !== Number(action.payload.checkedDetail.id));
+            if (
+                !state.addedDetails[action.payload.name] ||
+                !state.addedDetails[action.payload.name].find(
+                    (detail) => detail.id === Number(action.payload.checkedDetail.id)
+                )
+            )
+                state.checkedDetails[action.payload.name] = state.checkedDetails[
+                    action.payload.name
+                ].filter(
+                    (detail) => detail.id !== Number(action.payload.checkedDetail.id)
+                );
         },
         updateAddedDetails: (state) => {
             Object.keys(state.checkedDetails).forEach((name) => {
@@ -42,11 +51,36 @@ const slice = createSlice({
         clearCheckedDetails: (state) => {
             state.checkedDetails = {};
         },
+        clearAddDetails: (state) => {
+            state.addedDetails = {};
+        },
         deleteAddedDetail: (state, action) => {
             Object.keys(state.addedDetails).forEach((name) => {
                 state.addedDetails[name] = state.addedDetails[name].filter(
                     (detail) => detail.designation !== action.payload
                 );
+            });
+        },
+        addAddedDetails: (state, action: { payload: DetailDxf[] }) => {
+            action.payload.forEach((detail) => {
+                const name = detail.designation;
+                if (state.addedDetails[name.substring(0, 4)]) {
+                    state.addedDetails[name.substring(0, 4)].push({
+                        designation: detail.designation,
+                        id: detail.id,
+                        materialId: detail.materialId,
+                        thickness: detail.thickness,
+                    });
+                } else {
+                    state.addedDetails[name.substring(0, 4)] = [
+                        {
+                            designation: detail.designation,
+                            id: detail.id,
+                            materialId: detail.materialId,
+                            thickness: detail.thickness,
+                        },
+                    ];
+                }
             });
         },
     },
@@ -65,6 +99,8 @@ export const {
     clearCheckedDetails,
     deleteAddedDetail,
     deleteCheckedDetails,
+    addAddedDetails,
+    clearAddDetails,
 } = slice.actions;
 export default slice.reducer;
 export const selectCheckedDetails = (state: RootState) =>

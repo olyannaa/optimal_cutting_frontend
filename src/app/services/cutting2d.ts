@@ -4,6 +4,7 @@ import {
     ResultCalculate2D,
     WorkpieceStandard,
 } from '../../types/Calculated2D';
+import { DetailDxf, ICalculateDxf } from '../../types/CalculatedDxf';
 import { api } from './api';
 
 export const cutting2DApi = api.injectEndpoints({
@@ -28,6 +29,20 @@ export const cutting2DApi = api.injectEndpoints({
                 body: file,
             }),
         }),
+        calculateDxf: builder.mutation<ResultCalculate2D, ICalculateDxf>({
+            query: (data: ICalculateDxf) => ({
+                url: '/dxf/calculate',
+                method: 'POST',
+                body: data,
+            }),
+        }),
+        importFileDxf: builder.mutation<DetailDxf[], FormData>({
+            query: (file) => ({
+                url: 'dxf/import/csv',
+                method: 'POST',
+                body: file,
+            }),
+        }),
     }),
 });
 
@@ -35,4 +50,6 @@ export const {
     useGetWorkpiecesQuery,
     useCalculate2DMutation,
     useImportFile2DMutation,
+    useImportFileDxfMutation,
+    useCalculateDxfMutation,
 } = cutting2DApi;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Form } from 'antd';
 import styles from './Table.module.css';
 import { TableRow } from './TableRow/TableRow';
@@ -8,11 +7,15 @@ import {
     changeDetails1DDownload,
     changeDetails1DImport,
     changeDetails2DImport,
+    changeDetailsDxfExport,
+    changeDetailsDxfImport,
+    changeFieldsDxfImport,
     getListDetails2D,
 } from '../../functions/processingDataInput';
 import {
     downloadFileCSV1D,
     downloadFileCSV2DCutting,
+    downloadFileCSVDxfCutting,
 } from '../../functions/fetchFiles';
 import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
@@ -27,10 +30,16 @@ import { DownloadButton } from '../buttons/DownloadButton';
 import { ImportButton } from '../buttons/ImportButton/ImportButton';
 import { ModalSelectDetails } from '../ModalSelectDetails/ModalSelectDetails';
 import {
+    addAddedDetails,
     deleteAddedDetail,
     selectAddedDetails,
 } from '../../features/selectDetails2DSlice';
-import { useImportFile2DMutation } from '../../app/services/cutting2d';
+import {
+    useImportFile2DMutation,
+    useImportFileDxfMutation,
+} from '../../app/services/cutting2d';
+import { updateRows } from '../../features/rowsTableSlice';
+import { DetailDxf } from '../../types/CalculatedDxf';
 
 type Props = {
     typeTable: TableTypes;
@@ -41,10 +50,17 @@ export const Table = ({ typeTable, form }: Props) => {
     const dispatch = useAppDispatch();
     const [importFile1D] = useImportFile1DMutation();
     const [importFile2D] = useImportFile2DMutation();
-    const initialRow: ICustomTableRow = {
-        number: 1,
-        detail: '',
-    };
+    const [importFileDxf] = useImportFileDxfMutation();
+    const initialRow: ICustomTableRow =
+        typeTable === TableTypes.detail2D
+            ? { number: 1 }
+            : {
+                  number: 1,
+                  detail: '',
+                  id: 0,
+                  materialId: 0,
+                  thickness: 0,
+              };
     const [rows, setRows] = useState<ICustomTableRow[]>(
         TableTypes.detail2D === typeTable ? [] : [initialRow]
     );
@@ -54,6 +70,9 @@ export const Table = ({ typeTable, form }: Props) => {
 
     useEffect(() => {
         onChange();
+        if (typeTable === TableTypes.detail2D) {
+            dispatch(updateRows(rows));
+        }
     }, [rows]);
 
     useEffect(() => {
@@ -62,16 +81,15 @@ export const Table = ({ typeTable, form }: Props) => {
                 const lengthLast = last.length;
                 Object.values(addedDetails).forEach((values) => {
                     for (let i = 1; i <= values.length; i++) {
-                        if (
-                            !last.find(
-                                (el) => el.detail === values[i - 1].designation
-                            )
-                        )
+                        if (!last.find((el) => el.detail === values[i - 1].designation))
                             last = [
                                 ...last,
                                 {
                                     number: lengthLast + i,
                                     detail: values[i - 1].designation,
+                                    id: values[i - 1].id,
+                                    materialId: values[i - 1].materialId,
+                                    thickness: values[i - 1].thickness,
                                 },
                             ];
                     }
@@ -80,17 +98,13 @@ export const Table = ({ typeTable, form }: Props) => {
             });
         }
     }, [addedDetails]);
-
     const handlerAdd = () => {
         if (
             typeTable === TableTypes.detail1D ||
             typeTable === TableTypes.workpieces ||
             typeTable === TableTypes.sizes2D
         ) {
-            setRows((last) => [
-                ...last,
-                { ...initialRow, number: last.length + 1 },
-            ]);
+            setRows((last) => [...last, { ...initialRow, number: last.length + 1 }]);
         }
         if (typeTable === TableTypes.detail2D) {
             setIsOpenModal(true);
@@ -102,9 +116,11 @@ export const Table = ({ typeTable, form }: Props) => {
             const details = changeDetails1DDownload(data);
             await downloadFileCSV1D(JSON.stringify(details));
         } else if (typeTable === TableTypes.sizes2D) {
-            console.log(data);
             const details = getListDetails2D(data);
             await downloadFileCSV2DCutting(JSON.stringify(details));
+        } else if (typeTable === TableTypes.detail2D) {
+            const details = changeDetailsDxfExport(form.getFieldsValue(), rows);
+            await downloadFileCSVDxfCutting(JSON.stringify(details));
         }
     };
 
@@ -129,9 +145,7 @@ export const Table = ({ typeTable, form }: Props) => {
                 form.setFieldsValue(result);
             }
         } else {
-            form.resetFields(
-                tableOptionsInputs[typeTable].map((el) => `${el}_${num}`)
-            );
+            form.resetFields(tableOptionsInputs[typeTable].map((el) => `${el}_${num}`));
         }
         setRows((last) => {
             const newRows = last.filter((row) => row.number !== num);
@@ -142,9 +156,7 @@ export const Table = ({ typeTable, form }: Props) => {
         }
     };
 
-    const handlerImportFile = async (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handlerImportFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setError(null);
         const files = event.target.files;
         if (files) {
@@ -159,10 +171,7 @@ export const Table = ({ typeTable, form }: Props) => {
                     setRows((last) => {
                         const lengthLast = last.length;
                         for (let i = 1; i <= responseData.length; i++) {
-                            last = [
-                                ...last,
-                                { number: lengthLast + i, detail: '' },
-                            ];
+                            last = [...last, { number: lengthLast + i }];
                         }
 
                         form.setFieldsValue({
@@ -173,17 +182,13 @@ export const Table = ({ typeTable, form }: Props) => {
                     });
                 } else if (typeTable === TableTypes.detail1D) {
                     const responseData = await importFile1D(formData).unwrap();
-                    console.log(responseData);
                     if (Object.keys(responseData[0]).length !== 2) {
                         setError(ErrorsCsv.columns);
                     }
                     setRows((last) => {
                         const lengthLast = last.length;
                         for (let i = 1; i <= responseData.length; i++) {
-                            last = [
-                                ...last,
-                                { number: lengthLast + i, detail: '' },
-                            ];
+                            last = [...last, { number: lengthLast + i }];
                         }
 
                         form.setFieldsValue({
@@ -193,7 +198,53 @@ export const Table = ({ typeTable, form }: Props) => {
                         return last;
                     });
                 } else if (typeTable === TableTypes.detail2D) {
-                    //
+                    const filterResponseData: DetailDxf[] = [];
+                    const responseData = await importFileDxf(formData).unwrap();
+                    if (Object.keys(responseData[0]).length !== 5) {
+                        setError(ErrorsCsv.columns);
+                    } else if (
+                        rows.length !== 0 &&
+                        (rows[0].materialId !== responseData[0].materialId ||
+                            rows[0].thickness !== responseData[0].thickness)
+                    ) {
+                        setError(ErrorsCsv.material);
+                    } else {
+                        const currRows = rows;
+                        let number = 1;
+                        const lengthLast = currRows.length;
+                        const numberDetails: { number: number; count: number }[] = [];
+                        for (let i = 1; i <= responseData.length; i++) {
+                            const index = currRows.findIndex(
+                                (detail) => detail.id === responseData[i - 1].id
+                            );
+                            if (index !== -1) {
+                                numberDetails.push({
+                                    number: currRows[index].number,
+                                    count: responseData[i - 1].count,
+                                });
+                            } else {
+                                filterResponseData.push(responseData[i - 1]);
+                                currRows.push({
+                                    number: lengthLast + number,
+                                    detail: responseData[i - 1].designation,
+                                    id: responseData[i - 1].id,
+                                    materialId: responseData[i - 1].materialId,
+                                    thickness: responseData[i - 1].thickness,
+                                });
+                                number += 1;
+                            }
+                        }
+                        form.setFieldsValue({
+                            ...changeFieldsDxfImport(
+                                form.getFieldsValue(),
+                                numberDetails
+                            ),
+                            ...changeDetailsDxfImport(filterResponseData, lengthLast),
+                        });
+                        setRows(() => currRows);
+                        dispatch(addAddedDetails(filterResponseData));
+                        dispatch(updateRows(currRows));
+                    }
                 }
             } catch (err) {
                 if ((err as IError).status === 400) {
@@ -269,14 +320,9 @@ export const Table = ({ typeTable, form }: Props) => {
                         Добавить
                     </Button>
                 </Flex>
-                {error !== null && (
-                    <CsvError error={error} setError={setError} />
-                )}
+                {error !== null && <CsvError error={error} setError={setError} />}
             </Flex>
-            <ModalSelectDetails
-                isOpen={isOpenModal}
-                setIsOpen={setIsOpenModal}
-            />
+            <ModalSelectDetails isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
         </>
     );
 };

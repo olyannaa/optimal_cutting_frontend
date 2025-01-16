@@ -6,6 +6,15 @@ export type TypeDataForm1D = {
     workpiecesLength: number[];
 };
 
+export type TypeDataFormDxf = {
+    details: number[];
+    workpiece: {
+        width: number;
+        height: number;
+    };
+    cuttingThickness: number;
+};
+
 export type ResponseImportFile = { length: number; count: number }[];
 
 export const cuttingApi = api.injectEndpoints({
