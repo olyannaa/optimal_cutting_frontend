@@ -1,5 +1,4 @@
 import { DetailDxf } from '../types/CalculatedDxf';
-
 const headers = new Headers();
 headers.set('Authorization', `Bearer ${localStorage.getItem('accessToken')}`);
 headers.set('Content-Type', 'application/json');
@@ -110,11 +109,14 @@ export const downloadFileCSV2DCutting = async (dataDetails: string) => {
 
 export const downloadFile2DCutting = async (
     dataCalculate2D: string,
-    typeFile: 'pdf' | 'dxf'
+    typeFile: 'pdf' | 'dxf',
+    typeCutting: '2d' | 'dxf'
 ) => {
     try {
         const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}2d/export/result/${typeFile}`,
+            `${
+                import.meta.env.VITE_APP_BASE_URL
+            }${typeCutting}/export/result/${typeFile}`,
             {
                 method: 'POST',
                 headers: headers,

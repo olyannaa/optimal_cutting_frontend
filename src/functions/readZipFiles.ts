@@ -1,12 +1,14 @@
 import JSZip from 'jszip';
 import { ResultCalculate2D } from '../types/Calculated2D';
+import { TabsOptions } from '../components/FormTabs/tabsOption';
 
 const headers = new Headers();
 headers.set('Authorization', `Bearer ${localStorage.getItem('accessToken')}`);
 headers.set('Content-Type', 'application/json');
 
 export const getPNG2DCuttingFromSizes = async (
-    dataCalculate1D: ResultCalculate2D
+    dataCalculate1D: ResultCalculate2D,
+    tab: TabsOptions
 ) => {
     try {
         const response = await fetch(

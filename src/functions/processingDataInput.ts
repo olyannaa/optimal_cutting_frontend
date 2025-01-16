@@ -100,7 +100,6 @@ export const changeDetails2DImport = (dataFile: Detail2D[], startIndex: number) 
         result = { ...result, [`width_${i + 1 + startIndex}`]: el.width };
         result = { ...result, [`length_${i + 1 + startIndex}`]: el.height };
     });
-    console.log(result);
     return result;
 };
 
@@ -111,7 +110,7 @@ export const changeDetailsDxfCalculate = (
     const result: number[] = [];
     Object.values(dataRows).forEach((el) => {
         for (let i = 0; i < Number(dataInputs[`count_${el.number}`]); i++) {
-            result.push(el.id);
+            result.push(el.id || 0);
         }
     });
     return result;
@@ -123,9 +122,11 @@ export const changeDetailsDxfExport = (
 ) => {
     const result: DetailDxf[] = Object.values(dataRows).map((el) => {
         const detail: DetailDxf = {
-            id: el.id,
-            designation: el.detail,
+            id: el.id || 0,
+            designation: el.detail || '',
             count: Number(dataInputs[`count_${el.number}`]),
+            materialId: el.materialId || 0,
+            thickness: el.thickness || 0,
         };
         return detail;
     });
@@ -138,4 +139,15 @@ export const changeDetailsDxfImport = (dataFile: DetailDxf[], startIndex: number
         result = { ...result, [`count_${i + 1 + startIndex}`]: el.count };
     });
     return result;
+};
+
+export const changeFieldsDxfImport = (
+    fieldsValues: { [key: string]: number },
+    numberDetails: { number: number; count: number }[]
+) => {
+    numberDetails.forEach((el) => {
+        const count = fieldsValues[`count_${el.number}`];
+        fieldsValues[`count_${el.number}`] = count ? count + el.count : el.count;
+    });
+    return fieldsValues;
 };

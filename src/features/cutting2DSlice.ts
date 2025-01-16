@@ -11,7 +11,12 @@ const initialState: ResultCalculate2D = {
 const slice = createSlice({
     name: 'cutting2D',
     initialState,
-    reducers: {},
+    reducers: {
+        resetCutting2D: (state) => {
+            state.workpieces = [];
+            state.totalPercentUsage = 0;
+        },
+    },
     extraReducers: (builder) => {
         builder.addMatcher(
             cutting2DApi.endpoints.calculate2D.matchFulfilled,
@@ -19,9 +24,17 @@ const slice = createSlice({
                 state.workpieces = [...action.payload.workpieces];
                 state.totalPercentUsage = action.payload.totalPercentUsage;
             }
-        );
+        ),
+            builder.addMatcher(
+                cutting2DApi.endpoints.calculateDxf.matchFulfilled,
+                (state, action) => {
+                    state.workpieces = [...action.payload.workpieces];
+                    state.totalPercentUsage = action.payload.totalPercentUsage;
+                }
+            );
     },
 });
 
 export default slice.reducer;
+export const { resetCutting2D } = slice.actions;
 export const selectCalculateData2D = (state: RootState) => state.cutting2D;

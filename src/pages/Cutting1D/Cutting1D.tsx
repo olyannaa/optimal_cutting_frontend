@@ -23,7 +23,7 @@ export const Cutting1D = () => {
             {dataCalculate1D.workpieces.length !== 0 && (
                 <>
                     <Image src={image} preview={false} />
-                    <TableResult />
+                    <TableResult result1D={dataCalculate1D} />
                 </>
             )}
         </Flex>

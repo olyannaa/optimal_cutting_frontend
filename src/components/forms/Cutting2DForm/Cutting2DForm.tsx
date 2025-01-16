@@ -1,7 +1,7 @@
-import { Button, Form, Input, InputNumber, Select } from 'antd';
+import { Button, Form, InputNumber, Select } from 'antd';
 import { TableTypes } from '../../../types/typeTable';
 import { Table } from '../../custom-table/Table';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormTabs, FormTabsType } from '../../FormTabs/FormTabs';
 import { TabsOptions } from '../../FormTabs/tabsOption';
 import { FormContainer } from '../../FormContainer/FormContainer';
@@ -18,10 +18,11 @@ import {
     getListDetails2D,
 } from '../../../functions/processingDataInput';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
-import { setLoading } from '../../../features/statePageSlice';
+import { changeTab, setLoading } from '../../../features/statePageSlice';
 import { ICalculateDxf } from '../../../types/CalculatedDxf';
-import { selectAddedDetails } from '../../../features/selectDetails2DSlice';
-import { selectRowsTable } from '../../../features/rowsTableSlice';
+import { selectRowsTable, updateRows } from '../../../features/rowsTableSlice';
+import { resetCutting2D } from '../../../features/cutting2DSlice';
+import { clearAddDetails } from '../../../features/selectDetails2DSlice';
 
 export const Cutting2DForm = () => {
     const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ export const Cutting2DForm = () => {
     const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
     const [modeBlank, setModeBlank] = useState<TabsOptions>(TabsOptions.valueFirst);
     const { data } = useGetWorkpiecesQuery();
+
     const workpieces: Array<{ value: number; label: string }> = data
         ? data.map((key) => {
               const item = {
@@ -120,9 +122,8 @@ export const Cutting2DForm = () => {
 
         if (isValidatedFormsDxf && tab === TabsOptions.valueFirst) {
             dispatch(setLoading(true));
-            console.log(formThickness.getFieldValue('cuttingThickness'));
             let data: ICalculateDxf = {
-                details: changeDetailsDxfCalculate(
+                detailsId: changeDetailsDxfCalculate(
                     formDetailDxf.getFieldsValue(),
                     dataRows
                 ),
@@ -165,6 +166,19 @@ export const Cutting2DForm = () => {
         setTab: setModeBlank,
         tab: modeBlank,
     };
+
+    useEffect(() => {
+        if (tab === TabsOptions.valueFirst) formDetailDxf.resetFields();
+        else formDetail2D.resetFields();
+        if (modeBlank === TabsOptions.valueFirst) formStandardWorkpiece.resetFields();
+        else formCustomWorkpiece.resetFields();
+        formThickness.resetFields();
+        dispatch(resetCutting2D());
+        dispatch(clearAddDetails());
+        dispatch(updateRows([]));
+        dispatch(changeTab(tab));
+    }, [tab]);
+
     return (
         <FormContainer>
             <div className='formgap'>
@@ -180,7 +194,15 @@ export const Cutting2DForm = () => {
                 <FormTabs {...propsSelect}></FormTabs>
                 {modeBlank === TabsOptions.valueFirst && (
                     <Form form={formStandardWorkpiece}>
-                        <Form.Item name='workpiece'>
+                        <Form.Item
+                            name='workpiece'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '',
+                                },
+                            ]}
+                        >
                             <Select
                                 style={{ width: '90%' }}
                                 placeholder='Выбрать заготовку'
@@ -194,24 +216,53 @@ export const Cutting2DForm = () => {
                         form={formCustomWorkpiece}
                         className={styles['cutting2D__form-wrapper']}
                     >
-                        <Form.Item name='length'>
-                            <Input className={styles['cutting2D__input']}></Input>
+                        <Form.Item
+                            name='length'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                min={0}
+                                className={styles['cutting2D__input']}
+                            ></InputNumber>
                         </Form.Item>
                         <img src={multiple} />
-                        <Form.Item name='width'>
-                            <Input className={styles['cutting2D__input']}></Input>
+                        <Form.Item
+                            name='width'
+                            rules={[
+                                {
+                                    required: true,
+                                    message: '',
+                                },
+                            ]}
+                        >
+                            <InputNumber
+                                min={0}
+                                className={styles['cutting2D__input']}
+                            ></InputNumber>
                         </Form.Item>
                     </Form>
                 )}
                 <h2 style={{ marginTop: '38px' }}>Толщина реза</h2>
                 <Form form={formThickness} style={{ marginBottom: '28px' }}>
-                    <Form.Item name='cuttingThickness'>
+                    <Form.Item
+                        name='cuttingThickness'
+                        rules={[
+                            {
+                                required: true,
+                                message: '',
+                            },
+                        ]}
+                    >
                         <InputNumber
                             className={styles['cutting2D__input']}
                             size={'middle'}
                             min={0}
                             controls
-                            defaultValue={0.3}
                             step={0.1}
                         />
                     </Form.Item>
