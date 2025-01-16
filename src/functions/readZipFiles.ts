@@ -12,7 +12,9 @@ export const getPNG2DCuttingFromSizes = async (
 ) => {
     try {
         const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}2d/export/result/png`,
+            `${import.meta.env.VITE_APP_BASE_URL}${
+                tab === TabsOptions.valueFirst ? 'dxf' : '2d'
+            }/export/result/png`,
             {
                 method: 'POST',
                 headers: headers,
