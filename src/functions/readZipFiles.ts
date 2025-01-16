@@ -1,10 +1,9 @@
 import JSZip from 'jszip';
 import { ResultCalculate2D } from '../types/Calculated2D';
 import { TabsOptions } from '../components/FormTabs/tabsOption';
+import { getHeaders } from './getHeaders';
+import { export2DPng } from './endpoints/FileEndpoints';
 
-const headers = new Headers();
-headers.set('Authorization', `Bearer ${localStorage.getItem('accessToken')}`);
-headers.set('Content-Type', 'application/json');
 
 export const getPNG2DCuttingFromSizes = async (
     dataCalculate1D: ResultCalculate2D,
@@ -21,6 +20,7 @@ export const getPNG2DCuttingFromSizes = async (
                 body: JSON.stringify(dataCalculate1D),
             }
         );
+
         if (!response.ok) {
             throw new Error('Ошибка при получении данных.');
         }
@@ -32,9 +32,9 @@ export const getPNG2DCuttingFromSizes = async (
         // Получение файлов в ZIP
         const images: { name: string; url: string }[] = [];
         for (const [fileName, file] of Object.entries(zip.files)) {
-            if (!fileName.endsWith('.png')) continue; // Фильтруем только изображения
-            const content = await file.async('blob'); // Извлекаем содержимое файла как Blob
-            const url = URL.createObjectURL(content); // Создаем URL для отображения
+            if (!fileName.endsWith('.png')) continue;
+            const content = await file.async('blob');
+            const url = URL.createObjectURL(content);
             images.push({ name: fileName, url });
         }
 
