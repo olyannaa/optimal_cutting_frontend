@@ -1,4 +1,4 @@
-import { Flex, Input } from 'antd';
+import { Flex } from 'antd';
 import { TableInput } from '../../custom-input/TableInput/TableInput';
 import styles from './TableCell.module.css';
 import { nameColumns } from '../../../const/tableOptions';
