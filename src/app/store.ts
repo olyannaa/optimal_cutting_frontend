@@ -8,7 +8,6 @@ import maxLengthWorkpieces from '../features/maxLengthWorkpieces';
 import dxf from '../features/dxfSlice';
 import selectDetails2D from '../features/selectDetails2DSlice';
 import statePage from '../features/statePageSlice';
-import cuttingDxf from '../features/cuttingDxfSlice';
 import rowsTable from '../features/rowsTableSlice';
 
 export const store = configureStore({
@@ -21,7 +20,6 @@ export const store = configureStore({
         dxf,
         selectDetails2D,
         statePage,
-        cuttingDxf,
         rowsTable,
     },
     middleware: (getDefaultMiddleware) =>

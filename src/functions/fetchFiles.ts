@@ -143,7 +143,7 @@ export const downloadFileCSVDxfCutting = async (dataDetails: string) => {
             `${import.meta.env.VITE_APP_BASE_URL}dxf/export/csv`,
             {
                 method: 'POST',
-                headers: headers,
+                headers: getHeaders(),
                 body: dataDetails,
             }
         );

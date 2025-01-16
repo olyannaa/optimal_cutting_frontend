@@ -4,7 +4,6 @@ import { TabsOptions } from '../components/FormTabs/tabsOption';
 import { getHeaders } from './getHeaders';
 import { export2DPng } from './endpoints/FileEndpoints';
 
-
 export const getPNG2DCuttingFromSizes = async (
     dataCalculate1D: ResultCalculate2D,
     tab: TabsOptions
@@ -16,7 +15,7 @@ export const getPNG2DCuttingFromSizes = async (
             }/export/result/png`,
             {
                 method: 'POST',
-                headers: headers,
+                headers: getHeaders(),
                 body: JSON.stringify(dataCalculate1D),
             }
         );
