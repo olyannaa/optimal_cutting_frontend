@@ -40,6 +40,7 @@ export const NewWorkpiece = () => {
                     key={name}
                     name={name}
                     rules={[{ required: true, message: '' }]}
+                    className={styles['detail-form__item']}
                 >
                     <Input placeholder={placeholder} />
                 </Form.Item>

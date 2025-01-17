@@ -76,6 +76,7 @@ export const AddDetailForm = ({
                     key={name}
                     name={name}
                     rules={[{ required: true, message: '' }]}
+                    className={styles['detail-form__item']}
                 >
                     <Input
                         className={styles['detail-form__input']}
@@ -96,6 +97,7 @@ export const AddDetailForm = ({
                         message: '',
                     },
                 ]}
+                className={styles['detail-form__item']}
             >
                 <Select
                     placeholder='Материал'
