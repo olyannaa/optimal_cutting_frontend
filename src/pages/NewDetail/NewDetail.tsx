@@ -1,4 +1,4 @@
-import { Flex, Image } from 'antd';
+import { Flex } from 'antd';
 import { FormContainer } from '../../components/FormContainer/FormContainer';
 import { FormTabs, FormTabsType } from '../../components/FormTabs/FormTabs';
 import { AddDetailForm } from '../../components/forms/AddDXF/AddDetailForm/AddDetailForm';
@@ -25,16 +25,20 @@ export const NewDetail = () => {
                     {tab === TabsOptions.valueFirst && (
                         <AddDetailForm setImg={setImg}></AddDetailForm>
                     )}
-                    {tab === TabsOptions.valueSecond && <NewWorkpiece></NewWorkpiece>}
+                    {tab === TabsOptions.valueSecond && (
+                        <NewWorkpiece setImg={setImg}></NewWorkpiece>
+                    )}
                 </Flex>
             </FormContainer>
             <div className={styles['detail__img-container']}>
                 {img && (
-                    <Image
+                    <img
                         src={img}
-                        preview={false}
-                        style={{ width: '100%', height: '100%' }}
-                    ></Image>
+                        style={{
+                            height: '100%',
+                            padding: '40px',
+                        }}
+                    ></img>
                 )}
             </div>
         </Flex>
