@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Flex, Form } from 'antd';
 import styles from './Table.module.css';
 import { TableRow } from './TableRow/TableRow';
@@ -21,7 +22,7 @@ import { useImportFile1DMutation } from '../../app/services/cutting';
 import { ICustomTableRow } from '../../types/CustomTable';
 import { CsvError } from './CsvError/CsvError';
 import { IError } from '../../types/Error';
-import { tableOptionsInputs } from '../const/tableOptions';
+import { tableOptionsInputs } from '../../const/tableOptions';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { updateMaxLength } from '../../features/maxLengthWorkpieces';
 import { TableTypes } from '../../types/typeTable';
@@ -81,7 +82,11 @@ export const Table = ({ typeTable, form }: Props) => {
                 const lengthLast = last.length;
                 Object.values(addedDetails).forEach((values) => {
                     for (let i = 1; i <= values.length; i++) {
-                        if (!last.find((el) => el.detail === values[i - 1].designation))
+                        if (
+                            !last.find(
+                                (el) => el.detail === values[i - 1].designation
+                            )
+                        )
                             last = [
                                 ...last,
                                 {
@@ -104,7 +109,10 @@ export const Table = ({ typeTable, form }: Props) => {
             typeTable === TableTypes.workpieces ||
             typeTable === TableTypes.sizes2D
         ) {
-            setRows((last) => [...last, { ...initialRow, number: last.length + 1 }]);
+            setRows((last) => [
+                ...last,
+                { ...initialRow, number: last.length + 1 },
+            ]);
         }
         if (typeTable === TableTypes.detail2D) {
             setIsOpenModal(true);
@@ -145,7 +153,9 @@ export const Table = ({ typeTable, form }: Props) => {
                 form.setFieldsValue(result);
             }
         } else {
-            form.resetFields(tableOptionsInputs[typeTable].map((el) => `${el}_${num}`));
+            form.resetFields(
+                tableOptionsInputs[typeTable].map((el) => `${el}_${num}`)
+            );
         }
         setRows((last) => {
             const newRows = last.filter((row) => row.number !== num);
@@ -156,7 +166,9 @@ export const Table = ({ typeTable, form }: Props) => {
         }
     };
 
-    const handlerImportFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handlerImportFile = async (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         setError(null);
         const files = event.target.files;
         if (files) {
@@ -212,7 +224,10 @@ export const Table = ({ typeTable, form }: Props) => {
                         const currRows = rows;
                         let number = 1;
                         const lengthLast = currRows.length;
-                        const numberDetails: { number: number; count: number }[] = [];
+                        const numberDetails: {
+                            number: number;
+                            count: number;
+                        }[] = [];
                         for (let i = 1; i <= responseData.length; i++) {
                             const index = currRows.findIndex(
                                 (detail) => detail.id === responseData[i - 1].id
@@ -239,7 +254,10 @@ export const Table = ({ typeTable, form }: Props) => {
                                 form.getFieldsValue(),
                                 numberDetails
                             ),
-                            ...changeDetailsDxfImport(filterResponseData, lengthLast),
+                            ...changeDetailsDxfImport(
+                                filterResponseData,
+                                lengthLast
+                            ),
                         });
                         setRows(() => currRows);
                         dispatch(addAddedDetails(filterResponseData));
@@ -320,9 +338,14 @@ export const Table = ({ typeTable, form }: Props) => {
                         Добавить
                     </Button>
                 </Flex>
-                {error !== null && <CsvError error={error} setError={setError} />}
+                {error !== null && (
+                    <CsvError error={error} setError={setError} />
+                )}
             </Flex>
-            <ModalSelectDetails isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
+            <ModalSelectDetails
+                isOpen={isOpenModal}
+                setIsOpen={setIsOpenModal}
+            />
         </>
     );
 };

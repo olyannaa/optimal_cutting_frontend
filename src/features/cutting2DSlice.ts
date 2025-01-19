@@ -24,14 +24,14 @@ const slice = createSlice({
                 state.workpieces = [...action.payload.workpieces];
                 state.totalPercentUsage = action.payload.totalPercentUsage;
             }
-        ),
-            builder.addMatcher(
-                cutting2DApi.endpoints.calculateDxf.matchFulfilled,
-                (state, action) => {
-                    state.workpieces = [...action.payload.workpieces];
-                    state.totalPercentUsage = action.payload.totalPercentUsage;
-                }
-            );
+        );
+        builder.addMatcher(
+            cutting2DApi.endpoints.calculateDxf.matchFulfilled,
+            (state, action) => {
+                state.workpieces = [...action.payload.workpieces];
+                state.totalPercentUsage = action.payload.totalPercentUsage;
+            }
+        );
     },
 });
 

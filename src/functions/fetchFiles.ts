@@ -1,14 +1,19 @@
+import {
+    export1DPngEndpoint,
+    exportCsv1DEndpoint,
+    exportCsv2DEndpoint,
+    exportResult1DEndpoint,
+    getBaseApi,
+} from './endpoints/FileEndpoints';
 import { getHeaders } from './getHeaders';
 export const getPNG1DCutting = async (dataCalculate1D: string) => {
+    console.log();
     try {
-        const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}1d/export/result/png`,
-            {
-                method: 'POST',
-                headers: getHeaders(),
-                body: dataCalculate1D,
-            }
-        );
+        const response = await fetch(export1DPngEndpoint(), {
+            method: 'POST',
+            headers: getHeaders(),
+            body: dataCalculate1D,
+        });
         if (!response.ok) {
             throw new Error('Ошибка при получении данных.');
         }
@@ -25,14 +30,11 @@ export const downloadFile1DCutting = async (
     typeFile: 'pdf' | 'csv'
 ) => {
     try {
-        const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}1d/export/result/${typeFile}`,
-            {
-                method: 'POST',
-                headers: getHeaders(),
-                body: dataCalculate1D,
-            }
-        );
+        const response = await fetch(exportResult1DEndpoint() + typeFile, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: dataCalculate1D,
+        });
         if (!response.ok) {
             throw new Error('Ошибка при получении данных.');
         }
@@ -52,14 +54,11 @@ export const downloadFile1DCutting = async (
 
 export const downloadFileCSV1D = async (dataDetails: string) => {
     try {
-        const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}1d/export/csv`,
-            {
-                method: 'POST',
-                headers: getHeaders(),
-                body: dataDetails,
-            }
-        );
+        const response = await fetch(exportCsv1DEndpoint(), {
+            method: 'POST',
+            headers: getHeaders(),
+            body: dataDetails,
+        });
         if (!response.ok) {
             throw new Error('Ошибка при получении данных.');
         }
@@ -79,14 +78,11 @@ export const downloadFileCSV1D = async (dataDetails: string) => {
 
 export const downloadFileCSV2DCutting = async (dataDetails: string) => {
     try {
-        const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}2d/export/csv`,
-            {
-                method: 'POST',
-                headers: getHeaders(),
-                body: dataDetails,
-            }
-        );
+        const response = await fetch(exportCsv2DEndpoint(), {
+            method: 'POST',
+            headers: getHeaders(),
+            body: dataDetails,
+        });
         if (!response.ok) {
             throw new Error('Ошибка при получении данных.');
         }
@@ -111,9 +107,7 @@ export const downloadFile2DCutting = async (
 ) => {
     try {
         const response = await fetch(
-            `${
-                import.meta.env.VITE_APP_BASE_URL
-            }${typeCutting}/export/result/${typeFile}`,
+            `${getBaseApi()}${typeCutting}/export/result/${typeFile}`,
             {
                 method: 'POST',
                 headers: getHeaders(),
@@ -139,14 +133,11 @@ export const downloadFile2DCutting = async (
 
 export const downloadFileCSVDxfCutting = async (dataDetails: string) => {
     try {
-        const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}dxf/export/csv`,
-            {
-                method: 'POST',
-                headers: getHeaders(),
-                body: dataDetails,
-            }
-        );
+        const response = await fetch(`${getBaseApi()}dxf/export/csv`, {
+            method: 'POST',
+            headers: getHeaders(),
+            body: dataDetails,
+        });
         if (!response.ok) {
             throw new Error('Ошибка при получении данных.');
         }

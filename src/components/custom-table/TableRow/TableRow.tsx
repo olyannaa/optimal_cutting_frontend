@@ -1,6 +1,6 @@
 import { Flex, Image } from 'antd';
 import styles from './TableRow.module.css';
-import { tableOptions } from '../../const/tableOptions';
+import { tableOptions } from '../../../const/tableOptions';
 import { TableCell } from '../TableCell/TableCell';
 import { ICustomTableRow } from '../../../types/CustomTable';
 import srcClose from '../../../assets/icons/close.svg';
@@ -41,7 +41,7 @@ export const TableRow = ({
                     <Image
                         src={srcClose}
                         preview={false}
-                        onClick={() => deleteRow(rowInfo.number, rowInfo.detail)}
+                        onClick={() => deleteRow(rowInfo.number, rowInfo.detail || '')}
                         style={{ cursor: 'pointer' }}
                     />
                 </Flex>

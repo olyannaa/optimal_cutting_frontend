@@ -19,6 +19,7 @@
     --light-red: rgba(255, 241, 240, 1);
     --border-red: rgba(255, 204, 199, 1);
     --background-scroll-bar: #f6f6f6;
+    --ant-form-item-margin-bottom: 0px;
 }
 
 * {
@@ -112,9 +113,9 @@ code {
     padding: 8px;
 }
 
-.css-var-r1.ant-form-css-var {
+/* .css-var-r1.ant-form-css-var {
     --ant-form-item-margin-bottom: 0px;
-}
+} */
 
 ::-webkit-scrollbar {
     width: 0.57vw;

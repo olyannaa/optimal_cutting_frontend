@@ -2,7 +2,7 @@ import JSZip from 'jszip';
 import { ResultCalculate2D } from '../types/Calculated2D';
 import { TabsOptions } from '../components/FormTabs/tabsOption';
 import { getHeaders } from './getHeaders';
-import { export2DPng } from './endpoints/FileEndpoints';
+import { getBaseApi } from './endpoints/FileEndpoints';
 
 export const getPNG2DCuttingFromSizes = async (
     dataCalculate1D: ResultCalculate2D,
@@ -10,7 +10,7 @@ export const getPNG2DCuttingFromSizes = async (
 ) => {
     try {
         const response = await fetch(
-            `${import.meta.env.VITE_APP_BASE_URL}${
+            `${getBaseApi()}${
                 tab === TabsOptions.valueFirst ? 'dxf' : '2d'
             }/export/result/png`,
             {

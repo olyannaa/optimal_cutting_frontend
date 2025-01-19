@@ -1,7 +1,7 @@
 import { Flex } from 'antd';
 import styles from './Header.module.css';
 import { NavLink } from 'react-router-dom';
-import { linksNavHeader } from '../const/linksNavHeader';
+import { linksNavHeader } from '../../const/linksNavHeader';
 
 export const Header = () => {
     return (

@@ -28,7 +28,9 @@ export const Cutting2D = () => {
     };
 
     useEffect(() => {
-        getPng();
+        if (dataCalculate2D.workpieces.length) {
+            getPng();
+        }
     }, [dataCalculate2D]);
 
     return (
@@ -47,10 +49,8 @@ export const Cutting2D = () => {
                         <Image src={img.url} preview={false} />
                     </div>
                 ))}
-            {dataCalculate2D.workpieces[0] && !isLoading ? (
+            {dataCalculate2D.workpieces[0] && !isLoading && (
                 <TableResult result2D={dataCalculate2D} />
-            ) : (
-                ''
             )}
         </Flex>
     );

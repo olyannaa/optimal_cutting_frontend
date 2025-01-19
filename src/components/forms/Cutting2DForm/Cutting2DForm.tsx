@@ -32,11 +32,15 @@ export const Cutting2DForm = () => {
     const [formStandardWorkpiece] = Form.useForm();
     const [formCustomWorkpiece] = Form.useForm();
     const [formThickness] = Form.useForm();
-    const [getCalculate2D, { isLoading: isLoading2D }] = useCalculate2DMutation();
-    const [getCalculateDxf, { isLoading: isLoadingDxf }] = useCalculateDxfMutation();
+    const [getCalculate2D, { isLoading: isLoading2D }] =
+        useCalculate2DMutation();
+    const [getCalculateDxf, { isLoading: isLoadingDxf }] =
+        useCalculateDxfMutation();
     const requiredRule = [{ required: true, message: '' }];
     const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
-    const [modeBlank, setModeBlank] = useState<TabsOptions>(TabsOptions.valueFirst);
+    const [modeBlank, setModeBlank] = useState<TabsOptions>(
+        TabsOptions.valueFirst
+    );
     const { data } = useGetWorkpiecesQuery();
 
     const workpieces: Array<{ value: number; label: string }> = data
@@ -102,7 +106,8 @@ export const Cutting2DForm = () => {
             let data: ICalculate2D = {
                 details: getListDetails2D(formDetail2D.getFieldsValue()),
                 workpiece: { width: 0, height: 0 },
-                cuttingThickness: formThickness.getFieldValue('cuttingThickness'),
+                cuttingThickness:
+                    formThickness.getFieldValue('cuttingThickness'),
             };
             if (modeBlank === TabsOptions.valueFirst) {
                 data = {
@@ -115,8 +120,12 @@ export const Cutting2DForm = () => {
                 data = {
                     ...data,
                     workpiece: {
-                        width: Number(formCustomWorkpiece.getFieldValue('width')),
-                        height: Number(formCustomWorkpiece.getFieldValue('length')),
+                        width: Number(
+                            formCustomWorkpiece.getFieldValue('width')
+                        ),
+                        height: Number(
+                            formCustomWorkpiece.getFieldValue('length')
+                        ),
                     },
                 };
             }
@@ -135,7 +144,8 @@ export const Cutting2DForm = () => {
                     dataRows
                 ),
                 workpiece: { width: 0, height: 0 },
-                cuttingThickness: formThickness.getFieldValue('cuttingThickness'),
+                cuttingThickness:
+                    formThickness.getFieldValue('cuttingThickness'),
             };
             if (modeBlank === TabsOptions.valueFirst) {
                 data = {
@@ -148,8 +158,12 @@ export const Cutting2DForm = () => {
                 data = {
                     ...data,
                     workpiece: {
-                        width: Number(formCustomWorkpiece.getFieldValue('width')),
-                        height: Number(formCustomWorkpiece.getFieldValue('length')),
+                        width: Number(
+                            formCustomWorkpiece.getFieldValue('width')
+                        ),
+                        height: Number(
+                            formCustomWorkpiece.getFieldValue('length')
+                        ),
                     },
                 };
             }
@@ -177,7 +191,8 @@ export const Cutting2DForm = () => {
     useEffect(() => {
         if (tab === TabsOptions.valueFirst) formDetailDxf.resetFields();
         else formDetail2D.resetFields();
-        if (modeBlank === TabsOptions.valueFirst) formStandardWorkpiece.resetFields();
+        if (modeBlank === TabsOptions.valueFirst)
+            formStandardWorkpiece.resetFields();
         else formCustomWorkpiece.resetFields();
         formThickness.resetFields();
         dispatch(resetCutting2D());
@@ -192,7 +207,10 @@ export const Cutting2DForm = () => {
                 <h2>Детали</h2>
                 <FormTabs {...propsMode} />
                 {tab === TabsOptions.valueFirst && (
-                    <Table typeTable={TableTypes.detail2D} form={formDetailDxf} />
+                    <Table
+                        typeTable={TableTypes.detail2D}
+                        form={formDetailDxf}
+                    />
                 )}
                 {tab === TabsOptions.valueSecond && (
                     <Table typeTable={TableTypes.sizes2D} form={formDetail2D} />
@@ -215,14 +233,22 @@ export const Cutting2DForm = () => {
                         form={formCustomWorkpiece}
                         className={styles['cutting2D__form-wrapper']}
                     >
-                        <Form.Item name='length' rules={requiredRule}>
+                        <Form.Item
+                            name='length'
+                            rules={requiredRule}
+                            style={{ marginBottom: 0 }}
+                        >
                             <InputNumber
                                 min={0}
                                 className={styles['cutting2D__input']}
                             ></InputNumber>
                         </Form.Item>
                         <img width={16} src={multiple} />
-                        <Form.Item name='width' rules={requiredRule}>
+                        <Form.Item
+                            name='width'
+                            rules={requiredRule}
+                            style={{ marginBottom: 0 }}
+                        >
                             <InputNumber
                                 min={0}
                                 className={styles['cutting2D__input']}

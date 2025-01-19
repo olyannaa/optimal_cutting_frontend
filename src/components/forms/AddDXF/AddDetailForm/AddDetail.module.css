@@ -6,3 +6,7 @@
     gap: 15px;
     flex-direction: column;
 }
+
+.detail-form__item {
+    margin-bottom: 0;
+}

@@ -2,7 +2,7 @@ import { Flex, Image } from 'antd';
 import srcError from '../../../assets/icons/error.svg';
 import srcClose from '../../../assets/icons/close.svg';
 import styles from './CsvError.module.css';
-import { CsvErrors } from '../../const/CsvErrors';
+import { CsvErrors } from '../../../const/CsvErrors';
 import { ErrorsCsv } from '../../../types/typeErrorsCsv';
 
 type Props = {

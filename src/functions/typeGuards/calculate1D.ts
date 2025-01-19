@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ICalculate1D } from '../../types/Calculated1D';
 
 export function isICalculate1D(obj: any): obj is ICalculate1D {
@@ -6,7 +7,7 @@ export function isICalculate1D(obj: any): obj is ICalculate1D {
         obj !== null &&
         Array.isArray(obj.workpieces) &&
         obj.workpieces.every(
-            (workpiece) =>
+            (workpiece: { length: any; details: any[]; percentUsage: any }) =>
                 typeof workpiece.length === 'number' &&
                 Array.isArray(workpiece.details) &&
                 workpiece.details.every(
