@@ -4,9 +4,17 @@ import {
     useNewWorkpieceMutation,
 } from '../../../../app/services/addDxf';
 import styles from '../AddDetailForm/AddDetail.module.css';
+import { useEffect } from 'react';
 
-export const NewWorkpiece = () => {
+export const NewWorkpiece = ({
+    setImg,
+}: {
+    setImg: (value: string) => void;
+}) => {
     const [addWorkpiece, { isLoading }] = useNewWorkpieceMutation();
+    useEffect(() => {
+        setImg('');
+    }, []);
 
     const handleSubmit = async (data: ReqWorkpiece) => {
         const result = await addWorkpiece(data);
