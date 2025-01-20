@@ -79,18 +79,13 @@ export const Table = ({ typeTable, form }: Props) => {
     useEffect(() => {
         if (typeTable === TableTypes.detail2D) {
             setRows((last) => {
-                const lengthLast = last.length;
                 Object.values(addedDetails).forEach((values) => {
                     for (let i = 1; i <= values.length; i++) {
-                        if (
-                            !last.find(
-                                (el) => el.detail === values[i - 1].designation
-                            )
-                        )
+                        if (!last.find((el) => el.detail === values[i - 1].designation))
                             last = [
                                 ...last,
                                 {
-                                    number: lengthLast + i,
+                                    number: last.length + 1,
                                     detail: values[i - 1].designation,
                                     id: values[i - 1].id,
                                     materialId: values[i - 1].materialId,
@@ -109,10 +104,7 @@ export const Table = ({ typeTable, form }: Props) => {
             typeTable === TableTypes.workpieces ||
             typeTable === TableTypes.sizes2D
         ) {
-            setRows((last) => [
-                ...last,
-                { ...initialRow, number: last.length + 1 },
-            ]);
+            setRows((last) => [...last, { ...initialRow, number: last.length + 1 }]);
         }
         if (typeTable === TableTypes.detail2D) {
             setIsOpenModal(true);
@@ -153,9 +145,7 @@ export const Table = ({ typeTable, form }: Props) => {
                 form.setFieldsValue(result);
             }
         } else {
-            form.resetFields(
-                tableOptionsInputs[typeTable].map((el) => `${el}_${num}`)
-            );
+            form.resetFields(tableOptionsInputs[typeTable].map((el) => `${el}_${num}`));
         }
         setRows((last) => {
             const newRows = last.filter((row) => row.number !== num);
@@ -166,9 +156,7 @@ export const Table = ({ typeTable, form }: Props) => {
         }
     };
 
-    const handlerImportFile = async (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handlerImportFile = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setError(null);
         const files = event.target.files;
         if (files) {
@@ -254,10 +242,7 @@ export const Table = ({ typeTable, form }: Props) => {
                                 form.getFieldsValue(),
                                 numberDetails
                             ),
-                            ...changeDetailsDxfImport(
-                                filterResponseData,
-                                lengthLast
-                            ),
+                            ...changeDetailsDxfImport(filterResponseData, lengthLast),
                         });
                         setRows(() => currRows);
                         dispatch(addAddedDetails(filterResponseData));
@@ -338,14 +323,9 @@ export const Table = ({ typeTable, form }: Props) => {
                         Добавить
                     </Button>
                 </Flex>
-                {error !== null && (
-                    <CsvError error={error} setError={setError} />
-                )}
+                {error !== null && <CsvError error={error} setError={setError} />}
             </Flex>
-            <ModalSelectDetails
-                isOpen={isOpenModal}
-                setIsOpen={setIsOpenModal}
-            />
+            <ModalSelectDetails isOpen={isOpenModal} setIsOpen={setIsOpenModal} />
         </>
     );
 };
