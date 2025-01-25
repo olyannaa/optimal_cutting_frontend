@@ -35,7 +35,7 @@ export const NewDetail = () => {
                     <img
                         src={img}
                         style={{
-                            height: '100%',
+                            width: '100%',
                             padding: '40px',
                         }}
                     ></img>
