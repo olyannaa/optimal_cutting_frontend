@@ -41,11 +41,7 @@ export const TableInput = ({ name, value, typeCell, typeTable }: Props) => {
                     className={styles.tableInput}
                     size={typeCell === CellTypes.count ? 'small' : 'middle'}
                     min={1}
-                    max={
-                        typeTable === TableTypes.detail1D && typeCell === CellTypes.length
-                            ? maxLength.maxLength
-                            : 1000000000
-                    }
+                    max={1000000000}
                     controls={typeCell === CellTypes.count}
                 />
             )}

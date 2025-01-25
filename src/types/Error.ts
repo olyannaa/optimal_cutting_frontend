@@ -5,3 +5,9 @@ export interface IError {
     status: number;
     originalStatus: number;
 }
+
+export interface ICalculateError {
+    data: string;
+    status: number;
+    originalStatus: number;
+}
