@@ -33,7 +33,6 @@ export const TableRow = ({
                     typeCell={CellTypes[col]}
                     rowInfo={rowInfo}
                     key={i}
-                    typeTable={typeTable}
                 />
             ))}
             {!isHeader && (countRows! > 1 || typeTable === TableTypes.detail2D) && (

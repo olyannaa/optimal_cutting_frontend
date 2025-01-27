@@ -24,7 +24,6 @@ import { CsvError } from './CsvError/CsvError';
 import { IError } from '../../types/Error';
 import { tableOptionsInputs } from '../../const/tableOptions';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { updateMaxLength } from '../../features/maxLengthWorkpieces';
 import { TableTypes } from '../../types/typeTable';
 import { ErrorsCsv } from '../../types/typeErrorsCsv';
 import { DownloadButton } from '../buttons/DownloadButton';
@@ -70,7 +69,6 @@ export const Table = ({ typeTable, form }: Props) => {
     const addedDetails = useAppSelector(selectAddedDetails);
 
     useEffect(() => {
-        onChange();
         if (typeTable === TableTypes.detail2D) {
             dispatch(updateRows(rows));
         }
@@ -257,14 +255,6 @@ export const Table = ({ typeTable, form }: Props) => {
         }
     };
 
-    const onChange = () => {
-        if (typeTable === TableTypes.workpieces) {
-            let data: number[] = Object.values(form.getFieldsValue());
-            data = data.filter((el) => el !== undefined);
-            dispatch(updateMaxLength(Math.max(...data)));
-        }
-    };
-
     return (
         <>
             <Flex vertical className={styles.table}>
@@ -287,7 +277,6 @@ export const Table = ({ typeTable, form }: Props) => {
                     className={`${styles['table__form']} ${
                         styles[`table__form_${typeTable}`]
                     }`}
-                    onChange={onChange}
                 >
                     {rows.map((row, i) => (
                         <TableRow

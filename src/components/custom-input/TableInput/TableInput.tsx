@@ -1,18 +1,14 @@
 import { Form, Input, InputNumber } from 'antd';
 import styles from './TableInput.module.css';
-import { useAppSelector } from '../../../app/hooks';
-import { selectMaxLengthWorkpieces } from '../../../features/maxLengthWorkpieces';
-import { CellTypes, TableTypes } from '../../../types/typeTable';
+import { CellTypes } from '../../../types/typeTable';
 
 type Props = {
     name: string;
     value?: string;
     typeCell: CellTypes;
-    typeTable: TableTypes;
 };
 
-export const TableInput = ({ name, value, typeCell, typeTable }: Props) => {
-    const maxLength = useAppSelector(selectMaxLengthWorkpieces);
+export const TableInput = ({ name, value, typeCell }: Props) => {
     return (
         <Form.Item
             name={name}
