@@ -46,9 +46,8 @@ export const Cutting1DForm = () => {
             }
         } catch (err) {
             if (
-                (err as ICalculateError).originalStatus === 500 &&
-                (err as ICalculateError).data.slice(0, 50) ===
-                    'System.Exception: detail length > workpiece length'
+                (err as ICalculateError).originalStatus === 400 &&
+                (err as ICalculateError).data === 'detail length > workpiece length'
             ) {
                 openNotification('Длина детали больше длины заготовки');
             } else {

@@ -136,11 +136,9 @@ export const Cutting2DForm = () => {
             try {
                 await getCalculate2D(data).unwrap();
             } catch (err) {
-                console.log(err);
                 if (
-                    (err as ICalculateError).originalStatus === 500 &&
-                    (err as ICalculateError).data.slice(0, 36) ===
-                        'System.Exception: detail > workpiece'
+                    (err as ICalculateError).originalStatus === 400 &&
+                    (err as ICalculateError).data === 'detail > workpiece'
                 ) {
                     openNotification('Размеры детали больше размеров заготовки');
                 } else {
@@ -180,11 +178,9 @@ export const Cutting2DForm = () => {
             try {
                 await getCalculateDxf(data).unwrap();
             } catch (err) {
-                console.log(err);
                 if (
-                    (err as ICalculateError).originalStatus === 500 &&
-                    (err as ICalculateError).data.slice(0, 36) ===
-                        'System.Exception: detail > workpiece'
+                    (err as ICalculateError).originalStatus === 400 &&
+                    (err as ICalculateError).data === 'detail > workpiece'
                 ) {
                     openNotification('Размеры детали больше размеров заготовки');
                 } else {
