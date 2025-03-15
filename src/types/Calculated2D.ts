@@ -2,6 +2,7 @@ export interface ICalculate2D {
     details: Detail2D[];
     workpiece: RequestWorkpiece;
     cuttingThickness: number;
+    indent: number;
 }
 
 export interface ResultCalculate2D {
