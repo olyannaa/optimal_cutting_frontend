@@ -8,6 +8,7 @@ import {
     useGetMaterialQuery,
 } from '../../../../app/services/addDxf';
 import { NotFoundContentSelect } from '../../../custom-input/NotFountContentSelect';
+import { ModalDeleteDetail } from '../../../modals/ModalDeleteDetail/ModalDeleteDetail';
 
 const props: UploadProps = {
     required: true,
@@ -16,12 +17,9 @@ const props: UploadProps = {
     title: 'Загрузить dxf',
 };
 
-export const AddDetailForm = ({
-    setImg,
-}: {
-    setImg: (value: string) => void;
-}) => {
+export const AddDetailForm = ({ setImg }: { setImg: (value: string) => void }) => {
     const [fileList, setFiles] = useState<File[]>([]);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const { data } = useGetMaterialQuery();
     const [addDetail, { isLoading }] = useAddDetailMutation();
     const materials: Array<{ value: number; label: string }> = data
@@ -63,57 +61,65 @@ export const AddDetailForm = ({
     };
 
     return (
-        <Form
-            className={styles['detail-form__container']}
-            onFinish={handleSubmit}
-        >
-            {[
-                { name: 'designation', placeholder: 'Обозначение' },
-                { name: 'name', placeholder: 'Наименование' },
-                { name: 'thickness', placeholder: 'Толщина' },
-            ].map(({ name, placeholder }) => (
+        <>
+            <Form className={styles['detail-form__container']} onFinish={handleSubmit}>
+                {[
+                    { name: 'designation', placeholder: 'Обозначение' },
+                    { name: 'name', placeholder: 'Наименование' },
+                    { name: 'thickness', placeholder: 'Толщина' },
+                ].map(({ name, placeholder }) => (
+                    <Form.Item
+                        key={name}
+                        name={name}
+                        rules={[{ required: true, message: '' }]}
+                        className={styles['detail-form__item']}
+                    >
+                        <Input
+                            className={styles['detail-form__input']}
+                            placeholder={placeholder}
+                        />
+                    </Form.Item>
+                ))}
+                <Upload
+                    updateUploadFiles={setFiles}
+                    uploadedFiles={fileList}
+                    props={props}
+                />
                 <Form.Item
-                    key={name}
-                    name={name}
-                    rules={[{ required: true, message: '' }]}
+                    name='materialId'
+                    rules={[
+                        {
+                            required: true,
+                            message: '',
+                        },
+                    ]}
                     className={styles['detail-form__item']}
                 >
-                    <Input
-                        className={styles['detail-form__input']}
-                        placeholder={placeholder}
-                    />
+                    <Select
+                        placeholder='Материал'
+                        options={materials}
+                        notFoundContent={<NotFoundContentSelect />}
+                    ></Select>
                 </Form.Item>
-            ))}
-            <Upload
-                updateUploadFiles={setFiles}
-                uploadedFiles={fileList}
-                props={props}
-            />
-            <Form.Item
-                name='materialId'
-                rules={[
-                    {
-                        required: true,
-                        message: '',
-                    },
-                ]}
-                className={styles['detail-form__item']}
-            >
-                <Select
-                    placeholder='Материал'
-                    options={materials}
-                    notFoundContent={<NotFoundContentSelect />}
-                ></Select>
-            </Form.Item>
-            <Button
-                className='btn-bottom'
-                type='primary'
-                danger
-                htmlType='submit'
-                loading={isLoading}
-            >
-                Добавить
-            </Button>
-        </Form>
+                <Button
+                    className='btn-bottom btn-bottom_add'
+                    type='primary'
+                    danger
+                    htmlType='submit'
+                    loading={isLoading}
+                >
+                    Добавить
+                </Button>
+                <Button
+                    className='btn-bottom btn-bottom_delete'
+                    type='default'
+                    danger
+                    onClick={() => setIsOpen(true)}
+                >
+                    Удалить детали
+                </Button>
+            </Form>
+            <ModalDeleteDetail isOpen={isOpen} setIsOpen={setIsOpen} />
+        </>
     );
 };

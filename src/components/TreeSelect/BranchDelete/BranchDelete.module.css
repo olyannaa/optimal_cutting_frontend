@@ -1,0 +1,22 @@
+.icon_open {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px;
+}
+
+.icon_open-dir {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.select-details {
+    margin-left: 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
