@@ -59,8 +59,7 @@ a {
     text-decoration: none;
 }
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 .formgap {
     position: relative;
@@ -95,6 +94,10 @@ code {
     bottom: 0;
     height: 38px;
     margin-bottom: 40px;
+}
+
+.btn-bottom_add {
+    margin-bottom: 95px;
 }
 
 .page {

@@ -28,6 +28,8 @@ export type Designation = {
 
 export type ResponseGetDesignations = Record<string, Designation[]>;
 
+export type ResponseDeleteDetail = { message: string };
+
 export const addDxfApi = api.injectEndpoints({
     endpoints: (builder) => ({
         addDetail: builder.mutation<Blob, FormData>({
@@ -36,6 +38,13 @@ export const addDxfApi = api.injectEndpoints({
                 method: 'POST',
                 body: data,
                 responseHandler: (response) => response.blob(),
+            }),
+        }),
+        deleteDetail: builder.mutation<ResponseDeleteDetail, number[]>({
+            query: (data) => ({
+                url: '/detail/delete',
+                method: 'POST',
+                body: { detailsIds: data },
             }),
         }),
         newWorkpiece: builder.mutation<void, ReqWorkpiece>({
@@ -65,6 +74,7 @@ export const {
     useGetMaterialQuery,
     useNewWorkpieceMutation,
     useLazyGetDesignationsQuery,
+    useDeleteDetailMutation,
 } = addDxfApi;
 export const {
     endpoints: { addDetail, newWorkpiece, getMaterial, getDesignations },

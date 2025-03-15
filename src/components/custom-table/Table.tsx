@@ -28,7 +28,7 @@ import { TableTypes } from '../../types/typeTable';
 import { ErrorsCsv } from '../../types/typeErrorsCsv';
 import { DownloadButton } from '../buttons/DownloadButton';
 import { ImportButton } from '../buttons/ImportButton/ImportButton';
-import { ModalSelectDetails } from '../ModalSelectDetails/ModalSelectDetails';
+import { ModalSelectDetails } from '../modals/ModalSelectDetails/ModalSelectDetails';
 import {
     addAddedDetails,
     deleteAddedDetail,

@@ -8,6 +8,7 @@ import dxf from '../features/dxfSlice';
 import selectDetails2D from '../features/selectDetails2DSlice';
 import statePage from '../features/statePageSlice';
 import rowsTable from '../features/rowsTableSlice';
+import deleteDetails from '../features/deleteDetails';
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         selectDetails2D,
         statePage,
         rowsTable,
+        deleteDetails,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
