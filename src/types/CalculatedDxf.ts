@@ -4,6 +4,7 @@ export interface ICalculateDxf {
     detailsId: number[];
     workpiece: RequestWorkpiece;
     cuttingThickness: number;
+    indent: number;
 }
 
 export interface DetailDxf {

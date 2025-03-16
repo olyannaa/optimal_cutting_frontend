@@ -33,11 +33,16 @@ export const Cutting2DForm = () => {
     const [formStandardWorkpiece] = Form.useForm();
     const [formCustomWorkpiece] = Form.useForm();
     const [formThickness] = Form.useForm();
-    const [getCalculate2D, { isLoading: isLoading2D }] = useCalculate2DMutation();
-    const [getCalculateDxf, { isLoading: isLoadingDxf }] = useCalculateDxfMutation();
+    const [formIndent] = Form.useForm();
+    const [getCalculate2D, { isLoading: isLoading2D }] =
+        useCalculate2DMutation();
+    const [getCalculateDxf, { isLoading: isLoadingDxf }] =
+        useCalculateDxfMutation();
     const requiredRule = [{ required: true, message: '' }];
     const [tab, setTab] = useState<TabsOptions>(TabsOptions.valueFirst);
-    const [modeBlank, setModeBlank] = useState<TabsOptions>(TabsOptions.valueFirst);
+    const [modeBlank, setModeBlank] = useState<TabsOptions>(
+        TabsOptions.valueFirst
+    );
     const { data } = useGetWorkpiecesQuery();
     const [api, contextHolder] = notification.useNotification();
 
@@ -76,9 +81,28 @@ export const Cutting2DForm = () => {
         return undefined;
     };
 
+    const validateIndent = async (value: number) => {
+        const workpieceWidth =
+        modeBlank === TabsOptions.valueFirst
+            ? findHeightAndWidth(formStandardWorkpiece.getFieldValue('workpiece'))
+                  ?.width ?? 0
+            : Number(formCustomWorkpiece.getFieldValue('width'));
+        const workpieceHeight =
+        modeBlank === TabsOptions.valueFirst
+            ? findHeightAndWidth(formStandardWorkpiece.getFieldValue('workpiece'))
+                  ?.height ?? 0
+            : Number(formCustomWorkpiece.getFieldValue('length'));
+
+        if (value > workpieceWidth || value > workpieceHeight) {
+            return Promise.reject();
+        }
+        return Promise.resolve();
+    };
+
     const generateResult = async () => {
         let isValidatedForms2D = false;
         let isValidatedFormsDxf = false;
+
         if (tab === TabsOptions.valueFirst)
             await formDetailDxf
                 .validateFields()
@@ -110,12 +134,21 @@ export const Cutting2DForm = () => {
                 isValidatedForms2D = false;
                 isValidatedFormsDxf = false;
             });
+        await formIndent
+            .validateFields()
+            .then()
+            .catch(() => {
+                isValidatedForms2D = false;
+                isValidatedFormsDxf = false;
+            });
         if (isValidatedForms2D && tab === TabsOptions.valueSecond) {
             dispatch(setLoading(true));
             let data: ICalculate2D = {
                 details: getListDetails2D(formDetail2D.getFieldsValue()),
                 workpiece: { width: 0, height: 0 },
-                cuttingThickness: formThickness.getFieldValue('cuttingThickness'),
+                cuttingThickness:
+                    formThickness.getFieldValue('cuttingThickness'),
+                indent: formIndent.getFieldValue('indent'),
             };
             if (modeBlank === TabsOptions.valueFirst) {
                 data = {
@@ -158,6 +191,7 @@ export const Cutting2DForm = () => {
                 ),
                 workpiece: { width: 0, height: 0 },
                 cuttingThickness: formThickness.getFieldValue('cuttingThickness'),
+                indent: formIndent.getFieldValue('indent'),
             };
             if (modeBlank === TabsOptions.valueFirst) {
                 data = {
@@ -208,7 +242,8 @@ export const Cutting2DForm = () => {
     useEffect(() => {
         if (tab === TabsOptions.valueFirst) formDetailDxf.resetFields();
         else formDetail2D.resetFields();
-        if (modeBlank === TabsOptions.valueFirst) formStandardWorkpiece.resetFields();
+        if (modeBlank === TabsOptions.valueFirst)
+            formStandardWorkpiece.resetFields();
         else formCustomWorkpiece.resetFields();
         formThickness.resetFields();
         dispatch(resetCutting2D());
@@ -271,8 +306,11 @@ export const Cutting2DForm = () => {
                             </Form.Item>
                         </Form>
                     )}
-                    <h2 style={{ marginTop: '38px' }}>Толщина реза</h2>
-                    <Form form={formThickness} style={{ marginBottom: '28px' }}>
+                    <Form
+                        form={formThickness}
+                        style={{ marginBottom: '0px', marginTop: '38px' }}
+                    >
+                        <h2 style={{ marginBottom: '8px' }}>Толщина реза</h2>
                         <Form.Item name='cuttingThickness' rules={requiredRule}>
                             <InputNumber
                                 className={styles['cutting2D__input']}
@@ -280,6 +318,27 @@ export const Cutting2DForm = () => {
                                 min={0}
                                 controls
                                 step={0.1}
+                            />
+                        </Form.Item>
+                    </Form>
+                    <Form form={formIndent} style={{ marginBottom: '28px' }}>
+                        <h2 style={{ marginBottom: '8px' }}>
+                            Отступ от края заготовки
+                        </h2>
+                        <Form.Item name='indent' rules={[
+                            ...requiredRule,
+                            {
+                                validator: async (_, value) => {
+                                    return validateIndent(value);
+                                }
+                            }
+                        ]}>
+                            <InputNumber
+                                className={styles['cutting2D__input']}
+                                size={'middle'}
+                                min={0}
+                                controls
+                                step={1}
                             />
                         </Form.Item>
                     </Form>
