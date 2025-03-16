@@ -1,16 +1,16 @@
 import { Alert, Button, Flex, Modal } from 'antd';
-import { TreeSelect } from '../TreeSelect/TreeSelect';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { TreeSelect } from '../../TreeSelect/TreeSelect';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import {
     clearCheckedDetails,
     selectAddedDetails,
     selectCheckedDetails,
     updateAddedDetails,
-} from '../../features/selectDetails2DSlice';
+} from '../../../features/selectDetails2DSlice';
 import styles from './ModalSelectDetails.module.css';
 import { useState } from 'react';
-import { Designation } from '../../app/services/addDxf';
-import { checkErrorAddDetails } from '../../functions/checkErrorAddDetails';
+import { Designation } from '../../../app/services/addDxf';
+import { checkErrorAddDetails } from '../../../functions/checkErrorAddDetails';
 
 type Props = {
     isOpen: boolean;
@@ -65,7 +65,7 @@ export const ModalSelectDetails = ({ isOpen, setIsOpen }: Props) => {
             <Flex vertical className={styles.modal}>
                 <Flex className={styles.modal__title}>Детали</Flex>
                 <Flex className={styles.modal__subtitle}>Выберите детали</Flex>
-                <TreeSelect />
+                <TreeSelect type='select' />
             </Flex>
             {isError && (
                 <Alert

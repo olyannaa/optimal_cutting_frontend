@@ -7,8 +7,13 @@ import {
     ResponseGetDesignations,
     useLazyGetDesignationsQuery,
 } from '../../app/services/addDxf';
+import { BranchDelete } from './BranchDelete/BranchDelete';
 
-export const TreeSelect = () => {
+type Props = {
+    type: 'select' | 'delete';
+};
+
+export const TreeSelect = ({ type }: Props) => {
     const [getDesignationsQuery, { data, isLoading }] = useLazyGetDesignationsQuery();
     const [value, setValue] = useState<string>('');
     const [searchedDetails, setSearchedDetails] =
@@ -60,10 +65,16 @@ export const TreeSelect = () => {
                         data ? (
                             Object.keys(data).map((key, id) => {
                                 if (searchedDetails && searchedDetails[key])
-                                    return (
+                                    return type === 'select' ? (
                                         <BranchSelect
                                             name={key}
                                             key={id}
+                                            details={searchedDetails[key]}
+                                        />
+                                    ) : (
+                                        <BranchDelete
+                                            key={id}
+                                            name={key}
                                             details={searchedDetails[key]}
                                         />
                                     );
