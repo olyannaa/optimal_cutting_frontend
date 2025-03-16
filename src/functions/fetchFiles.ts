@@ -42,7 +42,7 @@ export const downloadFile1DCutting = async (
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `file.${typeFile}`;
+        link.download = getName(response, typeFile);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -66,7 +66,7 @@ export const downloadFileCSV1D = async (dataDetails: string) => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `details.csv`;
+        link.download = getName(response, 'csv');
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -90,7 +90,7 @@ export const downloadFileCSV2DCutting = async (dataDetails: string) => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `details.csv`;
+        link.download = getName(response, 'csv');
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -121,7 +121,7 @@ export const downloadFile2DCutting = async (
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `file.${typeFile}`;
+        link.download = getName(response, typeFile);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -145,7 +145,7 @@ export const downloadFileCSVDxfCutting = async (dataDetails: string) => {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `details.csv`;
+        link.download = getName(response, 'csv');
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -153,4 +153,13 @@ export const downloadFileCSVDxfCutting = async (dataDetails: string) => {
         console.error('Ошибка при получении данных:', error);
         throw error;
     }
+};
+
+const getName = (response: Response, typeFile: string) => {
+    const result = response.headers
+        .get('content-disposition')
+        ?.split('; ')[1]
+        .substring(10)
+        .slice(0, -1);
+    return result || `file.${typeFile}`;
 };
